@@ -16,7 +16,7 @@ def register():
     submenu_classes = (make_submenu_classes(path, category_name) for path, category_name in example_categories_names())
     for examples_menu in submenu_classes:
         bpy.utils.register_class(examples_menu)
-    add_extra_examples('Open3d', EXAMPLES_PATH)
+    add_extra_examples('Mega-Polis', EXAMPLES_PATH)
 
 def unregister():
     pass
