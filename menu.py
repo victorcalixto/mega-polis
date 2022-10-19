@@ -2,7 +2,7 @@ import bpy
 from sverchok.ui.nodeview_space_menu import make_extra_category_menus, layout_draw_categories
 from megapolis.nodes_index import nodes_index
 from megapolis.dependencies import geopandas as gpd
-from megapolis.dependencies import leafmap, osmnx, pandas, laspy, rasterio, PIL, mapillary, wget,networkx, sklearn, streamlit,pyvista,seaborn,visilibity,cv2,plotly,keplergl
+from megapolis.dependencies import leafmap, osmnx, pandas, laspy, rasterio, PIL, mapillary, wget,networkx, sklearn, streamlit,pyvista,seaborn,visilibity,cv2,plotly,keplergl,requests,richdem
 
 def plain_node_list():
     node_categories = {}
@@ -68,7 +68,13 @@ class NODEVIEW_MT_MEGAPOLIS(bpy.types.Menu):
             layout.operator('node.sv_ex_pip_install', text="Install keplergl Library with PIP").package = "keplergl"
         if plotly is None:
             layout.operator('node.sv_ex_pip_install', text="Install plotly Library with PIP").package = "plotly"
+        if requests is None:
+            layout.operator('node.sv_ex_pip_install', text="Install requests Library with PIP").package = "requests"
+        if richdem is None:
+            layout.operator('node.sv_ex_pip_install', text="Install richdem Library with PIP").package = "richdem"
         
+
+
         else:
             #layout_draw_categories(self.layout, self.bl_label, node_cats['Utils'])
             layout.menu("NODEVIEW_MT_MEGAPOLISGatheringMenu")

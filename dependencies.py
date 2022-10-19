@@ -116,7 +116,7 @@ except ImportError:
     pillow = None
 
 #mapillary
-mapillary_d = ex_dependencies["mapillary"] = SvDependency("mapillary", "https://pillow.readthedocs.io/en/stable/")
+mapillary_d = ex_dependencies["mapillary"] = SvDependency("mapillary", "https://github.com/mapillary/mapillary-python-sdk")
 mapillary_d.pip_installable = True
 
 try:
@@ -129,7 +129,7 @@ except ImportError:
     mapillary = None
 
 #wget
-wget_d = ex_dependencies["wget"] = SvDependency("wget", "https://pillow.readthedocs.io/en/stable/")
+wget_d = ex_dependencies["wget"] = SvDependency("wget", "https://pypi.org/project/wget/")
 wget_d.pip_installable = True
 
 try:
@@ -142,7 +142,7 @@ except ImportError:
     wget = None
 
 #networkx
-networkx_d = ex_dependencies["networkx"] = SvDependency("networkx", "https://pillow.readthedocs.io/en/stable/")
+networkx_d = ex_dependencies["networkx"] = SvDependency("networkx", "https://networkx.org/")
 networkx_d.pip_installable = True
 
 try:
@@ -155,7 +155,7 @@ except ImportError:
     networkx = None
 
 #scikit-learn
-scikitlearn_d = ex_dependencies["scikitlearn"] = SvDependency("scikitlearn", "https://pillow.readthedocs.io/en/stable/")
+scikitlearn_d = ex_dependencies["scikitlearn"] = SvDependency("scikitlearn", "https://scikit-learn.org/")
 scikitlearn_d.pip_installable = True
 
 try:
@@ -168,7 +168,7 @@ except ImportError:
     scikitlearn = None
 
 #streamlit
-streamlit_d = ex_dependencies["streamlit"] = SvDependency("streamlit", "https://pillow.readthedocs.io/en/stable/")
+streamlit_d = ex_dependencies["streamlit"] = SvDependency("streamlit", "https://streamlit.io/")
 streamlit_d.pip_installable = True
 
 try:
@@ -181,7 +181,7 @@ except ImportError:
     streamlit = None
 
 #pyvista
-pyvista_d = ex_dependencies["pyvista"] = SvDependency("pyvista", "https://pillow.readthedocs.io/en/stable/")
+pyvista_d = ex_dependencies["pyvista"] = SvDependency("pyvista", "https://docs.pyvista.org/")
 pyvista_d.pip_installable = True
 
 try:
@@ -194,7 +194,7 @@ except ImportError:
     pyvista = None
 
 #seaborn
-seaborn_d = ex_dependencies["seaborn"] = SvDependency("seaborn", "https://pillow.readthedocs.io/en/stable/")
+seaborn_d = ex_dependencies["seaborn"] = SvDependency("seaborn", "https://seaborn.pydata.org/")
 seaborn_d.pip_installable = True
 
 try:
@@ -207,7 +207,7 @@ except ImportError:
     seaborn = None
 
 #visilibity
-visilibity_d = ex_dependencies["visilibity"] = SvDependency("visilibity", "https://pillow.readthedocs.io/en/stable/")
+visilibity_d = ex_dependencies["visilibity"] = SvDependency("visilibity", "https://karlobermeyer.github.io/VisiLibity1/")
 visilibity_d.pip_installable = True
 
 try:
@@ -220,7 +220,7 @@ except ImportError:
     visilibity = None
 
 #opencv
-opencv_d = ex_dependencies["opencv"] = SvDependency("opencv", "https://pillow.readthedocs.io/en/stable/")
+opencv_d = ex_dependencies["opencv"] = SvDependency("opencv", "https://github.com/opencv/opencv-python")
 opencv_d.pip_installable = True
 
 try:
@@ -233,7 +233,7 @@ except ImportError:
     opencv = None
 
 #keplergl
-keplergl_d = ex_dependencies["keplergl"] = SvDependency("opencv", "https://pillow.readthedocs.io/en/stable/")
+keplergl_d = ex_dependencies["keplergl"] = SvDependency("keplergl", "https://github.com/keplergl/kepler.gl/tree/master/bindings/kepler.gl-jupyter")
 keplergl_d.pip_installable = True
 
 try:
@@ -246,7 +246,7 @@ except ImportError:
     keplergl = None
 
 #plotly
-plotly_d = ex_dependencies["plotly"] = SvDependency("plotly", "https://pillow.readthedocs.io/en/stable/")
+plotly_d = ex_dependencies["plotly"] = SvDependency("plotly", "https://plotly.com/python/")
 plotly_d.pip_installable = True
 
 try:
@@ -257,6 +257,42 @@ except ImportError:
     plotly_d.message = "keplergl package is not available, the addon will not work"
     info(plotly_d.message)
     plotly = None
+
+#requests
+requests_d = ex_dependencies["requests"] = SvDependency("requests", "https://pypi.org/project/requests")
+requests_d.pip_installable = True
+
+try:
+    import requests
+    requests_d.message = "requests package is available"
+    requests_d.module = requests
+except ImportError:
+    requests_d.message = "requests package is not available, the addon will not work"
+    info(requests_d.message)
+    requests = None
+
+#richdem
+richdem_d = ex_dependencies["richdem"] = SvDependency("richdem", "https://richdem.com/")
+richdem_d.pip_installable = True
+
+try:
+    import richdem
+    richdem_d.message = "requests package is available"
+    richdem_d.module = richdem
+except ImportError:
+    richdem_d.message = "richdem package is not available, the addon will not work"
+    info(richdem_d.message)
+    richdem = None
+
+
+
+
+
+
+
+
+
+
 
 
 

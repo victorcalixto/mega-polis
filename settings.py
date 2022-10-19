@@ -39,8 +39,7 @@ def draw_in_sv_prefs(layout):
     draw_message(layout, "opencvpython", dependencies=ex_dependencies)
     draw_message(layout, "keplergl", dependencies=ex_dependencies)
     draw_message(layout, "plotly", dependencies=ex_dependencies)
-
-
+    draw_message(layout, "requests", dependencies=ex_dependencies)
 
 
 def update_addon_ui(layout):
@@ -103,8 +102,7 @@ class SvMegapolisPreferences(AddonPreferences):
         draw_message(box, "opencv", dependencies=ex_dependencies)
         draw_message(box, "keplergl", dependencies=ex_dependencies)
         draw_message(box, "plotly", dependencies=ex_dependencies)
-
-
+        draw_message(box, "requests", dependencies=ex_dependencies)
 
         box_extra = layout.box()
         
