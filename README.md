@@ -20,8 +20,8 @@ jgs~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 A DATA-DRIVEN URBAN DESIGN TOOLKIT FOR SVERCHOK 
 ============================================
 
-This is an addon for [Blender][1], that extends [Sverchok][2]
-addon. MEGA-POLIS is a Data-Driven Urban Design Toolkit.
+MEGA-POLIS is a Data-Driven Urban Design Toolkit. This is an addon for [Blender][1] that extends [Sverchok][2]
+addon. 
 
 This add-on is part of an ongoing research, and it still very experimental and under HEAVILY development.  
 
