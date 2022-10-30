@@ -101,5 +101,4 @@ LICENSE: GPL-3.
 [2]: https://github.com/nortikin/sverchok
 [4]: https://github.com/victorcalixto/mega-polis
 [6]: https://github.com/nortikin/sverchok/wiki/Dependencies
-[7]: http://www.open3d.org/
 
