@@ -17,19 +17,20 @@ jgs~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                                                                                
 ```
 
-A FREE AND OPEN SOURCE DATA_DRIVEN URBAN DESIGN TOOL FOR SVERCHOK 
+A FREE AND OPEN SOURCE DATA-DRIVEN URBAN DESIGN TOOL FOR SVERCHOK 
 =================================================================
 
 This is an addon for [Blender][1], that extends [Sverchok][2]
 addon. MEGA-POLIS is a Data-Driven Urban Design Toolkit.
 
-This addon is part of a on-going research and still very experimental and under HUGE development.  
+This add-on is part of an ongoing research, and it still very experimental and under HEAVILY development.  
+
 
 
 Features
 --------
 
-At the moment, this addon includes the following nodes for Sverchok:
+At the moment, this add-on includes the following nodes for Sverchok:
 
 Gathering
 ---------
@@ -109,10 +110,10 @@ Installation
 
 * Download and Install [Sverchok][2]
 * Download [MEGA-POLIS zip archive][4] from GitHub
-* In Blender, go to User Preferences > Addons > install from file > choose
+* In Blender, go to User Preferences > Add-ons > install from file > choose
   zip-archive > activate flag beside MEGA-POLIS.
-* Check the addon options to install all dependencies.
-* Save preferences, if you want to enable the addon permanently.
+* Check the add-on options to install all dependencies.
+* Save preferences, if you want to enable the add-on permanently.
 
 LICENSE: GPL-3.
 
@@ -120,4 +121,5 @@ LICENSE: GPL-3.
 [2]: https://github.com/nortikin/sverchok
 [4]: https://github.com/victorcalixto/mega-polis
 [6]: https://github.com/nortikin/sverchok/wiki/Dependencies
+
 
