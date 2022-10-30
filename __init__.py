@@ -3,13 +3,13 @@ bl_info = {
     "name": "MEGA-POLIS",
     "author": "Victor Calixto",
     "version": (0, 0, 0, 0),
-    "blender": (3, 2, 0),
+    "blender": (3, 3, 0),
     "location": "Node Editor",
     "category": "Node",
     "description": "A Computational Data-Driven Urban Design Tool",
     "warning": "",
-    "wiki_url": "https://github.com/vicdoval/sverchok-open3d",
-    "tracker_url": "https://github.com/vicdoval/sverchok-open3d/issues"
+    "wiki_url": "https://github.com/victorcalixto/mega-polis",
+    "tracker_url": "https://github.com/victorcalixto/mega-polis/issues"
 }
 
 import sys

@@ -12,37 +12,6 @@ from megapolis.dependencies import osmnx as ox
 from megapolis.dependencies import networkx as nx
 
 
-def nx_analysis(nodes, method):
-    if method == "closeness_centrality":
-        closeness_centrality = nx.closeness_centrality(nx.line_graph(G))
-        nx.set_edge_attributes(G, closeness_centrality, method)
-        values_centrality = closeness_centrality.values()
-        ec = ox.plot.get_edge_colors_by_attr(G, method, cmap=colormap_type)
-        return [list(values_centrality)],[list(ec)]
-    
-    elif method == "betweenness_centrality":
-        betweenness_centrality= nx.betweenness_centrality(nx.line_graph(G))
-        nx.set_edge_attributes(G, betweenness_centrality, method)
-        values_centrality = betweenness_centrality.values()
-        ec = ox.plot.get_edge_colors_by_attr(G, method, cmap=colormap_type)
-        return [list(values_centrality)],[list(ec)]
-
-    elif method == "degree_centrality": 
-        degree_centrality = nx.degree_centrality(nx.line_graph(G))
-        nx.set_edge_attributes(G, degree_centrality, method)
-        ec = ox.plot.get_edge_colors_by_attr(G, method, cmap=colormap_type)
-        values_centrality = degree_centrality.values()
-        return [list(values_centrality)], [list(ec)]
-
-
-    
-    elif method == "basic":
-        nodes_proj = ox.graph_to_gdfs(G, edges=False)
-        graph_area_m = nodes_proj.unary_union.convex_hull.area
-        basic_stats = ox.basic_stats(G)
-        basic_result = ox.basic_stats(G, area=graph_area_m, clean_int_tol=15)
-        return basic_result
-
 
 Analysis_method = namedtuple('AnalysisMethod', ['closeness_centrality','betweenness_centrality','degree_centrality','basic'])
 ANALYSISMETHOD = Analysis_method('closeness_centrality','betweenness_centrality','degree_centrality','basic')
@@ -103,15 +72,47 @@ else:
             G = self.graph
             colormap_type = self.colour[0][0]
 
+            def nx_analysis(nodes, method):
+                if method == "closeness_centrality":
+                    closeness_centrality = nx.closeness_centrality(nx.line_graph(G))
+                    nx.set_edge_attributes(G, closeness_centrality, method)
+                    values_centrality = closeness_centrality.values()
+                    ec = ox.plot.get_edge_colors_by_attr(G, method, cmap=colormap_type)
+                    return [list(values_centrality)],[list(ec)]
+                
+                elif method == "betweenness_centrality":
+                    betweenness_centrality= nx.betweenness_centrality(nx.line_graph(G))
+                    nx.set_edge_attributes(G, betweenness_centrality, method)
+                    values_centrality = betweenness_centrality.values()
+                    ec = ox.plot.get_edge_colors_by_attr(G, method, cmap=colormap_type)
+                    return [list(values_centrality)],[list(ec)]
+
+                elif method == "degree_centrality": 
+                    degree_centrality = nx.degree_centrality(nx.line_graph(G))
+                    nx.set_edge_attributes(G, degree_centrality, method)
+                    ec = ox.plot.get_edge_colors_by_attr(G, method, cmap=colormap_type)
+                    values_centrality = degree_centrality.values()
+                    return [list(values_centrality)], [list(ec)]
+
+                
+                elif method == "basic":
+                    nodes_proj = ox.graph_to_gdfs(G, edges=False)
+                    graph_area_m = nodes_proj.unary_union.convex_hull.area
+                    basic_stats = ox.basic_stats(G)
+                    basic_result = ox.basic_stats(G, area=graph_area_m, clean_int_tol=15)
+                    return basic_result
+
+
+
             results = nx_analysis(G,self.analysismethod)
 
             nx_results = results[0]
-            nx_edges_colors = results[1] 
+            nx_edges_colours = results[1] 
 
             ## Output
 
             self.outputs["Nx Values"].sv_set(nx_results)
-            self.outputs["Nx Edges Colours"].sv_set(Colourmap)
+            self.outputs["Nx Edges Colours"].sv_set(nx_edges_colours)
             
 
 def register():

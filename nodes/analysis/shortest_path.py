@@ -182,5 +182,5 @@ def register():
         bpy.utils.register_class(SvMegapolisShortestPath)
 
 def unregister():
-    if rd is not None:
+    if nx is not None:
         bpy.utils.unregister_class(SvMegapolisShortestPath)

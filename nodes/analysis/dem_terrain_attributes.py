@@ -76,7 +76,9 @@ else:
 
             flatten_arr = dem_slope.flatten()
 
-            attribute_values = [flatten_arr.tolist()]
+            #attribute_values = [flatten_arr.tolist()]
+            attribute_values = flatten_arr
+
 
 
             ## Output

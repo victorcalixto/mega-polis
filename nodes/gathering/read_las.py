@@ -12,6 +12,11 @@ from megapolis.dependencies import laspy
 import numpy as np
 
 
+def getCoordinates(las):
+    coordinates = np.stack(((las.X*las.header.scales[0])+las.header.offsets[0],(las.Y*las.header.scales[1])+las.header.offsets[1],(las.Z*las.header.scales[2])+las.header.offsets[2]), axis=1)
+    return coordinates
+
+
 if laspy is None:
     add_dummy('SvMegapolisReadLas', 'Read LAS', 'laspy')
 else:
@@ -24,6 +29,24 @@ else:
         bl_label = 'Read LAS'
         bl_icon = 'MESH_DATA'
         
+       # Hide Interactive Sockets
+        def update_sockets(self, context):
+            """ need to do UX transformation before updating node"""
+            def set_hide(sock, status):
+                if sock.hide_safe != status:
+                    sock.hide_safe = status
+            
+            updateNode(self,context)
+
+
+        subsampling_factor: IntProperty(
+            name="subsampling_factor",
+            description="Decrease the number of Points by a Factor",
+            default= 150,
+            min= 1,
+            update=update_sockets)
+        
+
 
         def sv_init(self, context):
             # inputs
@@ -35,6 +58,14 @@ else:
             self.outputs.new('SvStringsSocket', "Intensity")
             self.outputs.new('SvStringsSocket', "Classification")
             self.outputs.new('SvStringsSocket', "Classification Colours")
+        
+        def draw_buttons(self,context, layout):
+            layout.prop(self, 'subsampling_factor')
+
+
+        def draw_buttons_ext(self, context, layout):
+            self.draw_buttons(context, layout)
+
 
         def process(self):
             if not self.inputs["Path"].is_linked:
@@ -66,32 +97,42 @@ else:
                                 17:["bridge",(.83,1,0,1)],
                                 18:["high_noise",(1,0,0,1)],
                                 }
-            names = list(las.point_format.dimension_names)
+            #names = list(las.point_format.dimension_names)
 
-            coordinates = np.array(list(zip((las.X*las.header.scales[0])+las.header.offsets[0],(las.Y*las.header.scales[1])+las.header.offsets[1],(las.Z*las.header.scales[2])+las.header.offsets[2])))
+            coordinates = getCoordinates(las)
 
-            colors = []
+            #colors_keys = list(colors_classification.keys())
 
-            colors_keys = list(colors_classification.keys())
+            colors = [colors_classification[i][1] for i in classification]
+            
+            dec_coordinates = coordinates[::self.subsampling_factor]
+            dec_las = las[::self.subsampling_factor]
+            dec_intensity = intensity[::self.subsampling_factor] 
+            dec_classification = classification[::self.subsampling_factor]
+            dec_colors = colors[::self.subsampling_factor]
+           
+            #intensity = [intensity.tolist()]
 
-
-            for i in classification:
-                colors.append(colors_classification[i][1])
-
-            intensity = [intensity.tolist()]
-
-            points_data =  las
-            points = [coordinates]
-            points_intensity = intensity
-            points_classification = [classification]
-            points_classification_color = [colors]
+            #points_data =  las
+            #points = [coordinates]
+            #points_intensity = intensity
+            #points_classification = [classification]
+            #points_classification_color = [colors]
             
             #Outputs
-            self.outputs["Points"].sv_set([coordinates])
-            self.outputs["Points Data"].sv_set(las)
-            self.outputs["Intensity"].sv_set(intensity)
-            self.outputs["Classification"].sv_set([classification])
-            self.outputs["Classification Colours"].sv_set([colors])
+            #self.outputs["Points"].sv_set([coordinates])
+            #self.outputs["Points Data"].sv_set(las)
+            #self.outputs["Intensity"].sv_set(intensity)
+            #self.outputs["Classification"].sv_set([classification])
+            #self.outputs["Classification Colours"].sv_set([colors])
+            
+            #Outputs
+            self.outputs["Points"].sv_set([dec_coordinates])
+            self.outputs["Points Data"].sv_set(dec_las)
+            self.outputs["Intensity"].sv_set(dec_intensity)
+            self.outputs["Classification"].sv_set([dec_classification])
+            self.outputs["Classification Colours"].sv_set([dec_colors])
+
 
 def register():
     if laspy is not None:

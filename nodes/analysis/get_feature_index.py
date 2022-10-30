@@ -11,15 +11,15 @@ from sverchok.utils.dummy_nodes import add_dummy
 from megapolis.dependencies import pandas as pd
 
 if pd is None:
-    add_dummy('SvMegapolisCorrelationIndex', 'Correlation Index', 'pandas')
+    add_dummy('SvMegapolisGetFeatureIndex', 'Get Feature Index', 'pandas')
 else:
-    class SvMegapolisCorrelationIndex(bpy.types.Node, SverchCustomTreeNode):
+    class SvMegapolisGetFeatureIndex(bpy.types.Node, SverchCustomTreeNode):
         """
-        Triggers: Correlation Index
-        Tooltip: Correlates a Dataframe at index of X and y features 
+        Triggers: Get Feature Index
+        Tooltip: Get a Feature from a Daatframe at index of X and y features 
         """
-        bl_idname = 'SvMegapolisCorrelationIndex'
-        bl_label = 'Correlation Index'
+        bl_idname = 'SvMegapolisGetFeatureIndex'
+        bl_label = 'Get Feature Index'
         bl_icon = 'MESH_DATA'
         
 
@@ -30,7 +30,7 @@ else:
             self.inputs.new('SvStringsSocket', "Index Feature y")
            
             #outputs
-            self.outputs.new('SvStringsSocket', "Correlation Index")
+            self.outputs.new('SvStringsSocket', "Feature Out")
 
         def process(self):
             if not self.inputs["Dataframe"].is_linked or not self.inputs["Index Feature X"].is_linked or not self.inputs["Index Feature y"].is_linked:
@@ -49,12 +49,12 @@ else:
             
             #Outputs
 
-            self.outputs["Correlation Index"].sv_set(corr_at)
+            self.outputs["Feature Out"].sv_set(corr_at)
 
 def register():
     if pd is not None:
-        bpy.utils.register_class(SvMegapolisCorrelationIndex)
+        bpy.utils.register_class(SvMegapolisGetFeatureIndex)
 
 def unregister():
     if pd is not None:
-        bpy.utils.unregister_class(SvMegapolisCorrelationIndex)
+        bpy.utils.unregister_class(SvMegapolisGetFeatureIndex)

@@ -14,9 +14,8 @@ def nodes_index():
                 ("gathering.split_string","SvMegapolisSplitString"),
                 ("gathering.download_data_url","SvMegapolisDownloadDataUrl"),
                 ("gathering.request_data_api","SvMegapolisRequestDataApi"),
-                ("gathering.get_pandas_feature","SvMegapolisGetPandasFeature")
-
-
+                ("gathering.get_pandas_feature","SvMegapolisGetPandasFeature"),
+                ("gathering.get_sample_dataframe","SvMegapolisGetSampleDataframe")
 
 
 
@@ -28,8 +27,9 @@ def nodes_index():
                 ("analysis.network_analyses","SvMegapolisNetworkAnalyses"),
                 ("analysis.isovists","SvMegapolisIsovists"),
                 ("analysis.shortest_path","SvMegapolisShortestPath"),
-                ("analysis.correlation_index","SvMegapolisCorrelationIndex"),
-                ("analysis.correlation_matrix","SvMegapolisCorrelationMatrix"),
+                ("analysis.get_feature_index","SvMegapolisGetFeatureIndex"),
+                ("analysis.get_feature_at","SvMegapolisGetFeatureAt"),
+                ("analysis.correlation","SvMegapolisCorrelation"),
                 ("analysis.correlation_with","SvMegapolisCorrelationWith"),
                 ("analysis.linear_model_selection","SvMegapolisLinearModelSelection"),
                 ("analysis.model_fit","SvMegapolisModelFit"),
@@ -61,5 +61,26 @@ def nodes_index():
 
                 ]),
             ("Visualisation", [
+                
+                ("visualisation.dataframe_vis","SvMegapolisDataframeVis"),
+                ("visualisation.seaborn_plot","SvMegapolisSeabornPlot"),
+                ("visualisation.dashboard_mesh","SvMegapolisDashboardMesh"),
+                ("visualisation.dashboard_map","SvMegapolisDashboardMap"),
+                ("visualisation.dashboard_load_map","SvMegapolisDashboardLoadMap"),
+                ("visualisation.dashboard_bokeh_figure","SvMegapolisDashboardBokehFigure"),
+                ("visualisation.dashboard_bokeh_plot_line","SvMegapolisDashboardBokehPlotLine"),
+                ("visualisation.dashboard_bokeh_plot_chart","SvMegapolisDashboardBokehPlotChart"),
+                ("visualisation.dashboard_plotly_figure","SvMegapolisDashboardPlotlyFigure"),
+                ("visualisation.dashboard_markdown","SvMegapolisDashboardMarkdown"),
+                ("visualisation.dashboard_plotly_scatter","SvMegapolisDashboardPlotlyScatter"),
+                ("visualisation.dashboard_dataframe","SvMegapolisDashboardDataframe"),
+                ("visualisation.dashboard_creation","SvMegapolisDashboardCreation"),
+                ("visualisation.python_server","SvMegapolisPythonServer"),
+                ("visualisation.webvr_connector","SvMegapolisWebVRConnector"),
+                ("visualisation.dashboard_server","SvMegapolisDashboardServer"),
+                
+
+
+
                 ]),
                       ]

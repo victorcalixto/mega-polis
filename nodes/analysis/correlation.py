@@ -1,5 +1,5 @@
 import bpy
-from bpy.props import IntProperty, EnumProperty
+from bpy.props import EnumProperty
 
 from collections import namedtuple
 from sverchok.node_tree import SverchCustomTreeNode
@@ -15,15 +15,15 @@ CORRELATIONMETHOD = Correlation_method('pearson','kendall','spearman')
 correlationmethod_items = [(i, i, '') for i in CORRELATIONMETHOD]
 
 if pd is None:
-    add_dummy('SvMegapolisCorrelationWith', 'Correlation With', 'pandas')
+    add_dummy('SvMegapolisCorrelation', 'Correlation', 'pandas')
 else:
-    class SvMegapolisCorrelationWith(bpy.types.Node, SverchCustomTreeNode):
+    class SvMegapolisCorrelation(bpy.types.Node, SverchCustomTreeNode):
         """
-        Triggers: Correlation With
-        Tooltip: Correlates a Dataframe with a Series using the methods; pearson, kendall, or spearman 
+        Triggers: Correlation
+        Tooltip: Correlates a Dataframe using the methods; pearson, kendall, or spearman 
         """
-        bl_idname = 'SvMegapolisCorrelationWith'
-        bl_label = 'Correlation With'
+        bl_idname = 'SvMegapolisCorrelation'
+        bl_label = 'Correlation'
         bl_icon = 'MESH_DATA'
 
         # Hide Interactive Sockets
@@ -45,10 +45,8 @@ else:
         def sv_init(self, context):
             # inputs
             self.inputs.new('SvStringsSocket', "Dataframe")
-            self.inputs.new('SvStringsSocket', "Series With")
-
             # outputs
-            self.outputs.new('SvStringsSocket', "Correlation With")
+            self.outputs.new('SvStringsSocket', "Correlation")
 
         def draw_buttons(self,context, layout):
             layout.prop(self, 'correlation', expand=False)
@@ -58,25 +56,24 @@ else:
 
         def process(self):
              
-            if not self.inputs["Dataframe"].is_linked or not self.inputs["Series With"].is_linked:
+            if not self.inputs["Dataframe"].is_linked:
                 return
             self.dataframe = self.inputs["Dataframe"].sv_get(deepcopy = False)
-            self.series = self.inputs["Series With"].sv_get(deepcopy = False)
 
-            series_with = self.series[0]
             df = self.dataframe
-            data = df.corrwith(series_with, method=self.correlation)
-            corr_with = [data]
+            data = df.corr(method=self.correlation)
+            corr = [data]
+
 
             ## Output
 
-            self.outputs["Correlation With"].sv_set(corr_with)
+            self.outputs["Correlation"].sv_set(corr)
 
 
 def register():
     if pd is not None:
-        bpy.utils.register_class(SvMegapolisCorrelationWith)
+        bpy.utils.register_class(SvMegapolisCorrelation)
 
 def unregister():
     if pd is not None:
-        bpy.utils.unregister_class(SvMegapolisCorrelationWith)
+        bpy.utils.unregister_class(SvMegapolisCorrelation)

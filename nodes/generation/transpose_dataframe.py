@@ -36,7 +36,7 @@ else:
                 return
             self.df = self.inputs["Dataframe"].sv_get(deepcopy = False)
 
-            data = df.T
+            data = self.df.T
 
             df_tranposed = data
 
