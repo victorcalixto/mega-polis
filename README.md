@@ -17,7 +17,7 @@ jgs~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                                                                                
 ```
 
-A DATA-DRIVEN URBAN DESIGN TOOL FOR SVERCHOK 
+A DATA-DRIVEN URBAN DESIGN TOOLKIT FOR SVERCHOK 
 ============================================
 
 This is an addon for [Blender][1], that extends [Sverchok][2]
