@@ -46,7 +46,9 @@ class SvMegapolisDashboardMarkdown(bpy.types.Node, SverchCustomTreeNode):
         st_markdown_tx=self.text[0]
 
 
-        text = "st.markdown(\"\"\"{0}\"\"\")\n\n".format(st_markdown_tx)
+        text ="""
+st.markdown(\"\"\"{0}\"\"\")\n\n
+              """.format(st_markdown_tx)
 
         st_markdown_out = [text]
 

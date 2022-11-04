@@ -55,8 +55,8 @@ def nodes_index():
                 ("generation.file_to_geojson","SvMegapolisFileToGeoJson"),
                 ("generation.csv_to_dataframe","SvMegapolisCsvToDataframe"),
                 ("generation.sequential_colormap","SvMegapolisSequentialColormap"),
-                ("generation.get_file_path","SvMegapolisGetFilePath")
-
+                ("generation.get_file_path","SvMegapolisGetFilePath"),
+                ("generation.create_dictionary","SvMegapolisCreateDictionary")
 
 
                 ]),
@@ -78,8 +78,8 @@ def nodes_index():
                 ("visualisation.python_server","SvMegapolisPythonServer"),
                 ("visualisation.webvr_connector","SvMegapolisWebVRConnector"),
                 ("visualisation.dashboard_server","SvMegapolisDashboardServer"),
-                
-
+                ("visualisation.dashboard_geojson_to_map","SvMegapolisDashboardGeojsonToMap"),
+                ("visualisation.dashboard_create_plotly","SvMegapolisDashboardCreatePlotly"),
 
 
                 ]),

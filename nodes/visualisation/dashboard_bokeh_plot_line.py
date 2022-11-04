@@ -45,24 +45,33 @@ class SvMegapolisDashboardBokehPlotLine(bpy.types.Node, SverchCustomTreeNode):
         self.inputs.new('SvStringsSocket', "Y Values")
         #Outputs
         self.outputs.new('SvStringsSocket',"Dashboard Bokeh Line")
+    
+    def draw_buttons(self,context, layout):
+        layout.prop(self, 'line_width')
+
+    def draw_buttons_ext(self, context, layout):
+        self.draw_buttons(context, layout)
+
 
     def process(self):
     
         if not self.inputs["Figure Name"].is_linked or not self.inputs["Legend Label"].is_linked or  not self.inputs["X Values"].is_linked or not self.inputs["Y Values"].is_linked:
             return
-        self.name = self.inputs["Figure Name"].sv_get(deepcopy = False)
+        self.figname = self.inputs["Figure Name"].sv_get(deepcopy = False)
         self.legend = self.inputs["Legend Label"].sv_get(deepcopy = False)
         self.x= self.inputs["X Values"].sv_get(deepcopy = False)
         self.y= self.inputs["Y Values"].sv_get(deepcopy = False)
 
 
-        figure_name=self.name[0][0]
-        title=self.legend[0][0]
-        x_values=self.x[0][0]
-        y_values=self.y[0][0]
-        line_width = self.line_width[0][0]
+        figure_name=self.figname[0][0]
+        legend_label=self.legend[0][0]
+        x_values=self.x[0]
+        y_values=self.y[0]
+        line_width = self.line_width
 
-        line= f"{figure_name}.line({x_values}, {y_values}, legend_label='{legend_label}', line_width={line_width}) \n"
+        line= f"""
+{figure_name}.line({x_values}, {y_values}, legend_label='{legend_label}', line_width={line_width}) \n
+               """
 
         st_bokeh_line = line
 

@@ -123,9 +123,9 @@ else:
             
             geometry_shape = gpd.read_file(file_name)
             gdf = geometry_shape
-            #gdf.set_crs(f'epsg:{gis_crs}', allow_override=True)
-            gdf = ox.projection.project_gdf(gdf, to_crs=self.projection)
-
+            #gdf.set_crs(f'self.projection', allow_override=True)
+            #gdf = ox.projection.project_gdf(gdf, to_crs=self.projection)
+            gdf = gdf.to_crs(self.projection)
 
             #gdf.to_crs(f'epsg:{gis_crs}')
 
@@ -354,7 +354,6 @@ else:
                 new_list_3.append(unequal_divide(lista, chunks))
 
 
-            print(new_list_2)
 
             m_edges_shift = []
 
@@ -363,7 +362,6 @@ else:
                 for j in i:
                     m_edges_shift[new_list_3.index(i)].append(shift(j,1))
 
-            print(new_list_3 )
 
 
             m_edges_chunk =[]
@@ -457,6 +455,9 @@ else:
                     mp_keys.append(i['properties'].keys())
                     mp_values.append(i['properties'].values())
 
+            
+
+
             ## Polygons
 
             self.outputs["Polygons_Vertices"].sv_set(polygons_verts)
@@ -475,10 +476,10 @@ else:
 
             ## Points
 
-            self.outputs["Points_Vertices"].sv_set(polygons_verts)
-            self.outputs["Points_Keys"].sv_set(polygons_keys)
-            self.outputs["Points_Values"].sv_set(polygons_values)
-            self.outputs["Points_ID"].sv_set(polygons_id)
+            self.outputs["Points_Vertices"].sv_set(points_verts)
+            self.outputs["Points_Keys"].sv_set(points_keys)
+            self.outputs["Points_Values"].sv_set(points_values)
+            self.outputs["Points_ID"].sv_set(points_id)
             
             ## Lines
 

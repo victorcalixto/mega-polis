@@ -40,8 +40,8 @@ class SvMegapolisDashboardMap(bpy.types.Node, SverchCustomTreeNode):
     def sv_init(self, context):
         # inputs
         self.inputs.new('SvStringsSocket', "Map Name")
-        self.inputs.new('SvStringsSocket', " Map Coordinate X")
-        self.inputs.new('SvStringsSocket', " Map Coordinate Y")
+        self.inputs.new('SvStringsSocket', "Map Coordinate X")
+        self.inputs.new('SvStringsSocket', "Map Coordinate Y")
 
         #Outputs
         self.outputs.new('SvStringsSocket',"Dashboard Map")
@@ -56,18 +56,20 @@ class SvMegapolisDashboardMap(bpy.types.Node, SverchCustomTreeNode):
     
         if not self.inputs["Map Name"].is_linked or not self.inputs["Map Coordinate X"].is_linked or not self.inputs["Map Coordinate Y"].is_linked :
             return
-        self.name = self.inputs["Map Name"].sv_get(deepcopy = False)
+        self.mapname = self.inputs["Map Name"].sv_get(deepcopy = False)
         self.x = self.inputs["Map Coordinate X"].sv_get(deepcopy = False)
         self.y = self.inputs["Map Coordinate Y"].sv_get(deepcopy = False)
 
 
-        map_name = self.name[0][0]
+        map_name = self.mapname[0][0]
         map_centre_x = self.x[0][0]
         map_centre_y = self.y[0][0]
         zoom = self.zoom
         
         
-        map_ = f"{map_name} = kepler.Map(center=[{map_centre_x}, {map_centre_y}], zoom={zoom}) \n\n"
+        map_ = f"""
+{map_name} = kepler.Map(center=[{map_centre_x}, {map_centre_y}], zoom={zoom}) \n\n
+                """
 
         st_kepler_map_out = [map_] 
 

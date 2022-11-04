@@ -12,8 +12,8 @@ from multiprocessing import Process
 import subprocess
 import sys
 import os
-
-
+import webbrowser
+import psutil
 
 class SvMegapolisPythonServer(bpy.types.Node, SverchCustomTreeNode):
     """
@@ -46,6 +46,13 @@ class SvMegapolisPythonServer(bpy.types.Node, SverchCustomTreeNode):
         default=False,
         update=update_sockets)
     
+    run: BoolProperty(
+        name="run",
+        description="Run the server",
+        default=False,
+        update=update_sockets)
+    
+
     #Blender Properties Buttons
     
     def sv_init(self, context):
@@ -57,6 +64,7 @@ class SvMegapolisPythonServer(bpy.types.Node, SverchCustomTreeNode):
 
     def draw_buttons(self,context, layout):
         layout.prop(self, 'port')
+        layout.prop(self, 'run')
         layout.prop(self, 'close')
 
     def draw_buttons_ext(self, context, layout):
@@ -67,7 +75,7 @@ class SvMegapolisPythonServer(bpy.types.Node, SverchCustomTreeNode):
         if not self.inputs["Folder"].is_linked:
             return
         self.folder = self.inputs["Folder"].sv_get(deepcopy = False)
-        port = self.port[0][0]
+        port = self.port
 
         run_folder = self.folder[0][0]
 
@@ -89,9 +97,11 @@ class SvMegapolisPythonServer(bpy.types.Node, SverchCustomTreeNode):
 
 
         try:
-            p = Process(target=run_process_python, args=(python,port,run_folder,))
-            p.start()
-            message = ['Runnning']
+            if self.run == True:
+                p = Process(target=run_process_python, args=(python,port,run_folder,))
+                p.start()
+                message = ['Runnning']
+                webbrowser.open(f"localhost:{port}")
         except:
             pass
 

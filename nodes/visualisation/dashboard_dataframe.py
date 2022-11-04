@@ -55,7 +55,9 @@ else:
             #df = pd.io.json.build_table_schema(df)
             df = pd.DataFrame.to_json(df)
 
-            write = f"st.dataframe(pd.DataFrame.from_dict({df}))\n"
+            write = f"""
+st.dataframe(pd.DataFrame.from_dict({df}))\n
+                     """
 
             st_df = write
 

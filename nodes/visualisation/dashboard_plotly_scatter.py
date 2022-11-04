@@ -43,14 +43,14 @@ class SvMegapolisDashboardPlotlyScatter(bpy.types.Node, SverchCustomTreeNode):
     
         if not self.inputs["Figure Name"].is_linked or not self.inputs["Dataframe"].is_linked or  not self.inputs["Scatter Parameters"].is_linked:
             return
-        self.name = self.inputs["Figure Name"].sv_get(deepcopy = False)
+        self.figname = self.inputs["Figure Name"].sv_get(deepcopy = False)
         self.dataframe = self.inputs["Dataframe"].sv_get(deepcopy = False)
         self.scatter= self.inputs["Scatter Parameters"].sv_get(deepcopy = False)
 
-        figure_name=self.name[0][0]
+        figure_name=self.figname[0][0]
         
         scatter_parameters=self.scatter[0]
-        df = self.dataframe
+        df_in = self.dataframe
 
         scatter_values = list(scatter_parameters.values())
         scatter_keys = list(scatter_parameters.keys())
@@ -66,7 +66,9 @@ class SvMegapolisDashboardPlotlyScatter(bpy.types.Node, SverchCustomTreeNode):
             else:
                 scatter_list=scatter_list+f"{scatter_keys[i]}='{scatter_values[i]}',"
 
-        scatter_str=f"{figure_name}_=pd.DataFrame.from_dict({parsed}) \n{figure_name} = px.scatter({figure_name}_,{scatter_list}) \n"
+        scatter_str=f"""
+{figure_name}_=pd.DataFrame.from_dict({parsed}) \n{figure_name} = px.scatter({figure_name}_,{scatter_list}) \n
+                     """
 
         plotly_scatter = scatter_str
 

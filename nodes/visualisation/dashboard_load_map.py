@@ -61,11 +61,16 @@ class SvMegapolisDashboardLoadMap(bpy.types.Node, SverchCustomTreeNode):
     
         if not self.inputs["Map Name"].is_linked:
             return
-        self.name = self.inputs["Map Name"].sv_get(deepcopy = False)
+        self.mapname = self.inputs["Map Name"].sv_get(deepcopy = False)
 
-        map_name = self.name[0][0]
+        map_height = self.map_height
+        map_width= self.map_width
+
+        map_name = self.mapname[0][0]
         
-        load =f"{map_name}.to_streamlit(height={map_height},width={map_width})\n"
+        load =f"""
+{map_name}.to_streamlit(height={map_height},width={map_width})\n
+               """
 
         load_map=load
 

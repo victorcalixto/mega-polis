@@ -42,16 +42,18 @@ class SvMegapolisDashboardPlotlyFigure(bpy.types.Node, SverchCustomTreeNode):
     
         if not self.inputs["Figure Name"].is_linked:
             return
-        self.name = self.inputs["Figure Name"].sv_get(deepcopy = False)
+        self.figname = self.inputs["Figure Name"].sv_get(deepcopy = False)
 
-        plotly_figure_name = self.name[0][0]
+        plotly_figure_name = self.figname[0][0]
         
-        plot  = f"st.plotly_chart({plotly_figure_name}, use_container_width=True) \n"
+        plot  = f"""
+st.plotly_chart({plotly_figure_name}, use_container_width=True) \n
+                 """
 
         plot_plotly_figure = plot
         ## Output
 
-        self.outputs["Plotly Figure"].sv_set(plot+plotly_figure)
+        self.outputs["Plotly Figure"].sv_set(plot_plotly_figure)
 
 def register():
     bpy.utils.register_class(SvMegapolisDashboardPlotlyFigure)

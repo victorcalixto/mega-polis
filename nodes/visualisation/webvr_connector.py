@@ -40,6 +40,13 @@ class SvMegapolisWebVRConnector(bpy.types.Node, SverchCustomTreeNode):
         description="width",
         default=800 ,
         update=update_sockets)
+    
+    create: BoolProperty(
+        name="create",
+        description="Create Html",
+        default=False ,
+        update=update_sockets)
+
 
     #Blender Properties Buttons
     
@@ -47,7 +54,7 @@ class SvMegapolisWebVRConnector(bpy.types.Node, SverchCustomTreeNode):
         # inputs
         self.inputs.new('SvStringsSocket', "Folder")
         self.inputs.new('SvVerticesSocket', "Vertices")
-        self.inputs.new('SvStringsSocket', " Faces")
+        self.inputs.new('SvStringsSocket', "Faces")
 
 
         #Outputs
@@ -56,6 +63,7 @@ class SvMegapolisWebVRConnector(bpy.types.Node, SverchCustomTreeNode):
         self.outputs.new('SvStringsSocket',"Faces Out")
 
     def draw_buttons(self,context, layout):
+        layout.prop(self, 'create')
         layout.prop(self, 'height')
         layout.prop(self, 'width')
 
@@ -74,6 +82,8 @@ class SvMegapolisWebVRConnector(bpy.types.Node, SverchCustomTreeNode):
         aframe_folder=self.folder[0][0]
         vertices = self.vertices
         faces= self.faces
+        height = self.height
+        width = self.width
 
         size ="a-scene[height:{0}px;width:{1}px;]".format(height,width)
 
@@ -128,16 +138,15 @@ class SvMegapolisWebVRConnector(bpy.types.Node, SverchCustomTreeNode):
 
         """
 
-        component = f"components.html(\"\"\"{html}\"\"\",height={height},width={width},scrolling=False)"
+        #component = f"components.html(\"\"\"{html}\"\"\",height={height},width={width},scrolling=False)"
 
-        node_out = component
+        node_out = html
 
         vertices_out=vertices_str
         faces_out = faces_str
-
-        with open(f"{aframe_folder}/index.html", "w") as f:
-            f.write(html)
-
+        if self.create ==True:
+            with open(f"{aframe_folder}/index.html", "w") as f:
+                f.write(html)
 
         ## Output
 

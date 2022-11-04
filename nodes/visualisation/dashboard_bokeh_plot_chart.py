@@ -42,11 +42,13 @@ class SvMegapolisDashboardBokehPlotChart(bpy.types.Node, SverchCustomTreeNode):
     
         if not self.inputs["Figure Name"].is_linked:
             return
-        self.name = self.inputs["Figure Name"].sv_get(deepcopy = False)
+        self.figname = self.inputs["Figure Name"].sv_get(deepcopy = False)
 
-        figure_name = self.name[0][0]
+        figure_name = self.figname[0][0]
         
-        plot = f"st.bokeh_chart({figure_name}, use_container_.pywidth=False)\n"
+        plot = f"""
+st.bokeh_chart({figure_name}, use_container_width=False)\n
+                """
 
         st_bokeh_plot_chart=plot 
 

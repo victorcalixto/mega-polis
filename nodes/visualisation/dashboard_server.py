@@ -10,7 +10,9 @@ from sverchok.utils.dummy_nodes import add_dummy
 #Megapolis Dependencies
 from multiprocessing import Process
 import subprocess
-
+import os
+import sys
+import psutil
 
 class SvMegapolisDashboardServer(bpy.types.Node, SverchCustomTreeNode):
     """
@@ -32,29 +34,71 @@ class SvMegapolisDashboardServer(bpy.types.Node, SverchCustomTreeNode):
         updateNode(self,context)
     
     #Blender Properties Buttons
-    
+    run:BoolProperty(
+         name="run",
+         description="Run Dashboard",
+         default=False ,
+         update=update_sockets)
+
+
+    close: BoolProperty(
+        name="close",
+        description="Close the server",
+        default=False,
+        update=update_sockets)
+
+
     def sv_init(self, context):
         # inputs
-        self.inputs.new('SvStringsSocket', "Dashboard Name")
+        self.inputs.new('SvFilePathSocket', "Dashboard Name")
 
         #Outputs
         self.outputs.new('SvStringsSocket',"Output Message")
-    
+   
+    def draw_buttons(self,context, layout):
+        layout.prop(self, 'run')
+        layout.prop(self, 'close')
+
+
+    def draw_buttons_ext(self, context, layout):
+        self.draw_buttons(context, layout)
+
+
     def process(self):
     
         if not self.inputs["Dashboard Name"].is_linked:
             return
-        self.name = self.inputs["Dashboard Name"].sv_get(deepcopy = False)
+        self.dashname = self.inputs["Dashboard Name"].sv_get(deepcopy = False)
+        
+        def killtree(pid, including_parent=False):
+            parent = psutil.Process(pid)
+            for child in parent.children(recursive=True):
+                print (child), child
+                child.kill()
 
-        dashboard_streamlit_name = self.name[0][0]
+            if including_parent:
+                parent.kill()
+        
+        
+        python = sys.executable
 
+        dashboard_streamlit_name = self.dashname[0][0]
+        message = ''
         def run_process(dashboard_streamlit_name):
             return_code = subprocess.run(['streamlit','run', dashboard_streamlit_name])
+        
+        if self.run == True:
+            p = Process(target=run_process, args=(dashboard_streamlit_name,))
+            p.start()
 
-        p = Process(target=run_process, args=(dashboard_streamlit_name,))
-        p.start()
-
-        message = ['Runnning']
+            message = ['Runnning']
+        
+        pid=os.getpid()
+        
+        if self.close == True:
+            killtree(pid)
+            message =''
+        
 
         ## Output
 

@@ -76,35 +76,34 @@ class SvMegapolisDashboardMesh(bpy.types.Node, SverchCustomTreeNode):
         plot_height = self.plot_height
 
         geometry= f"""
+plot_width = {plot_width}
+plot_height = {plot_height}
 
-        plot_width = {plot_width}
-        plot_height = {plot_height}
-
-        vertices = {vertices}
-        faces = {faces}
+vertices = {vertices}
+faces = {faces}
 
 
-        vertices_array= np.array(vertices)
+vertices_array= np.array(vertices)
 
-        faces_l = [len(j) for i in faces for j in i]
+faces_l = [len(j) for i in faces for j in i]
 
-        for i in faces:
-            for j in i:
-               j.insert(0, faces_l[i.index(j)])
-               
-        list_surf = []
+for i in faces:
+    for j in i:
+       j.insert(0, faces_l[i.index(j)])
+       
+list_surf = []
 
-        for i in range(0,len(vertices)):
-            faces_= np.hstack(faces[i])
-            vertices_= np.array(vertices_array[i])
-            list_surf.append(pv.PolyData(vertices_,faces_))
+for i in range(0,len(vertices)):
+    faces_= np.hstack(faces[i])
+    vertices_= np.array(vertices_array[i])
+    list_surf.append(pv.PolyData(vertices_,faces_))
 
-        plotter = pv.Plotter()
+plotter = pv.Plotter()
 
-        for i in list_surf:
-            plotter.add_mesh(i,color='grey')
+for i in list_surf:
+    plotter.add_mesh(i,color='grey')
 
-        pyvista_streamlit(plotter,plot_width,plot_height)
+pyvista_streamlit(plotter,plot_width,plot_height)
         """
 
 

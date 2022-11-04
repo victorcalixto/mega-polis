@@ -52,6 +52,13 @@ else:
             default="drive",
             description='Choose Network Type', 
             update=update_sockets)
+        
+        distance: IntProperty(
+            name="distance",
+            description="Distance",
+            default=1000,
+            update=update_sockets)
+        
 
 
         def sv_init(self, context):
@@ -78,6 +85,8 @@ else:
         def draw_buttons(self,context, layout):
             layout.prop(self, 'projection')
             layout.prop(self, 'networktype', expand=True)
+            layout.prop(self, 'distance')
+
 
         def draw_buttons_ext(self, context, layout):
             self.draw_buttons(context, layout)
@@ -87,11 +96,11 @@ else:
             if not self.inputs["Address"].is_linked:
                 return
             self.address = self.inputs["Address"].sv_get(deepcopy = False)
-                
+            distance = self.distance 
 
             address = str(self.address[0][0])
 
-            G = ox.graph_from_address(address, network_type=self.networktype)
+            G = ox.graph_from_address(address,dist=distance,network_type=self.networktype)
 
             G = ox.projection.project_graph(G, to_crs=self.projection)
 

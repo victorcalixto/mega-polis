@@ -14,7 +14,7 @@ from megapolis.dependencies import osmnx as ox
 from megapolis.dependencies import mapillary as mly
 
 from shapely.geometry import shape, Polygon, Point, LineString, mapping
-from pyproj import Proj, transform, CRS
+from pyproj import Proj, Transformer, CRS
 import os
 import threading
 import json
@@ -184,15 +184,17 @@ else:
 
 
 
-            in_latlon = CRS.from_proj4("+proj=latlon")
-            out_proj = Proj(projection)
-
+            #in_latlon = CRS.from_proj4("+proj=latlon")
+            #out_proj = Proj(self.projection)
+            
+            transformer = Transformer.from_crs("+proj=latlon",f"epsg:{self.projection}")
 
 
             for i in location:
                x = i[0]
                y = i[1]
-               x,y = transform(in_latlon,out_proj, x,y)
+               x,y = transformer.transform(x,y)
+               #x,y = transform(in_latlon,out_proj, x,y)
                z = 0
                coords.append([x,y,z])
               

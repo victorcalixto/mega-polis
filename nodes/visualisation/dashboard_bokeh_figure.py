@@ -45,17 +45,19 @@ class SvMegapolisDashboardBokehFigure(bpy.types.Node, SverchCustomTreeNode):
     
         if not self.inputs["Figure Name"].is_linked or not self.inputs["Title"].is_linked or  not self.inputs["X Label"].is_linked or not self.inputs["Y Label"].is_linked:
             return
-        self.name = self.inputs["Figure Name"].sv_get(deepcopy = False)
+        self.bokehname = self.inputs["Figure Name"].sv_get(deepcopy = False)
         self.title = self.inputs["Title"].sv_get(deepcopy = False)
         self.x= self.inputs["X Label"].sv_get(deepcopy = False)
         self.y= self.inputs["Y Label"].sv_get(deepcopy = False)
 
-        figure_name=self.name[0][0]
+        figure_name=self.bokehname[0][0]
         title=self.title[0][0]
         x_label=self.x[0][0]
         y_label=self.y[0][0]
 
-        figure_plot=f"{figure_name} = figure(title='{title}',x_axis_label='{x_label}',y_axis_label='{y_label}') \n \n"
+        figure_plot=f"""
+{figure_name} = figure(title='{title}',x_axis_label='{x_label}',y_axis_label='{y_label}') \n \n
+                     """
 
         st_bokeh_plot = [figure_plot]
 

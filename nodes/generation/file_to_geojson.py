@@ -29,7 +29,7 @@ else:
             self.inputs.new('SvFilePathSocket', "File")
 
             #outputs
-            self.outputs.new('SvStringsSocket', "GeoJson Output")
+            self.outputs.new('SvStringsSocket', "GeoDataframe Output")
 
         def process(self):
             if not self.inputs["File"].is_linked:
