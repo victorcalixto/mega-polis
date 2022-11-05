@@ -27,7 +27,7 @@ class SvMegapolisCreateDictionary(bpy.types.Node, SverchCustomTreeNode):
         self.outputs.new('SvStringsSocket', "Dictionary")
 
     def process(self):
-        if not self.inputs["Dictionary Keys"].is_linked or not self.inputs["Dictionary Keys"].is_linked :
+        if not self.inputs["Dictionary Keys"].is_linked or not self.inputs["Dictionary Values"].is_linked :
             return
         self.dict_keys = self.inputs["Dictionary Keys"].sv_get(deepcopy = False)
         self.dict_values = self.inputs["Dictionary Values"].sv_get(deepcopy = False)
