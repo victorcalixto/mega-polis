@@ -284,6 +284,34 @@ except ImportError:
     info(richdem_d.message)
     richdem = None
 
+#pythreejs
+pythreejs_d = ex_dependencies["pythreejs"] = SvDependency("pythreejs", "https://github.com/jupyter-widgets/pythreejs")
+pythreejs_d.pip_installable = True
+
+try:
+    import pythreejs
+    pythreejs_d.message = "pythreejs package is available"
+    pythreejs_d.module = pythreejs
+except ImportError:
+    pythreejs_d.message = "pythreejs package is not available, the addon will not work"
+    info(pythreejs_d.message)
+    pythreejs = None
+
+#bokeh
+bokeh_d = ex_dependencies["bokeh"] = SvDependency("bokeh", "https://bokeh.org/")
+bokeh_d.pip_installable = True
+
+try:
+    import bokeh
+    bokeh_d.message = "bokeh package is available"
+    bokeh_d.module = bokeh
+except ImportError:
+    bokeh_d.message = "bokeh package is not available, the addon will not work"
+    info(bokeh_d.message)
+    bokeh = None
+
+
+
 
 
 

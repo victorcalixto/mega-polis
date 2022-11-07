@@ -14,11 +14,11 @@ from megapolis.dependencies import ex_dependencies, pip, ensurepip
 from sverchok.utils.context_managers import addon_preferences
 from sverchok.ui.utils import message_on_layout
 
-COMMITS_LINK = 'https://api.github.com/repos/vicdoval/sverchok-open3d/commits'
+COMMITS_LINK = 'https://api.github.com/repos/victorcalixto/mega-polis/commits'
 ADDON_NAME = megapolis.__name__
 ADDON_PRETTY_NAME = 'MEGA-POLIS'
-ARCHIVE_LINK = 'https://github.com/vicdoval/sverchok-open3d/archive/'
-MASTER_BRANCH_NAME = 'master'
+ARCHIVE_LINK = 'https://github.com/victorcalixto/mega-polis/archive/'
+MASTER_BRANCH_NAME = 'main'
 
 def draw_in_sv_prefs(layout):
     draw_message(layout, "geopandas", dependencies=ex_dependencies)
@@ -40,6 +40,10 @@ def draw_in_sv_prefs(layout):
     draw_message(layout, "keplergl", dependencies=ex_dependencies)
     draw_message(layout, "plotly", dependencies=ex_dependencies)
     draw_message(layout, "requests", dependencies=ex_dependencies)
+    draw_message(layout, "bokeh", dependencies=ex_dependencies)
+    draw_message(layout, "pythreejs", dependencies=ex_dependencies)
+
+
 
 
 def update_addon_ui(layout):
@@ -98,18 +102,22 @@ class SvMegapolisPreferences(AddonPreferences):
         draw_message(box, "pyvista", dependencies=ex_dependencies)
         draw_message(box, "seaborn", dependencies=ex_dependencies)
         draw_message(box, "visilibity", dependencies=ex_dependencies)
-        box.operator('wm.url_open', text="Read installation instructions for Swig (Visilibity dependency)").url="https://github.com/facebookresearch/Mask2Former/blob/main/INSTALL.md"
+        box.operator('wm.url_open', text="Read installation instructions for Swig (Visilibity dependency)").url="https://swig.org/download.html"
         draw_message(box, "opencv", dependencies=ex_dependencies)
         draw_message(box, "keplergl", dependencies=ex_dependencies)
         draw_message(box, "plotly", dependencies=ex_dependencies)
         draw_message(box, "requests", dependencies=ex_dependencies)
+        draw_message(box, "pythreejs", dependencies=ex_dependencies)
+        draw_message(box, "bokeh", dependencies=ex_dependencies)
+
+
 
         box_extra = layout.box()
         
         box_extra.label(text="Extra Dependencies:")
         
 
-        box_extra.operator('wm.url_open', text="Read installation instructions for Mask2Former").url="https://github.com/facebookresearch/Mask2Former/blob/main/INSTALL.md"
+        box_extra.operator('wm.url_open', text="Read installation instructions for Detectron 2").url="https://detectron2.readthedocs.io/en/latest/tutorials/install.html"
        
         box_extra.operator('wm.url_open', text="Read installation instructions in Pytorch website to install pytorch torchvision torchaudio cudatoolkit").url="https://pytorch.org/"
         
