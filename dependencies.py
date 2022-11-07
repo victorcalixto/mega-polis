@@ -108,7 +108,7 @@ pillow_d.pip_installable = True
 
 try:
     import PIL
-    pillow_d.message = "pilllow package is available"
+    pillow_d.message = "pillow package is available"
     pillow_d.module = PIL
 except ImportError:
     pillow_d.message = "pillow package is not available, the addon will not work"
@@ -155,7 +155,7 @@ except ImportError:
     networkx = None
 
 #scikit-learn
-scikitlearn_d = ex_dependencies["scikitlearn"] = SvDependency("scikitlearn", "https://scikit-learn.org/")
+scikitlearn_d = ex_dependencies["scikit-learn"] = SvDependency("scikit-learn", "https://scikit-learn.org/")
 scikitlearn_d.pip_installable = True
 
 try:
