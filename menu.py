@@ -27,11 +27,11 @@ class NODEVIEW_MT_MEGAPOLIS(bpy.types.Menu):
         if leafmap is None:
             layout.operator('node.sv_ex_pip_install', text="Install leafmap Library with PIP").package = "leafmap"
         if osmnx is None:
-            layout.operator('node.sv_ex_pip_install', text="Install osmnx Library with PIP").package = "leafmap"
+            layout.operator('node.sv_ex_pip_install', text="Install osmnx Library with PIP").package = "osmnx"
         if pandas is None:
-            layout.operator('node.sv_ex_pip_install', text="Install pandas Library with PIP").package = "leafmap"
+            layout.operator('node.sv_ex_pip_install', text="Install pandas Library with PIP").package = "pandas"
         if laspy is None:
-            layout.operator('node.sv_ex_pip_install', text="Install laspy Library with PIP").package = "leafmap"
+            layout.operator('node.sv_ex_pip_install', text="Install laspy Library with PIP").package = "laspy"
 
         if rasterio is None:
             layout.operator('node.sv_ex_pip_install', text="Install rasterio Library with PIP").package = "rasterio"
@@ -43,7 +43,7 @@ class NODEVIEW_MT_MEGAPOLIS(bpy.types.Menu):
             layout.operator('node.sv_ex_pip_install', text="Install mapillary Library with PIP").package = "mapillary"
 
         if wget is None:
-            layout.operator('node.sv_ex_pip_install', text="Install wget Library with PIP").package = "mapillary"
+            layout.operator('node.sv_ex_pip_install', text="Install wget Library with PIP").package = "wget"
 
         if networkx is None:
             layout.operator('node.sv_ex_pip_install', text="Install networkx Library with PIP").package = "networkx"
@@ -78,9 +78,6 @@ class NODEVIEW_MT_MEGAPOLIS(bpy.types.Menu):
         
         if pythreejs is None:
             layout.operator('node.sv_ex_pip_install', text="Install richdem Library with PIP").package = "pythreejs"
-        
-
-
 
 
         else:

@@ -155,7 +155,7 @@ except ImportError:
     networkx = None
 
 #scikit-learn
-scikitlearn_d = ex_dependencies["scikit-learn"] = SvDependency("scikit-learn", "https://scikit-learn.org/")
+scikitlearn_d = ex_dependencies["sklearn"] = SvDependency("sklearn", "https://scikit-learn.org/")
 scikitlearn_d.pip_installable = True
 
 try:
@@ -165,7 +165,7 @@ try:
 except ImportError:
     scikitlearn_d.message = "scikit-learn package is not available, the addon will not work"
     info(scikitlearn_d.message)
-    scikitlearn = None
+    sklearn = None
 
 #streamlit
 streamlit_d = ex_dependencies["streamlit"] = SvDependency("streamlit", "https://streamlit.io/")
@@ -230,7 +230,7 @@ try:
 except ImportError:
     opencv_d.message = "opencv package is not available, the addon will not work"
     info(opencv_d.message)
-    opencv = None
+    cv2 = None
 
 #keplergl
 keplergl_d = ex_dependencies["keplergl"] = SvDependency("keplergl", "https://github.com/keplergl/kepler.gl/tree/master/bindings/kepler.gl-jupyter")
