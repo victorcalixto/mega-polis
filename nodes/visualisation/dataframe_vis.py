@@ -30,7 +30,8 @@ from sverchok.utils.sv_text_io_common import (
 )
 
 import pandas as pd
-from tabulate import tabulate
+from megapolis.dependencies import tabulate
+tabulate = tabulate.tabulate
 
 def get_sv_data(node):
         out = []

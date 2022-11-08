@@ -8,10 +8,8 @@ from sverchok.data_structure import updateNode
 
 #Megapolis Dependencies
 from megapolis.dependencies import osmnx as ox
-import shutil
-import fiona
-from shapely.geometry import shape,mapping, Point, Polygon, MultiPolygon
-import  re
+
+import re
 
 
 Download_method = namedtuple('DownloadMethod', ['Address', 'Place','Point','Bbox'])

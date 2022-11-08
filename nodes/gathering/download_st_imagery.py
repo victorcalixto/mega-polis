@@ -11,13 +11,15 @@ from megapolis.dependencies import geopandas as gpd
 from megapolis.dependencies import pandas as pd
 from megapolis.dependencies import osmnx as ox
 from megapolis.dependencies import mapillary as mly
+from megapolis.dependencies import requests
+from megapolis.dependencies import pyproj
 
-from shapely.geometry import shape, Polygon, Point, LineString, mapping
-from pyproj import Proj, Transformer, CRS
+Proj = pyproj.Proj
+Transformer = pyproj.Transformer
+
 import os
 import threading
 import json
-import requests
 import urllib.request
 
 

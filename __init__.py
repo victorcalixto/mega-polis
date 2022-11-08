@@ -82,7 +82,7 @@ def nodes_index():
                 ("analysis.model_evaluate","SvMegapolisModelEvaluate"),
                 ("analysis.dataframe_utils","SvMegapolisDataframeUtils"),
                 ("analysis.object_detection","SvMegapolisObjectDetection"),
-                ("analysis.detectron","SvMegapolisDetectron")
+                ("analysis.image_segmentation","SvMegapolisImageSegmentation")
 
 
 

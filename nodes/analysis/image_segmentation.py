@@ -7,22 +7,24 @@ from sverchok.data_structure import updateNode
 
 
 #Megapolis Dependencies
+from megapolis.dependencies import cv2
+from megapolis.dependencies import torch
+from megapolis.dependencies import pandas as pd
+from megapolis.dependencies import detectron2
 
 from detectron2.engine import DefaultPredictor
 from detectron2.config import get_cfg
 from detectron2.data import MetadataCatalog
 from detectron2.utils.visualizer import ColorMode, Visualizer
 from detectron2 import model_zoo
+
+
+
 import os
-import cv2
 import numpy as np
 from pathlib import Path
-import torch
 
 from collections import namedtuple
-import scipy.io
-import pandas as pd
-import json
 
 
 
@@ -394,13 +396,13 @@ class Detector:
 
 
 
-class SvMegapolisDetectron(bpy.types.Node, SverchCustomTreeNode):
+class SvMegapolisImageSegmentation(bpy.types.Node, SverchCustomTreeNode):
     """
-    Triggers: Detectron
-    Tooltip: Detectron
+    Triggers: Image Segmentation
+    Tooltip: Image Segmentation
     """
-    bl_idname = 'SvMegapolisDetectron'
-    bl_label = 'Detectron'
+    bl_idname = 'SvMegapolisImageSegmentation'
+    bl_label = 'ImageSegmentation'
     bl_icon = 'MESH_DATA'
     
 
@@ -525,7 +527,7 @@ class SvMegapolisDetectron(bpy.types.Node, SverchCustomTreeNode):
         self.outputs["Dataframe"].sv_set(results)
         
 def register():
-    bpy.utils.register_class(SvMegapolisDetectron)
+    bpy.utils.register_class(SvMegapolisImageSegmentation)
 
 def unregister():
-    bpy.utils.unregister_class(SvMegapolisDetectron)
+    bpy.utils.unregister_class(SvMegapolisImageSegmentation)

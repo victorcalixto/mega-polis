@@ -10,7 +10,14 @@ from sverchok.data_structure import updateNode
 #Megapolis Dependencies
 from megapolis.dependencies import geopandas as gpd
 from megapolis.dependencies import osmnx as ox
-from shapely.geometry import shape, Polygon, Point, LineString, mapping
+from megapolis.dependencies import shapely
+
+shape = shapely.geometry.shape
+Polygon = shapely.geometry.Polygon
+Point = shapely.geometry.Point
+LineString = shapely.geometry.LineString
+mapping = shapely.geometry.mapping 
+
 from itertools import islice 
 import itertools
 

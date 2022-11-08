@@ -5,12 +5,11 @@ from collections import namedtuple
 from sverchok.node_tree import SverchCustomTreeNode
 from sverchok.data_structure import updateNode
 
-
 #Megapolis Dependencies
-from megapolis.dependencies import geopandas as gpd
 from megapolis.dependencies import osmnx as ox
-from shapely.geometry import shape, Polygon, Point, LineString, mapping
-from itertools import islice 
+from megapolis.dependencies import shapely
+mapping = shapely.geometry.mapping 
+
 import itertools
 
 

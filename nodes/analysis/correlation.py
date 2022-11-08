@@ -5,7 +5,6 @@ from collections import namedtuple
 from sverchok.node_tree import SverchCustomTreeNode
 from sverchok.data_structure import updateNode
 
-
 #Megapolis Dependencies
 from megapolis.dependencies import pandas as pd
 

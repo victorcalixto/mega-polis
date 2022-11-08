@@ -310,27 +310,83 @@ except ImportError:
     info(bokeh_d.message)
     bokeh = None
 
+#shapely
+shapely_d = ex_dependencies["shapely"] = SvDependency("shapely", "https://pypi.org/project/shapely/")
+shapely_d.pip_installable = True
 
+try:
+    import shapely
+    shapely_d.message = "shapely package is available"
+    shapely_d.module = shapely
+except ImportError:
+    shapely_d.message = "shapely package is not available, the addon will not work"
+    info(shapely_d.message)
+    shapely = None
 
+#requests
+requests_d = ex_dependencies["requests"] = SvDependency("requests", "https://requests.readthedocs.io/en/latest/")
+requests_d.pip_installable = True
 
+try:
+    import requests
+    requests_d.message = "requests package is available"
+    requests_d.module = requests
+except ImportError:
+    requests_d.message = "shapely package is not available, the addon will not work"
+    info(requests_d.message)
+    requests = None
 
+#pyproj
+pyproj_d = ex_dependencies["pyproj"] = SvDependency("pyproj", "https://pypi.org/project/pyproj/")
+pyproj_d.pip_installable = True
 
+try:
+    import pyproj
+    pyproj_d.message = "pyproj package is available"
+    pyproj_d.module = pyproj
+except ImportError:
+    pyproj_d.message = "pyproj package is not available, the addon will not work"
+    info(pyproj_d.message)
+    pyproj = None
 
+#detectron2
+detectron2_d = ex_dependencies["detectron2"] = SvDependency("detectron2", "https://detectron2.readthedocs.io/en/latest/tutorials/install.html")
+detectron2_d.pip_installable = False
 
+try:
+    import detectron2
+    detectron2_d.message = "detectron2 package is available"
+    detectron2_d.module = detectron2
+except ImportError:
+    detectron2_d.message = "detectron2 package is not available, the addon will not work"
+    info(detectron_d.message)
+    detectron2 = None
 
+#torch
+torch_d = ex_dependencies["torch"] = SvDependency("torch", "https://pytorch.org/")
+torch_d.pip_installable = False
 
+try:
+    import torch
+    torch_d.message = "torch package is available"
+    torch_d.module = torch
+except ImportError:
+    torch_d.message = "torch package is not available, the addon will not work"
+    info(torch_d.message)
+    torch = None
 
+#tabulate
+tabulate_d = ex_dependencies["tabulate"] = SvDependency("tabulate", "https://github.com/astanin/python-tabulate")
+tabulate_d.pip_installable = True
 
-
-
-
-
-
-
-
-
-
-
+try:
+    import tabulate
+    tabulate_d.message = "tabulate package is available"
+    tabulate_d.module = tabulate
+except ImportError:
+    tabulate_d.message = "tabulate package is not available, the addon will not work"
+    info(tabulate_d.message)
+    tabulate = None
 
 
 

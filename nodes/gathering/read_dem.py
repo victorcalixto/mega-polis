@@ -8,9 +8,7 @@ from sverchok.data_structure import updateNode
 
 #Megapolis Dependencies
 from megapolis.dependencies import rasterio as rio
-from megapolis.dependencies import pandas as pd
-from rasterio.plot import show
-from matplotlib import pyplot as plt
+
 import numpy as np
 
 def makeFaces(x_shape,y_shape):

@@ -8,9 +8,8 @@ from sverchok.data_structure import node_id, multi_socket, updateNode, levels_of
 
 #Megapolis Dependencies
 from megapolis.dependencies import wget
-import os
 
-import wget 
+import os
 
 class SvMegapolisDownloadDataUrl(bpy.types.Node, SverchCustomTreeNode):
     """

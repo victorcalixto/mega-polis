@@ -42,7 +42,11 @@ def draw_in_sv_prefs(layout):
     draw_message(layout, "requests", dependencies=ex_dependencies)
     draw_message(layout, "bokeh", dependencies=ex_dependencies)
     draw_message(layout, "pythreejs", dependencies=ex_dependencies)
-
+    draw_message(layout, "shapely", dependencies=ex_dependencies)
+    draw_message(layout, "pyproj", dependencies=ex_dependencies)
+    draw_message(layout, "detectron2", dependencies=ex_dependencies)
+    draw_message(layout, "torch", dependencies=ex_dependencies)
+    draw_message(layout, "tabulate", dependencies=ex_dependencies)
 
 
 
@@ -109,13 +113,16 @@ class SvMegapolisPreferences(AddonPreferences):
         draw_message(box, "requests", dependencies=ex_dependencies)
         draw_message(box, "pythreejs", dependencies=ex_dependencies)
         draw_message(box, "bokeh", dependencies=ex_dependencies)
-
+        draw_message(box, "shapely", dependencies=ex_dependencies)
+        draw_message(box, "pyproj", dependencies=ex_dependencies)
+        draw_message(box, "detectron2", dependencies=ex_dependencies)
+        draw_message(box, "torch", dependencies=ex_dependencies)
+        draw_message(box, "tabulate", dependencies=ex_dependencies)
 
 
         box_extra = layout.box()
         
         box_extra.label(text="Extra Dependencies:")
-        
 
         box_extra.operator('wm.url_open', text="Read installation instructions for Detectron 2").url="https://detectron2.readthedocs.io/en/latest/tutorials/install.html"
        

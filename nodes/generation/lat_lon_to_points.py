@@ -6,7 +6,11 @@ from sverchok.node_tree import SverchCustomTreeNode
 from sverchok.data_structure import updateNode
 
 #Megapolis Dependencies
-from pyproj import Proj, transform, CRS
+from megapolis.dependencies import pyproj
+
+CRS = pyproj.CRS 
+Proj = pyproj.Proj
+transform = pyproj.transform
 
 
 class SvMegapolisLatLonToPoints(bpy.types.Node, SverchCustomTreeNode):

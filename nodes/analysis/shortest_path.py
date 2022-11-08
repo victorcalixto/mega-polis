@@ -11,8 +11,6 @@ from megapolis.dependencies import osmnx as ox
 from megapolis.dependencies import networkx as nx
 from megapolis.dependencies import pandas as pd
 
-from shapely.geometry import shape, Polygon,Point,LineString, mapping
-
 
 def sumOfList(list, size):
    if (size == 0):

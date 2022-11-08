@@ -16,7 +16,7 @@
     - Gathering:  # Name of a node category
         - icon_name: OBJECT_DATAMODE  # icon name to show
         - extra_menu: MeshPartialMenu  # to make the category available in another menu (1,2,3,4,5)
-        - Design Tools:  # Name of a node category
+        - Gathering Design Tools:  # Name of a node category
             - SvMegapolisReadGis 
             - SvMegapolisReadCsv 
             - SvMegapolisReadJson
@@ -25,27 +25,27 @@
             - SvMegapolisDownloadStImagery
             - SvMegapolisLoadStreetNetwork
             - SvMegapolisOSMDownloader
-        - Data Tools:  # Name of a node category
+        - Gathering Data Tools:  # Name of a node category
             - SvMegapolisPandasSeries
             - SvMegapolisPandasDataframe
             - SvMegapolisSplitString
             - SvMegapolisGetPandasFeature
             - SvMegapolisGetSampleDataframe
-        - Supporting Tools:  # Name of a node category
+        - Gathering Supporting Tools:  # Name of a node category
             - SvMegapolisDownloadDataUrl
             - SvMegapolisRequestDataApi
        
     - Analysis:
         - icon_name: OUTLINER_OB_CURVE
         - extra_menu: AdvancedObjectsPartialMenu
-        - Design Tools:
+        - Analysis Design Tools:
             - SvMegapolisWhiteboxGisTools
             - SvMegapolisDemTerrainAttributes
             - SvMegapolisNetworkAnalyses
             - SvMegapolisIsovists
             - SvMegapolisShortestPath
             
-         - Data Tools:
+         - Analysis Data Tools:
             - SvMegapolisGetFeatureIndex
             - SvMegapolisGetFeatureAt
             - SvMegapolisCorrelation
@@ -56,24 +56,24 @@
             - SvMegapolisModelEvaluate
             - SvMegapolisDataframeUtils
             - SvMegapolisObjectDetection
-            - SvMegapolisDetectron
+            - SvMegapolisImageSegmentation
 
     - Generation:
         - icon_name: SURFACE_DATA
         - extra_menu: AdvancedObjectsPartialMenu
         
-        - Design Tools: 
+        - Generation Design Tools: 
             - SvMegapolisLatLonToPoints
             - SvMegapolisFacesFromVertices
             
-        - Data Tools:
+        - Generation Data Tools:
             - SvMegapolisPandasFilter
             - SvMegapolisTransposeDataframe
             - SvMegapolisPandasMapFeature
             - SvMegapolisSequentialColormap
             - SvMegapolisGetFilePath
             - SvMegapolisCreateDictionary
-        - Supporting Tools:
+        - Generation Supporting Tools:
             - SvMegapolisFileToGdf
             - SvMegapolisFileToGeoJson
             - SvMegapolisCsvToDataframe
@@ -86,7 +86,7 @@
             - SvMegapolisDashboardMap
             - SvMegapolisWebVRConnector
             
-        - Data Tools:
+        - Visualisation Data Tools:
             - SvMegapolisDataframeVis
             - SvMegapolisSeabornPlot
             - SvMegapolisDashboardLoadMap
@@ -100,7 +100,7 @@
             - SvMegapolisDashboardGeojsonToMap
             - SvMegapolisDashboardCreatePlotly
             
-        - Supporting Tools:
+        - Visualisation Supporting Tools:
             - SvMegapolisDashboardCreation
             - SvMegapolisPythonServer
             - SvMegapolisDashboardServer
