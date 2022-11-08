@@ -1,6 +1,6 @@
 
 bl_info = {
-    "name": "MEGA-POLIS",
+    "name": "Megapolis",
     "author": "Victor Calixto",
     "version": (0, 0, 0, 0),
     "blender": (3, 3, 0),
@@ -21,7 +21,6 @@ import bl_operators
 import sverchok
 from sverchok.core import sv_registration_utils, make_node_list
 from sverchok.utils import auto_gather_node_classes, get_node_class_reference
-import sverchok.ui.nodeview_space_menu as sm
 
 from sverchok.core import make_node_list
 from sverchok.utils import auto_gather_node_classes, yaml_parser
@@ -29,15 +28,7 @@ from sverchok.utils.logging import info, debug
 
 from sverchok_extra.utils import show_welcome
 
-#from sverchok.menu import SverchNodeItem, node_add_operators, SverchNodeCategory, register_node_panels, unregister_node_panels, unregister_node_add_operators
-
-#from sverchok.utils.extra_categories import register_extra_category_provider, unregister_extra_category_provider
-
-from sverchok.utils import auto_gather_node_classes
-
-#from sverchok.ui.nodeview_space_menu import make_extra_category_menus, layout_draw_categories
 from sverchok.ui.nodeview_space_menu import add_node_menu
-
 
 from sverchok.node_tree import SverchCustomTreeNode
 from sverchok.data_structure import updateNode, zip_long_repeat
@@ -49,7 +40,7 @@ if __name__ != "megapolis":
 
 
 import megapolis
-from megapolis import icons, sockets, examples, settings #menu, settings
+from megapolis import icons, settings #menu, settings, sockets, examples
 from megapolis.utils import show_welcome
 
 def nodes_index():
@@ -139,28 +130,9 @@ def nodes_index():
                 ]),
                       ]
 
-
-
-def convert_config(config):
-    new_form = []
-    for cat_name, items in config:
-        new_items = []
-        for item in items:
-            if item is None:
-                new_items.append('---')
-                continue
-            path, bl_idname = item
-            new_items.append(bl_idname)
-        cat = {cat_name: new_items}
-        new_form.append(cat)
-    return new_form
-
 config_file = Path(__file__).parents[0]/'index.yaml'
 
-#nodes_index = yaml_parser.load(config_file)
-
 add_node_menu.append_from_config(yaml_parser.load(Path(__file__).parents[0]/'index.yaml'))
-#add_node_menu.append_from_config(nodes_index)
 
 def make_node_list():
     modules = []
@@ -181,7 +153,7 @@ reload_event = False
 
 if "bpy" in locals():
     reload_event = True
-    info("Reloading MEGA-POLIS...")
+    info("Reloading MEGAPOLIS...")
 
 
 import bpy
@@ -209,21 +181,18 @@ def reload_modules():
 def register():
     global our_menu_classes
 
-    debug("Registering MEGA-POLIS")
+    debug("Registering megapolis")
 
     add_node_menu.register()
     settings.register()
     icons.register()
-    sockets.register()
-    examples.register()
-
-
+     
 
     register_nodes()
     extra_nodes = importlib.import_module(".nodes", "megapolis")
     auto_gather_node_classes(extra_nodes)
     show_welcome()
-
+    
 def unregister():
     global our_menu_classes
     if 'MEGAPOLIS' in nodeitems_utils._node_categories:
@@ -237,7 +206,4 @@ def unregister():
     unregister_nodes()
 
     icons.unregister()
-    sockets.unregister()
-    examples.unregister()
     settings.unregister()
-
