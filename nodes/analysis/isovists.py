@@ -5,7 +5,6 @@ from bpy.props import IntProperty, EnumProperty
 #from collections import namedtuple
 from sverchok.node_tree import SverchCustomTreeNode
 from sverchok.data_structure import updateNode
-from sverchok.utils.dummy_nodes import add_dummy
 
 
 #Megapolis Dependencies
@@ -13,98 +12,95 @@ from megapolis.dependencies import visilibity as vis
 import math
 
 
-if vis is None:
-    add_dummy('SvMegapolisIsovists', 'Isovists', 'visilibity')
-else:
-    class SvMegapolisIsovists(bpy.types.Node, SverchCustomTreeNode):
-        """
-        Triggers: Isovists
-        Tooltip: Creates a 2D Isovists based on a 2d Context
-        """
-        bl_idname = 'SvMegapolisIsovists'
-        bl_label = 'Isovists'
-        bl_icon = 'MESH_DATA'
+class SvMegapolisIsovists(bpy.types.Node, SverchCustomTreeNode):
+    """
+    Triggers: Isovists
+    Tooltip: Creates a 2D Isovists based on a 2d Context
+    """
+    bl_idname = 'SvMegapolisIsovists'
+    bl_label = 'Isovists'
+    bl_icon = 'MESH_DATA'
+    
+    def update_sockets(self, context):
+        """ need to do UX transformation before updating node"""
+        def set_hide(sock, status):
+            if sock.hide_safe != status:
+                sock.hide_safe = status
+        updateNode(self,context)
+
+    def sv_init(self, context):
+        # inputs
+        self.inputs.new('SvStringsSocket', "NumVertices")
+        self.inputs.new('SvStringsSocket', "Radius")
+        self.inputs.new('SvVerticesSocket', "Origin")
+        self.inputs.new('SvVerticesSocket', "Context")
+
+        #outputs
+        self.outputs.new('SvVerticesSocket', "Vertices Out")
+        self.outputs.new('SvVerticesSocket', "Isovists Vertices")
+
+    def process(self):
+        if not self.inputs["NumVertices"].is_linked or not self.inputs["Radius"].is_linked or not self.inputs["Origin"].is_linked or not self.inputs["Context"].is_linked:
+            return
+        self.num_vertices = self.inputs["NumVertices"].sv_get(deepcopy = False)
+        self.radius = self.inputs["Radius"].sv_get(deepcopy = False)
+        self.origin = self.inputs["Origin"].sv_get(deepcopy = False)
+        self.context = self.inputs["Context"].sv_get(deepcopy = False)
         
-        def update_sockets(self, context):
-            """ need to do UX transformation before updating node"""
-            def set_hide(sock, status):
-                if sock.hide_safe != status:
-                    sock.hide_safe = status
-            updateNode(self,context)
+        radius = self.radius[0][0]
+        vertices_num= self.num_vertices[0][0]
+        origin = self.origin[0][0]
+        shapes = self.context
 
-        def sv_init(self, context):
-            # inputs
-            self.inputs.new('SvStringsSocket', "NumVertices")
-            self.inputs.new('SvStringsSocket', "Radius")
-            self.inputs.new('SvVerticesSocket', "Origin")
-            self.inputs.new('SvVerticesSocket', "Context")
+        origin_x = origin[0]
+        origin_y = origin[1]
+        origin_z = origin[2]
 
-            #outputs
-            self.outputs.new('SvVerticesSocket', "Vertices Out")
-            self.outputs.new('SvVerticesSocket', "Isovists Vertices")
+        origin_2d = (origin[0], origin[1])
 
-        def process(self):
-            if not self.inputs["NumVertices"].is_linked or not self.inputs["Radius"].is_linked or not self.inputs["Origin"].is_linked or not self.inputs["Context"].is_linked:
-                return
-            self.num_vertices = self.inputs["NumVertices"].sv_get(deepcopy = False)
-            self.radius = self.inputs["Radius"].sv_get(deepcopy = False)
-            self.origin = self.inputs["Origin"].sv_get(deepcopy = False)
-            self.context = self.inputs["Context"].sv_get(deepcopy = False)
-            
-            radius = self.radius[0][0]
-            vertices_num= self.num_vertices[0][0]
-            origin = self.origin[0][0]
-            shapes = self.context
+        theta = 360/vertices_num
 
-            origin_x = origin[0]
-            origin_y = origin[1]
-            origin_z = origin[2]
+        list_vertsX = [radius * math.cos(math.radians(theta*i))+ origin_x for i in range(vertices_num)]
+        list_vertsY = [radius * math.sin(math.radians(theta*i)) + origin_y for i in range(vertices_num)]
 
-            origin_2d = (origin[0], origin[1])
+        points = list((x,y,(0+origin_z)) for x,y in zip(list_vertsX,list_vertsY))
 
-            theta = 360/vertices_num
+        epsilon = 0.001
 
-            list_vertsX = [radius * math.cos(math.radians(theta*i))+ origin_x for i in range(vertices_num)]
-            list_vertsY = [radius * math.sin(math.radians(theta*i)) + origin_y for i in range(vertices_num)]
+        list_points = list(vis.Point(x,y) for x,y in zip(list_vertsX,list_vertsY))
+        print(list_points)
+        
+        list_wall_x = list(x.x() for x in list_points)
+        list_wall_y = list(y.y() for y in list_points)
 
-            points = list((x,y,(0+origin_z)) for x,y in zip(list_vertsX,list_vertsY))
+        list_wall_x.append(list_points[-1].x())
+        list_wall_y.append(list_points[-1].y())
 
-            epsilon = 0.001
+        walls = vis.Polygon(list_points)
 
-            list_points = list(vis.Point(x,y) for x,y in zip(list_vertsX,list_vertsY))
-            print(list_points)
-            
-            list_wall_x = list(x.x() for x in list_points)
-            list_wall_y = list(y.y() for y in list_points)
+        observer = vis.Point(origin_2d[0],origin_2d[1])
 
-            list_wall_x.append(list_points[-1].x())
-            list_wall_y.append(list_points[-1].y())
+        list_shapes = [[vis.Point(j[0],j[1]) for j in i] for i in shapes]
+        
+        list_holes = [vis.Polygon(i) for i in list_shapes]    
 
-            walls = vis.Polygon(list_points)
+        enviroment = list_holes
 
-            observer = vis.Point(origin_2d[0],origin_2d[1])
+        enviroment.insert(0,walls)
 
-            list_shapes = [[vis.Point(j[0],j[1]) for j in i] for i in shapes]
-            
-            list_holes = [vis.Polygon(i) for i in list_shapes]    
+        env = vis.Environment(enviroment)
 
-            enviroment = list_holes
+        isovist = vis.Visibility_Polygon(observer, env, epsilon)
 
-            enviroment.insert(0,walls)
+        points_isovist = [(list([isovist[i].x(),isovist[i].y(),0])) for i in range(vertices_num)]
 
-            env = vis.Environment(enviroment)
+        vertices_out = [points]
 
-            isovist = vis.Visibility_Polygon(observer, env, epsilon)
-
-            points_isovist = [(list([isovist[i].x(),isovist[i].y(),0])) for i in range(vertices_num)]
-
-            vertices_out = [points]
-
-            isovists_verts = [points_isovist]           
-            
-            #outputs           
-            self.outputs["Vertices Out"].sv_set(vertices_out)
-            self.outputs["Isovists Vertices"].sv_set(isovists_verts)
+        isovists_verts = [points_isovist]           
+        
+        #outputs           
+        self.outputs["Vertices Out"].sv_set(vertices_out)
+        self.outputs["Isovists Vertices"].sv_set(isovists_verts)
 
 def register():
     if vis is not None:

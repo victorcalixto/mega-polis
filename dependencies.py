@@ -155,7 +155,7 @@ except ImportError:
     networkx = None
 
 #scikit-learn
-scikitlearn_d = ex_dependencies["sklearn"] = SvDependency("sklearn", "https://scikit-learn.org/")
+scikitlearn_d = ex_dependencies["scikitlearn"] = SvDependency("scikitlearn", "https://scikit-learn.org/")
 scikitlearn_d.pip_installable = True
 
 try:

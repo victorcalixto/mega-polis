@@ -21,9 +21,24 @@ import bl_operators
 import sverchok
 from sverchok.core import sv_registration_utils, make_node_list
 from sverchok.utils import auto_gather_node_classes, get_node_class_reference
-from sverchok.menu import SverchNodeItem, node_add_operators, SverchNodeCategory, register_node_panels, unregister_node_panels, unregister_node_add_operators
-from sverchok.utils.extra_categories import register_extra_category_provider, unregister_extra_category_provider
-from sverchok.ui.nodeview_space_menu import make_extra_category_menus, layout_draw_categories
+import sverchok.ui.nodeview_space_menu as sm
+
+from sverchok.core import make_node_list
+from sverchok.utils import auto_gather_node_classes, yaml_parser
+from sverchok.utils.logging import info, debug
+
+from sverchok_extra.utils import show_welcome
+
+#from sverchok.menu import SverchNodeItem, node_add_operators, SverchNodeCategory, register_node_panels, unregister_node_panels, unregister_node_add_operators
+
+#from sverchok.utils.extra_categories import register_extra_category_provider, unregister_extra_category_provider
+
+from sverchok.utils import auto_gather_node_classes
+
+#from sverchok.ui.nodeview_space_menu import make_extra_category_menus, layout_draw_categories
+from sverchok.ui.nodeview_space_menu import add_node_menu
+
+
 from sverchok.node_tree import SverchCustomTreeNode
 from sverchok.data_structure import updateNode, zip_long_repeat
 from sverchok.utils.logging import info, debug
@@ -32,43 +47,142 @@ from sverchok.utils.logging import info, debug
 if __name__ != "megapolis":
     sys.modules["megapolis"] = sys.modules[__name__]
 
+
 import megapolis
-from megapolis import icons, settings, sockets, menu, examples
-from megapolis.nodes_index import nodes_index
+from megapolis import icons, sockets, examples, settings #menu, settings
 from megapolis.utils import show_welcome
 
-DOCS_LINK = 'https://github.com/vicdoval/sverchok-open3d/tree/master/utils'
-MODULE_NAME = 'megapolis'
+def nodes_index():
+    return [
+            ("Gathering", [
+                ("gathering.read_gis","SvMegapolisReadGis"),
+                ("gathering.read_csv","SvMegapolisReadCsv"),
+                ("gathering.read_json","SvMegapolisReadJson"),
+                ("gathering.read_dem","SvMegapolisReadDem"),
+                ("gathering.read_las","SvMegapolisReadLas"),
+                ("gathering.download_st_imagery","SvMegapolisDownloadStImagery"),
+                ("gathering.load_street_network","SvMegapolisLoadStreetNetwork"),
+                ("gathering.osm_downloader","SvMegapolisOSMDownloader"),
+                ("gathering.pandas_series","SvMegapolisPandasSeries"),
+                ("gathering.pandas_dataframe","SvMegapolisPandasDataframe"),
+                ("gathering.split_string","SvMegapolisSplitString"),
+                ("gathering.download_data_url","SvMegapolisDownloadDataUrl"),
+                ("gathering.request_data_api","SvMegapolisRequestDataApi"),
+                ("gathering.get_pandas_feature","SvMegapolisGetPandasFeature"),
+                ("gathering.get_sample_dataframe","SvMegapolisGetSampleDataframe")
+
+
+
+                ]),
+            ("Analysis", [
+
+                ("analysis.whitebox_gis_tools","SvMegapolisWhiteboxGisTools"),
+                ("analysis.dem_terrain_attributes","SvMegapolisDemTerrainAttributes"),
+                ("analysis.network_analyses","SvMegapolisNetworkAnalyses"),
+                ("analysis.isovists","SvMegapolisIsovists"),
+                ("analysis.shortest_path","SvMegapolisShortestPath"),
+                ("analysis.get_feature_index","SvMegapolisGetFeatureIndex"),
+                ("analysis.get_feature_at","SvMegapolisGetFeatureAt"),
+                ("analysis.correlation","SvMegapolisCorrelation"),
+                ("analysis.correlation_with","SvMegapolisCorrelationWith"),
+                ("analysis.linear_model_selection","SvMegapolisLinearModelSelection"),
+                ("analysis.model_fit","SvMegapolisModelFit"),
+                ("analysis.model_predict","SvMegapolisModelPredict"),
+                ("analysis.model_evaluate","SvMegapolisModelEvaluate"),
+                ("analysis.dataframe_utils","SvMegapolisDataframeUtils"),
+                ("analysis.object_detection","SvMegapolisObjectDetection"),
+                ("analysis.detectron","SvMegapolisDetectron")
+
+
+
+                ]),
+
+
+            ("Generation", [
+
+                ("generation.lat_lon_to_points","SvMegapolisLatLonToPoints"),
+                ("generation.faces_from_vertices","SvMegapolisFacesFromVertices"),
+                ("generation.pandas_filter","SvMegapolisPandasFilter"),
+                ("generation.transpose_dataframe","SvMegapolisTransposeDataframe"),
+                ("generation.pandas_map_feature","SvMegapolisPandasMapFeature"),
+                ("generation.file_to_gdf","SvMegapolisFileToGdf"),
+                ("generation.file_to_geojson","SvMegapolisFileToGeoJson"),
+                ("generation.csv_to_dataframe","SvMegapolisCsvToDataframe"),
+                ("generation.sequential_colormap","SvMegapolisSequentialColormap"),
+                ("generation.get_file_path","SvMegapolisGetFilePath"),
+                ("generation.create_dictionary","SvMegapolisCreateDictionary")
+
+
+                ]),
+            ("Visualisation", [
+                
+                ("visualisation.dataframe_vis","SvMegapolisDataframeVis"),
+                ("visualisation.seaborn_plot","SvMegapolisSeabornPlot"),
+                ("visualisation.dashboard_mesh","SvMegapolisDashboardMesh"),
+                ("visualisation.dashboard_map","SvMegapolisDashboardMap"),
+                ("visualisation.dashboard_load_map","SvMegapolisDashboardLoadMap"),
+                ("visualisation.dashboard_bokeh_figure","SvMegapolisDashboardBokehFigure"),
+                ("visualisation.dashboard_bokeh_plot_line","SvMegapolisDashboardBokehPlotLine"),
+                ("visualisation.dashboard_bokeh_plot_chart","SvMegapolisDashboardBokehPlotChart"),
+                ("visualisation.dashboard_plotly_figure","SvMegapolisDashboardPlotlyFigure"),
+                ("visualisation.dashboard_markdown","SvMegapolisDashboardMarkdown"),
+                ("visualisation.dashboard_plotly_scatter","SvMegapolisDashboardPlotlyScatter"),
+                ("visualisation.dashboard_dataframe","SvMegapolisDashboardDataframe"),
+                ("visualisation.dashboard_creation","SvMegapolisDashboardCreation"),
+                ("visualisation.python_server","SvMegapolisPythonServer"),
+                ("visualisation.webvr_connector","SvMegapolisWebVRConnector"),
+                ("visualisation.dashboard_server","SvMegapolisDashboardServer"),
+                ("visualisation.dashboard_geojson_to_map","SvMegapolisDashboardGeojsonToMap"),
+                ("visualisation.dashboard_create_plotly","SvMegapolisDashboardCreatePlotly"),
+
+
+                ]),
+                      ]
+
+
+
+def convert_config(config):
+    new_form = []
+    for cat_name, items in config:
+        new_items = []
+        for item in items:
+            if item is None:
+                new_items.append('---')
+                continue
+            path, bl_idname = item
+            new_items.append(bl_idname)
+        cat = {cat_name: new_items}
+        new_form.append(cat)
+    return new_form
+
+config_file = Path(__file__).parents[0]/'index.yaml'
+
+#nodes_index = yaml_parser.load(config_file)
+
+add_node_menu.append_from_config(yaml_parser.load(Path(__file__).parents[0]/'index.yaml'))
+#add_node_menu.append_from_config(nodes_index)
 
 def make_node_list():
     modules = []
     base_name = "megapolis.nodes"
     index = nodes_index()
     for category, items in index:
-        for module_name, node_name in items:
-            if node_name == 'separator':
+        for item in items:
+            if not item:
                 continue
+            module_name, node_name = item
             module = importlib.import_module(f".{module_name}", base_name)
             modules.append(module)
     return modules
 
-def plain_node_list():
-    node_cats = {}
-    index = nodes_index()
-    for category, items in index:
-        nodes = []
-        for _, node_name in items:
-            nodes.append([node_name])
-        node_cats[category] = nodes
-    return node_cats
 imported_modules = [icons] + make_node_list()
 
 reload_event = False
 
 if "bpy" in locals():
     reload_event = True
-    info("Reloading megapolis...")
-    reload_modules()
+    info("Reloading MEGA-POLIS...")
+
 
 import bpy
 
@@ -83,56 +197,6 @@ def unregister_nodes():
     for module in reversed(imported_modules):
         module.unregister()
 
-def make_categories():
-    menu_cats = []
-    index = nodes_index()
-    for category, items in index:
-        identifier = "MEGAPOLIS_" + category.replace(' ', '_')
-        node_items = []
-        for item in items:
-            nodetype = item[1]
-            rna = get_node_class_reference(nodetype)
-            if not rna and nodetype != 'separator':
-                info("Node `%s' is not available (probably due to missing dependencies).", nodetype)
-            else:
-                node_item = SverchNodeItem.new(nodetype)
-                node_items.append(node_item)
-        if node_items:
-            cat = SverchNodeCategory(
-                        identifier,
-                        category,
-                        items=node_items
-                    )
-            menu_cats.append(cat)
-    return menu_cats
-
-def add_nodes_to_sv():
-    index = nodes_index()
-    for _, items in index:
-        for item in items:
-            nodetype = item[1]
-            rna = get_node_class_reference(nodetype)
-            if not rna and nodetype != 'separator':
-                info("Node `%s' is not available (probably due to missing dependencies).", nodetype)
-            else:
-                SverchNodeItem.new(nodetype)
-
-
-
-node_cats = plain_node_list()
-
-
-
-class SvMegapolisCategoryProvider(object):
-    def __init__(self, identifier, cats_menu, docs_link, use_custom_menu=False, custom_menu=None):
-        self.identifier = identifier
-        self.menu = cats_menu
-        self.docs = docs_link
-        self.use_custom_menu = use_custom_menu
-        self.custom_menu = custom_menu
-
-    def get_categories(self):
-        return self.menu
 
 our_menu_classes = []
 
@@ -142,38 +206,27 @@ def reload_modules():
         debug("Reloading: %s", im)
         importlib.reload(im)
 
-
 def register():
     global our_menu_classes
 
-    debug("Registering megapolis")
+    debug("Registering MEGA-POLIS")
 
+    add_node_menu.register()
     settings.register()
     icons.register()
     sockets.register()
+    examples.register()
+
+
 
     register_nodes()
     extra_nodes = importlib.import_module(".nodes", "megapolis")
     auto_gather_node_classes(extra_nodes)
-
-    add_nodes_to_sv()
-    menu.register()
-
-    cats_menu = make_categories() # This would load every sverchok-open3d category straight in the Sv menu
-
-    menu_category_provider = SvMegapolisCategoryProvider("MEGAPOLIS", cats_menu, DOCS_LINK, use_custom_menu=True, custom_menu='NODEVIEW_MT_MEGAPOLIS')
-    register_extra_category_provider(menu_category_provider) #if 'SVERCHOK_OPEN3D' in nodeitems_utils._node_categories:
-    examples.register()
-
-    # with make_categories() This would load every sverchok-open3d category straight in the Sv menu
-    # our_menu_classes = make_extra_category_menus()
-
     show_welcome()
 
 def unregister():
     global our_menu_classes
     if 'MEGAPOLIS' in nodeitems_utils._node_categories:
-        #unregister_node_panels()
         nodeitems_utils.unregister_node_categories("MEGAPOLIS")
     for clazz in our_menu_classes:
         try:
@@ -181,12 +234,10 @@ def unregister():
         except Exception as e:
             print("Can't unregister menu class %s" % clazz)
             print(e)
-    unregister_extra_category_provider("MEGAPOLIS")
-    #unregister_node_add_operators()
     unregister_nodes()
-    menu.unregister()
-
 
     icons.unregister()
     sockets.unregister()
+    examples.unregister()
     settings.unregister()
+

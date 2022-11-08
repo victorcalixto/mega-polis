@@ -4,7 +4,6 @@ from bpy.props import IntProperty, EnumProperty
 #from collections import namedtuple
 from sverchok.node_tree import SverchCustomTreeNode
 from sverchok.data_structure import updateNode
-from sverchok.utils.dummy_nodes import add_dummy
 
 
 #Megapolis Dependencies
@@ -19,68 +18,65 @@ def makeFaces(x_shape,y_shape):
     return xy
 
 
-if rio is None:
-    add_dummy('SvMegapolisReadDem', 'Read DEM', 'rasterio')
-else:
-    class SvMegapolisReadDem(bpy.types.Node, SverchCustomTreeNode):
-        """
-        Triggers: Read DEM
-        Tooltip: Read a Digital Elevation Model file (geotiff)
-        """
-        bl_idname = 'SvMegapolisReadDem'
-        bl_label = 'Read DEM'
-        bl_icon = 'MESH_DATA'
+class SvMegapolisReadDem(bpy.types.Node, SverchCustomTreeNode):
+    """
+    Triggers: Read DEM
+    Tooltip: Read a Digital Elevation Model file (geotiff)
+    """
+    bl_idname = 'SvMegapolisReadDem'
+    bl_label = 'Read DEM'
+    bl_icon = 'MESH_DATA'
+    
+
+    def sv_init(self, context):
+        # inputs
+        self.inputs.new('SvFilePathSocket', "Path")
+       
+        #outputs
+        self.outputs.new('SvVerticesSocket', "Vertices")
+        self.outputs.new('SvStringsSocket', "Faces")
+        self.outputs.new('SvStringsSocket', "DEM data")
+
+    def process(self):
+        if not self.inputs["Path"].is_linked:
+            return
+        self.path = self.inputs["Path"].sv_get(deepcopy = False)
+      
+        path = self.path[0][0]
+
+        dem = rio.open(path)
+        dem_arr = dem.read(1).astype('float64')
+
+        dim_x = dem.width
+        dim_y = dem.height
         
+        #origin = dem.transform * (0, 0)
+        
+        band1 = dem.read(1)
+        height = band1.shape[0]
+        width = band1.shape[1]
+        cols, rows = np.meshgrid(np.arange(width), np.arange(height))
 
-        def sv_init(self, context):
-            # inputs
-            self.inputs.new('SvFilePathSocket', "Path")
-           
-            #outputs
-            self.outputs.new('SvVerticesSocket', "Vertices")
-            self.outputs.new('SvStringsSocket', "Faces")
-            self.outputs.new('SvStringsSocket', "DEM data")
+        xs, ys = rio.transform.xy(dem.transform, rows, cols)
+        lons= np.array(xs)
+        lats = np.array(ys)
 
-        def process(self):
-            if not self.inputs["Path"].is_linked:
-                return
-            self.path = self.inputs["Path"].sv_get(deepcopy = False)
-          
-            path = self.path[0][0]
+        xyz = np.stack((lons, lats,band1),-1)
+        dem.sample([lons,lats])
 
-            dem = rio.open(path)
-            dem_arr = dem.read(1).astype('float64')
+        grid = makeFaces(dim_x,dim_y)
 
-            dim_x = dem.width
-            dim_y = dem.height
-            
-            #origin = dem.transform * (0, 0)
-            
-            band1 = dem.read(1)
-            height = band1.shape[0]
-            width = band1.shape[1]
-            cols, rows = np.meshgrid(np.arange(width), np.arange(height))
+        xyz= np.reshape(xyz , (dim_x * dim_y , 3))
 
-            xs, ys = rio.transform.xy(dem.transform, rows, cols)
-            lons= np.array(xs)
-            lats = np.array(ys)
+        vertices = [xyz]
 
-            xyz = np.stack((lons, lats,band1),-1)
-            dem.sample([lons,lats])
+        faces = [grid]
 
-            grid = makeFaces(dim_x,dim_y)
+        dem_data = dem_arr
 
-            xyz= np.reshape(xyz , (dim_x * dim_y , 3))
-
-            vertices = [xyz]
-
-            faces = [grid]
-
-            dem_data = dem_arr
-
-            self.outputs["Vertices"].sv_set(vertices)
-            self.outputs["Faces"].sv_set(faces)
-            self.outputs["DEM data"].sv_set(dem_data)
+        self.outputs["Vertices"].sv_set(vertices)
+        self.outputs["Faces"].sv_set(faces)
+        self.outputs["DEM data"].sv_set(dem_data)
 
 def register():
     if rio is not None:

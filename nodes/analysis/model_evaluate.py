@@ -4,70 +4,66 @@ from bpy.props import FloatProperty, BoolProperty
 from collections import namedtuple
 from sverchok.node_tree import SverchCustomTreeNode
 from sverchok.data_structure import updateNode
-from sverchok.utils.dummy_nodes import add_dummy
 
 #Megapolis Dependencies
 
 from megapolis.dependencies import sklearn as skl
 
-if skl is None:
-    add_dummy('SvMegapolisModelEvaluate', 'Model Evaluate', 'sklearn')
-else:
-    class SvMegapolisModelEvaluate(bpy.types.Node, SverchCustomTreeNode):
-        """
-        Triggers: Model Evaluate
-        Tooltip: Model Evaluate
-        """
-        bl_idname = 'SvMegapolisModelEvaluate'
-        bl_label = 'Model Evaluate'
-        bl_icon = 'MESH_DATA'
+class SvMegapolisModelEvaluate(bpy.types.Node, SverchCustomTreeNode):
+    """
+    Triggers: Model Evaluate
+    Tooltip: Model Evaluate
+    """
+    bl_idname = 'SvMegapolisModelEvaluate'
+    bl_label = 'Model Evaluate'
+    bl_icon = 'MESH_DATA'
+    
+
+    # Hide Interactive Sockets
+    def update_sockets(self, context):
+        """ need to do UX transformation before updating node"""
+        def set_hide(sock, status):
+            if sock.hide_safe != status:
+                sock.hide_safe = status
         
+        updateNode(self,context)
 
-        # Hide Interactive Sockets
-        def update_sockets(self, context):
-            """ need to do UX transformation before updating node"""
-            def set_hide(sock, status):
-                if sock.hide_safe != status:
-                    sock.hide_safe = status
-            
-            updateNode(self,context)
+    #Blender Properties Buttons
+    
+    def sv_init(self, context):
+        # inputs
+        self.inputs.new('SvStringsSocket', "Model")
+        self.inputs.new('SvStringsSocket', "Predictions")
+        self.inputs.new('SvStringsSocket', "y")
 
-        #Blender Properties Buttons
+        # outputs
         
-        def sv_init(self, context):
-            # inputs
-            self.inputs.new('SvStringsSocket', "Model")
-            self.inputs.new('SvStringsSocket', "Predictions")
-            self.inputs.new('SvStringsSocket', "y")
+        self.outputs.new('SvStringsSocket', "r2")
+        self.outputs.new('SvStringsSocket', "rmse")
 
-            # outputs
-            
-            self.outputs.new('SvStringsSocket', "r2")
-            self.outputs.new('SvStringsSocket', "rmse")
-
-        def process(self):
-             
-            if not self.inputs["Model"].is_linked or not self.inputs["y"].is_linked or not self.inputs["Predictions"].is_linked :
-                return
-            self.model = self.inputs["Model"].sv_get(deepcopy = False)
-            self.y = self.inputs["y"].sv_get(deepcopy = False)
-            self.predictions = self.inputs["Predictions"].sv_get(deepcopy = False)
+    def process(self):
+         
+        if not self.inputs["Model"].is_linked or not self.inputs["y"].is_linked or not self.inputs["Predictions"].is_linked :
+            return
+        self.model = self.inputs["Model"].sv_get(deepcopy = False)
+        self.y = self.inputs["y"].sv_get(deepcopy = False)
+        self.predictions = self.inputs["Predictions"].sv_get(deepcopy = False)
 
 
-            model = self.model[0]
-            predictions = self.predictions[0]
-            y_test = self.y
+        model = self.model[0]
+        predictions = self.predictions[0]
+        y_test = self.y
 
-            data_r2 = skl.metrics.r2_score(y_test, predictions)
-            data_rmse = skl.metrics.mean_squared_error(y_test, predictions, squared=False)
+        data_r2 = skl.metrics.r2_score(y_test, predictions)
+        data_rmse = skl.metrics.mean_squared_error(y_test, predictions, squared=False)
 
-            r2 = [data_r2]
-            rmse = [data_rmse]
-            
-            ## Outputs
-            
-            self.outputs["r2"].sv_set(predictions)
-            self.outputs["rmse"].sv_set(predictions)
+        r2 = [data_r2]
+        rmse = [data_rmse]
+        
+        ## Outputs
+        
+        self.outputs["r2"].sv_set(predictions)
+        self.outputs["rmse"].sv_set(predictions)
 
 def register():
     if skl is not None:
