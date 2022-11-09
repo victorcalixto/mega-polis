@@ -8,8 +8,10 @@ from sverchok.data_structure import updateNode
 import multiprocessing
 from subprocess import call
 import os, signal
-import psutil
 
+
+#megapolis dependencies
+from megapolis.dependencies import psutil
 
 
 class SvMegapolisWhiteboxGisTools(bpy.types.Node, SverchCustomTreeNode):

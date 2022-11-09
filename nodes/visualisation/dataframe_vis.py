@@ -29,9 +29,14 @@ from sverchok.utils.sv_text_io_common import (
     text_modes
 )
 
-import pandas as pd
+from megapolis.dependencies import pandas as pd
 from megapolis.dependencies import tabulate
-tabulate = tabulate.tabulate
+
+try:
+    from tabulate import tabulate
+
+except:
+    pass
 
 def get_sv_data(node):
         out = []

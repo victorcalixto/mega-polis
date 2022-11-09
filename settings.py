@@ -47,6 +47,10 @@ def draw_in_sv_prefs(layout):
     draw_message(layout, "detectron2", dependencies=ex_dependencies)
     draw_message(layout, "torch", dependencies=ex_dependencies)
     draw_message(layout, "tabulate", dependencies=ex_dependencies)
+    draw_message(layout, "psutil", dependencies=ex_dependencies)
+    draw_message(layout, "matplotlib", dependencies=ex_dependencies)
+
+
 
 
 
@@ -118,6 +122,10 @@ class SvMegapolisPreferences(AddonPreferences):
         draw_message(box, "detectron2", dependencies=ex_dependencies)
         draw_message(box, "torch", dependencies=ex_dependencies)
         draw_message(box, "tabulate", dependencies=ex_dependencies)
+        draw_message(box, "psutil", dependencies=ex_dependencies)
+        draw_message(box, "matplotlib", dependencies=ex_dependencies)
+
+
 
 
         box_extra = layout.box()

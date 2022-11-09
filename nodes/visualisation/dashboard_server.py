@@ -11,7 +11,8 @@ from multiprocessing import Process
 import subprocess
 import os
 import sys
-import psutil
+
+from megapolis.dependencies import psutil
 
 class SvMegapolisDashboardServer(bpy.types.Node, SverchCustomTreeNode):
     """

@@ -8,9 +8,11 @@ from sverchok.data_structure import updateNode
 #Megapolis Dependencies
 from megapolis.dependencies import pyproj
 
-CRS = pyproj.CRS 
-Proj = pyproj.Proj
-transform = pyproj.transform
+try:
+    from pyproj import CRS, Proj, transform
+except:
+    pass
+
 
 
 class SvMegapolisLatLonToPoints(bpy.types.Node, SverchCustomTreeNode):

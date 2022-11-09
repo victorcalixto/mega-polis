@@ -10,11 +10,17 @@ from sverchok.data_structure import updateNode
 from megapolis.dependencies import seaborn as sns
 
 import  threading
-import matplotlib.pyplot as plt
-import matplotlib
-matplotlib.use("TkAgg")
 
-import secrets
+
+from megapolis.dependencies import matplotlib
+
+
+try: 
+    import matplotlib.pyplot as plt
+    matplotlib.use("TkAgg")
+    import secrets
+except:
+    pass
 
 Plot = namedtuple('Plot', ['regplot', 'pairplot'])
 PLOT = Plot('regplot', 'pairplot')

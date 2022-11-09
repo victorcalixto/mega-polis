@@ -388,6 +388,34 @@ except ImportError:
     info(tabulate_d.message)
     tabulate = None
 
+#psutil
+psutil_d = ex_dependencies["psutil"] = SvDependency("psutil", "https://github.com/giampaolo/psutil")
+psutil_d.pip_installable = True
+
+try:
+    import psutil
+    psutil_d.message = "psutil package is available"
+    psutil_d.module = psutil
+except ImportError:
+    psutil_d.message = "psutil package is not available, the addon will not work"
+    info(psutil_d.message)
+    psutil = None
+
+#matplotlib
+matplotlib_d = ex_dependencies["matplotlib"] = SvDependency("matplotlib", "https://matplotlib.org/")
+matplotlib_d.pip_installable = True
+
+try:
+    import matplotlib
+    matplotlib_d.message = "matplotlib package is available"
+    matplotlib_d.module = matplotlib
+except ImportError:
+    matplotlib_d.message = "matplolib package is not available, the addon will not work"
+    info(matplotlib_d.message)
+    matplotlib = None
+
+
+
 
 
 

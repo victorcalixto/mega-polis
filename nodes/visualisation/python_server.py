@@ -12,7 +12,9 @@ import subprocess
 import sys
 import os
 import webbrowser
-import psutil
+
+
+from megapolis.dependencies import psutil
 
 class SvMegapolisPythonServer(bpy.types.Node, SverchCustomTreeNode):
     """

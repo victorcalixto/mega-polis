@@ -8,7 +8,12 @@ from collections import namedtuple
 
 #Megapolis Dependencies
 from megapolis.dependencies import pandas as pd
-import sklearn.datasets as datasets
+from megapolis.dependencies import sklearn
+
+try:
+    import sklearn.datasets as datasets
+except:
+    pass
 
 
 

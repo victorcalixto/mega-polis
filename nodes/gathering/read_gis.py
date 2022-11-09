@@ -12,11 +12,14 @@ from megapolis.dependencies import geopandas as gpd
 from megapolis.dependencies import osmnx as ox
 from megapolis.dependencies import shapely
 
-shape = shapely.geometry.shape
-Polygon = shapely.geometry.Polygon
-Point = shapely.geometry.Point
-LineString = shapely.geometry.LineString
-mapping = shapely.geometry.mapping 
+try:
+    from shapely.geometry import mapping
+except:
+    pass
+#Polygon = shapely.geometry.Polygon
+#Point = shapely.geometry.Point
+#LineString = shapely.geometry.LineString
+#mapping = shapely.geometry.mapping 
 
 from itertools import islice 
 import itertools
@@ -125,8 +128,8 @@ class SvMegapolisReadGis(bpy.types.Node, SverchCustomTreeNode):
             self.path = self.inputs["URL"].sv_get(deepcopy = False)
             file_name = str(self.path[0][0])
         
-        geometry_shape = gpd.read_file(file_name)
-        gdf = geometry_shape
+        geometry_shp = gpd.read_file(file_name)
+        gdf = geometry_shp
         #gdf.set_crs(f'self.projection', allow_override=True)
         #gdf = ox.projection.project_gdf(gdf, to_crs=self.projection)
         gdf = gdf.to_crs(self.projection)

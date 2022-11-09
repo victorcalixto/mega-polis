@@ -8,10 +8,13 @@ from sverchok.data_structure import updateNode
 
 
 #Megapolis Dependencies
-from matplotlib.colors import ListedColormap, LinearSegmentedColormap
-from matplotlib import cm
+from megapolis.dependencies import matplotlib
 
-
+try:
+    from matplotlib.colors import ListedColormap, LinearSegmentedColormap
+    from matplotlib import cm
+except:
+    pass
 
 Sequential = namedtuple('Sequential',
      ['viridis', 'plasma', 'inferno', 'magma', 'cividis','Greys', 'Purples', 'Blues', 'Greens', 'Oranges', 'Reds',

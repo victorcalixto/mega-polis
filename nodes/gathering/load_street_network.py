@@ -8,7 +8,11 @@ from sverchok.data_structure import updateNode
 #Megapolis Dependencies
 from megapolis.dependencies import osmnx as ox
 from megapolis.dependencies import shapely
-mapping = shapely.geometry.mapping 
+
+try:
+    from shapely.geometry import mapping
+except:
+    pass
 
 import itertools
 

@@ -14,8 +14,10 @@ from megapolis.dependencies import mapillary as mly
 from megapolis.dependencies import requests
 from megapolis.dependencies import pyproj
 
-Proj = pyproj.Proj
-Transformer = pyproj.Transformer
+try:
+    from pyproj import Proj, Transformer
+except:
+    pass
 
 import os
 import threading

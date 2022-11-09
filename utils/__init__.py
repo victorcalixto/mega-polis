@@ -25,9 +25,10 @@ jgs~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                                                                                
 """
     can_paint = os.name in {'posix'}
-    
-    for line in text.splitlines():
-        line_color = random.randint(31,37)
-        with_color = f"\033[1;{line_color}m{line}\033[0m" if can_paint else "{line}"
-        print(with_color.format(line))
-
+    if can_paint == True: 
+        for line in text.splitlines():
+            line_color = random.randint(31,37)
+            with_color = f"\033[1;{line_color}m{line}\033[0m" if can_paint else "{line}"
+            print(with_color.format(line))
+    else:
+        print(text)
