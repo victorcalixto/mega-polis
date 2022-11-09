@@ -26,8 +26,6 @@ from sverchok.core import make_node_list
 from sverchok.utils import auto_gather_node_classes, yaml_parser
 from sverchok.utils.logging import info, debug
 
-from sverchok_extra.utils import show_welcome
-
 from sverchok.ui.nodeview_space_menu import add_node_menu
 
 from sverchok.node_tree import SverchCustomTreeNode
