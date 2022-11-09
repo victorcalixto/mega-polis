@@ -155,7 +155,7 @@ except ImportError:
     networkx = None
 
 #scikit-learn
-scikitlearn_d = ex_dependencies["scikitlearn"] = SvDependency("scikitlearn", "https://scikit-learn.org/")
+scikitlearn_d = ex_dependencies["scikit-learn"] = SvDependency("scikit-learn", "https://scikit-learn.org/")
 scikitlearn_d.pip_installable = True
 
 try:
@@ -220,16 +220,16 @@ except ImportError:
     visilibity = None
 
 #opencv
-opencv_d = ex_dependencies["opencv"] = SvDependency("opencv", "https://github.com/opencv/opencv-python")
-opencv_d.pip_installable = True
+opencvpython_d = ex_dependencies["opencv-python"] = SvDependency("opencv-python", "https://github.com/opencv/opencv-python")
+opencvpython_d.pip_installable = True
 
 try:
     import cv2
-    opencv_d.message = "opencv package is available"
-    opencv_d.module = cv2
+    opencvpython_d.message = "opencv-python package is available"
+    opencvpython_d.module = cv2
 except ImportError:
-    opencv_d.message = "opencv package is not available, the addon will not work"
-    info(opencv_d.message)
+    opencvpython_d.message = "opencv-python package is not available, the addon will not work"
+    info(opencvpython_d.message)
     cv2 = None
 
 #keplergl
@@ -251,10 +251,10 @@ plotly_d.pip_installable = True
 
 try:
     import plotly
-    plotly_d.message = "ploltly package is available"
+    plotly_d.message = "plotly package is available"
     plotly_d.module = plotly
 except ImportError:
-    plotly_d.message = "keplergl package is not available, the addon will not work"
+    plotly_d.message = "plotly package is not available, the addon will not work"
     info(plotly_d.message)
     plotly = None
 
@@ -413,6 +413,20 @@ except ImportError:
     matplotlib_d.message = "matplolib package is not available, the addon will not work"
     info(matplotlib_d.message)
     matplotlib = None
+
+#richdem
+richdem_d = ex_dependencies["richdem"] = SvDependency("richdem", "https://richdem.readthedocs.io/en/latest/")
+richdem_d.pip_installable = True
+
+try:
+    import richdem
+    richdem_d.message = "richdem package is available"
+    richdem_d.module = richdem
+except ImportError:
+    richdem_d.message = "richdem package is not available, the addon will not work"
+    info(richdem_d.message)
+    richdem = None
+
 
 
 

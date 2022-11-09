@@ -31,12 +31,12 @@ def draw_in_sv_prefs(layout):
     draw_message(layout, "mapillary", dependencies=ex_dependencies)
     draw_message(layout, "wget", dependencies=ex_dependencies)
     draw_message(layout, "networkx", dependencies=ex_dependencies)
-    draw_message(layout, "scikitlearn", dependencies=ex_dependencies)
+    draw_message(layout, "scikit-learn", dependencies=ex_dependencies)
     draw_message(layout, "streamlit", dependencies=ex_dependencies)
     draw_message(layout, "pyvista", dependencies=ex_dependencies)
     draw_message(layout, "seaborn", dependencies=ex_dependencies)
     draw_message(layout, "visilibity", dependencies=ex_dependencies)
-    draw_message(layout, "opencvpython", dependencies=ex_dependencies)
+    draw_message(layout, "opencv-python", dependencies=ex_dependencies)
     draw_message(layout, "keplergl", dependencies=ex_dependencies)
     draw_message(layout, "plotly", dependencies=ex_dependencies)
     draw_message(layout, "requests", dependencies=ex_dependencies)
@@ -49,6 +49,8 @@ def draw_in_sv_prefs(layout):
     draw_message(layout, "tabulate", dependencies=ex_dependencies)
     draw_message(layout, "psutil", dependencies=ex_dependencies)
     draw_message(layout, "matplotlib", dependencies=ex_dependencies)
+    draw_message(layout, "richdem", dependencies=ex_dependencies)
+
 
 
 
@@ -105,13 +107,13 @@ class SvMegapolisPreferences(AddonPreferences):
         draw_message(box, "mapillary", dependencies=ex_dependencies)
         draw_message(box, "wget", dependencies=ex_dependencies)
         draw_message(box, "networkx", dependencies=ex_dependencies)
-        draw_message(box, "scikitlearn", dependencies=ex_dependencies)
+        draw_message(box, "scikit-learn", dependencies=ex_dependencies)
         draw_message(box, "streamlit", dependencies=ex_dependencies)
         draw_message(box, "pyvista", dependencies=ex_dependencies)
         draw_message(box, "seaborn", dependencies=ex_dependencies)
         draw_message(box, "visilibity", dependencies=ex_dependencies)
         box.operator('wm.url_open', text="Read installation instructions for Swig (Visilibity dependency)").url="https://swig.org/download.html"
-        draw_message(box, "opencv", dependencies=ex_dependencies)
+        draw_message(box, "opencv-python", dependencies=ex_dependencies)
         draw_message(box, "keplergl", dependencies=ex_dependencies)
         draw_message(box, "plotly", dependencies=ex_dependencies)
         draw_message(box, "requests", dependencies=ex_dependencies)
@@ -124,6 +126,8 @@ class SvMegapolisPreferences(AddonPreferences):
         draw_message(box, "tabulate", dependencies=ex_dependencies)
         draw_message(box, "psutil", dependencies=ex_dependencies)
         draw_message(box, "matplotlib", dependencies=ex_dependencies)
+        draw_message(box, "richdem", dependencies=ex_dependencies)
+
 
 
 
