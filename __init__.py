@@ -98,6 +98,7 @@ def nodes_index():
                 ("generation.file_to_geojson","SvMegapolisFileToGeoJson"),
                 ("generation.csv_to_dataframe","SvMegapolisCsvToDataframe"),
                 ("generation.sequential_colormap","SvMegapolisSequentialColormap"),
+                ("generation.colormap","SvMegapolisColormap"),
                 ("generation.get_file_path","SvMegapolisGetFilePath"),
                 ("generation.create_dictionary","SvMegapolisCreateDictionary")
 
@@ -107,6 +108,7 @@ def nodes_index():
                 
                 ("visualisation.dataframe_vis","SvMegapolisDataframeVis"),
                 ("visualisation.seaborn_plot","SvMegapolisSeabornPlot"),
+                ("visualisation.plot_dem","SvMegapolisPlotDem"),
                 ("visualisation.dashboard_mesh","SvMegapolisDashboardMesh"),
                 ("visualisation.dashboard_map","SvMegapolisDashboardMap"),
                 ("visualisation.dashboard_load_map","SvMegapolisDashboardLoadMap"),

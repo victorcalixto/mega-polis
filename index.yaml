@@ -18,14 +18,14 @@
         - extra_menu: MeshPartialMenu  # to make the category available in another menu (1,2,3,4,5)
         - Gathering Design Tools:  # Name of a node category
             - SvMegapolisReadGis 
-            - SvMegapolisReadCsv 
-            - SvMegapolisReadJson
             - SvMegapolisReadDem
             - SvMegapolisReadLas
             - SvMegapolisDownloadStImagery
             - SvMegapolisLoadStreetNetwork
             - SvMegapolisOSMDownloader
         - Gathering Data Tools:  # Name of a node category
+            - SvMegapolisReadCsv 
+            - SvMegapolisReadJson
             - SvMegapolisPandasSeries
             - SvMegapolisPandasDataframe
             - SvMegapolisSplitString
@@ -71,6 +71,7 @@
             - SvMegapolisTransposeDataframe
             - SvMegapolisPandasMapFeature
             - SvMegapolisSequentialColormap
+            - SvMegapolisColormap
             - SvMegapolisGetFilePath
             - SvMegapolisCreateDictionary
         - Generation Supporting Tools:
@@ -85,7 +86,8 @@
             - SvMegapolisDashboardMesh
             - SvMegapolisDashboardMap
             - SvMegapolisWebVRConnector
-            
+            - SvMegapolisPlotDem
+
         - Visualisation Data Tools:
             - SvMegapolisDataframeVis
             - SvMegapolisSeabornPlot

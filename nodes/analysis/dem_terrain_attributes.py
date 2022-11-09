@@ -46,6 +46,8 @@ class SvMegapolisDemTerrainAttributes(bpy.types.Node, SverchCustomTreeNode):
         # outputs
         
         self.outputs.new('SvVerticesSocket', "Attribute Values")
+        self.outputs.new('SvVerticesSocket', "Array Out")
+
 
     def draw_buttons(self,context, layout):
         layout.prop(self, 'attributetype', expand=False)
@@ -78,8 +80,9 @@ class SvMegapolisDemTerrainAttributes(bpy.types.Node, SverchCustomTreeNode):
 
 
         ## Output
-
+        
         self.outputs["Attribute Values"].sv_set(attribute_values)
+        self.outputs["Array Out"].sv_set(dem_slope)
         
 
 def register():
