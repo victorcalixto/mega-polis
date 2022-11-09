@@ -359,7 +359,7 @@ try:
     detectron2_d.module = detectron2
 except ImportError:
     detectron2_d.message = "detectron2 package is not available, the addon will not work"
-    info(detectron_d.message)
+    info(detectron2_d.message)
     detectron2 = None
 
 #torch
