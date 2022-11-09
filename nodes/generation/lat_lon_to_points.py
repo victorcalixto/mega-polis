@@ -63,13 +63,13 @@ class SvMegapolisLatLonToPoints(bpy.types.Node, SverchCustomTreeNode):
     
 
         lat = self.lat[0][0]
-        lon = self.lon[0][0]
+        lon = self.long[0][0]
 
         latlon = []
 
-        if len(lat_o[0]) > 1:
-            for i in range(0,len(lat_o[0])):
-                latlon.append(list(zip(lat_o[0][i],lon_o[0][i])))
+        if len(lat[0]) > 1:
+            for i in range(0,len(lat[0])):
+                latlon.append(list(zip(lon[0][i],lat[0][i])))
         else:
             latlon.append([lon,lat])
 

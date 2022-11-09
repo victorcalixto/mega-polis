@@ -70,7 +70,7 @@ class SvMegapolisDashboardBokehPlotLine(bpy.types.Node, SverchCustomTreeNode):
 
         line= f"""
 {figure_name}.line({x_values}, {y_values}, legend_label='{legend_label}', line_width={line_width}) \n
-               """
+           """
 
         st_bokeh_line = line
 

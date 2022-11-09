@@ -47,7 +47,7 @@ class SvMegapolisDashboardPlotlyFigure(bpy.types.Node, SverchCustomTreeNode):
         
         plot  = f"""
 st.plotly_chart({plotly_figure_name}, use_container_width=True) \n
-                 """
+             """
 
         plot_plotly_figure = plot
         ## Output

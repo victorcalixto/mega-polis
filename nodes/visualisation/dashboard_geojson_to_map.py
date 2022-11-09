@@ -53,7 +53,7 @@ class SvMegapolisDashboardGeojsonToMap(bpy.types.Node, SverchCustomTreeNode):
 
         load = f"""
 {map_name}.add_geojson({geomap})\n
-                """
+            """
 
         load_geo=load
 

@@ -91,7 +91,7 @@ class SvMegapolisDashboardCreatePlotly(bpy.types.Node, SverchCustomTreeNode):
 
             figure_str=f"""
 {figure_name}_=pd.DataFrame.from_dict({parsed}) \n{figure_name} = px.{plot_type}({figure_name}_,{figure_list}) \n
-                        """
+                    """
             
             return figure_str
 

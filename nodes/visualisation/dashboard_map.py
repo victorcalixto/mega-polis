@@ -68,7 +68,7 @@ class SvMegapolisDashboardMap(bpy.types.Node, SverchCustomTreeNode):
         
         map_ = f"""
 {map_name} = kepler.Map(center=[{map_centre_x}, {map_centre_y}], zoom={zoom}) \n\n
-                """
+            """
 
         st_kepler_map_out = [map_] 
 

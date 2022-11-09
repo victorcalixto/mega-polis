@@ -56,7 +56,7 @@ class SvMegapolisDashboardBokehFigure(bpy.types.Node, SverchCustomTreeNode):
 
         figure_plot=f"""
 {figure_name} = figure(title='{title}',x_axis_label='{x_label}',y_axis_label='{y_label}') \n \n
-                     """
+                 """
 
         st_bokeh_plot = [figure_plot]
 

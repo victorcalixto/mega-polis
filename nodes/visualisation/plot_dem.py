@@ -22,11 +22,6 @@ SEQUENTIAL = Sequential('viridis', 'plasma', 'inferno', 'magma', 'cividis','Grey
       'Wistia', 'hot', 'afmhot', 'gist_heat', 'copper')
 sequential_items = [(i, i, '') for i in SEQUENTIAL]
 
-
-
-
-
-
 class SvMegapolisPlotDem(bpy.types.Node, SverchCustomTreeNode):
     """
     Triggers: Plot Dem
@@ -103,7 +98,7 @@ class SvMegapolisPlotDem(bpy.types.Node, SverchCustomTreeNode):
         self.array = self.inputs["Dem Array"].sv_get(deepcopy = False)
         
         if self.run == True:
-            rd.rdShow(self.rarray, ignore_colours=[0], axes=self.axes, cmap=self.colour, figsize=(self.width,self.height))
+            rd.rdShow(self.array, ignore_colours=[0], axes=self.axes, cmap=self.colour, figsize=(self.width,self.height))
 
         ## Output
         

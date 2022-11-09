@@ -251,7 +251,6 @@ class SvMegapolisOSMDownloader(bpy.types.Node, SverchCustomTreeNode):
                 buildings = ox.geometries_from_address(address, dictionary, distance)
                 #address_ = re.sub('[^A-Za-z0-9]+', ' ',address) 
                 #buildings = buildings.loc[:,buildings.columns.str.contains(r'^((?!nodes).)*$')]
-                print(buldings)
                 buildings = buildings.loc[:,buildings.columns.str.contains('building|geometry|addr:|amenity|operator|name|historic|brand|cuisine|delivery|drive|internet|opening|outdoor|smoking|takeway|website|layer|source|shop|tourism|wheelchair|office|information|roof|emergency|man|access|parking|fixme|construction|toilets|denomination|religion|height|wikidata|leisure|area|healthcare|levels|diet|email|description|note|old_name|type')]
                 #buildings.to_file(f"{folder}{address}_{self.features}.geojson", driver="GeoJSON")
                 
@@ -262,7 +261,6 @@ class SvMegapolisOSMDownloader(bpy.types.Node, SverchCustomTreeNode):
                 buildings = ox.geometries_from_place(str(place), dictionary)
                 #place_ = re.sub('[^A-Za-z0-9]+', ' ',place) 
                 #buildings.to_file(f"{folder}{place_}_{self.features}.geojson", driver="GeoJSON", index =True)
-                print(buildings)
                 buildings = buildings.loc[:,buildings.columns.str.contains('building|geometry|addr:|amenity|operator|name|historic|brand|cuisine|delivery|drive|internet|opening|outdoor|smoking|takeway|website|layer|source|shop|tourism|wheelchair|office|information|roof|emergency|man|access|parking|fixme|construction|toilets|denomination|religion|height|wikidata|leisure|area|healthcare|levels|diet|email|description|note|old_name|type')]
                 
 
@@ -272,7 +270,7 @@ class SvMegapolisOSMDownloader(bpy.types.Node, SverchCustomTreeNode):
                 buildings.to_file(f"{folder}{place}_{self.features}.geojson", driver="GeoJSON")
                 
 
-                print(buildings)
+                #print(buildings)
                 #buildings = buildings.loc[:,buildings.columns.str.contains('addr:|geometry')]
                 #for geomtype in buildings.geom_type.unique():
                 #    buildings[buildings.geom_type == geomtype].to_file(f"{folder}{place}_{self.features}_{geomtype}")

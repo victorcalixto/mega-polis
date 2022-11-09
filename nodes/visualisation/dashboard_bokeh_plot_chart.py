@@ -47,7 +47,7 @@ class SvMegapolisDashboardBokehPlotChart(bpy.types.Node, SverchCustomTreeNode):
         
         plot = f"""
 st.bokeh_chart({figure_name}, use_container_width=False)\n
-                """
+            """
 
         st_bokeh_plot_chart=plot 
 

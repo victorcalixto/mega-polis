@@ -67,7 +67,8 @@ class SvMegapolisModelPredict(bpy.types.Node, SverchCustomTreeNode):
         if self.run == True:
             data = model.predict(X_test)
             predictions = [data]
-
+        else:
+            predictions = ''
         ## Outputs
         
         self.outputs["Predictions Array"].sv_set(predictions)

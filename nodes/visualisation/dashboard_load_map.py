@@ -69,7 +69,7 @@ class SvMegapolisDashboardLoadMap(bpy.types.Node, SverchCustomTreeNode):
         
         load =f"""
 {map_name}.to_streamlit(height={map_height},width={map_width})\n
-               """
+           """
 
         load_map=load
 

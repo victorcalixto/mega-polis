@@ -87,6 +87,8 @@ class SvMegapolisModelFit(bpy.types.Node, SverchCustomTreeNode):
             
             model_out = [data]
 
+        else:
+            model_out = ''
         ## Outputs
         
         self.outputs["Model Out"].sv_set(model_out)

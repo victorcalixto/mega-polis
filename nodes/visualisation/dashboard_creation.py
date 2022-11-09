@@ -96,19 +96,15 @@ import matplotlib.pyplot as plt
 
         pyvista_def=f"""
 pv.set_plot_theme('document')
-
 def pyvista_streamlit(plotter,plot_width,plot_height):
-widget = convert_plotter(plotter)
-state = embed.dependency_state(widget)
-fp = io.StringIO()
-embed.embed_minimal_html(fp, None, title="", state=state)
-fp.seek(0)
-snippet = fp.read()
-components.html(snippet, width=plot_width, height=plot_height)
-        """
-
-
-
+    widget = convert_plotter(plotter)
+    state = embed.dependency_state(widget)
+    fp = io.StringIO()
+    embed.embed_minimal_html(fp, None, title="", state=state)
+    fp.seek(0)
+    snippet = fp.read()
+    components.html(snippet, width=plot_width, height=plot_height)
+            """
         str_content=''
 
         for i in dashboard_content: 
@@ -131,7 +127,6 @@ components.html(snippet, width=plot_width, height=plot_height)
         ## Output
 
         self.outputs["Output Message"].sv_set(template_df)
-
 
 def register():
     if st is not None:

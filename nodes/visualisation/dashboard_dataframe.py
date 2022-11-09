@@ -53,7 +53,7 @@ class SvMegapolisDashboardDataframe(bpy.types.Node, SverchCustomTreeNode):
 
         write = f"""
 st.dataframe(pd.DataFrame.from_dict({df}))\n
-                 """
+             """
 
         st_df = write
 

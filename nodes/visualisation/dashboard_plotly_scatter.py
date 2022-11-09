@@ -67,7 +67,7 @@ class SvMegapolisDashboardPlotlyScatter(bpy.types.Node, SverchCustomTreeNode):
 
         scatter_str=f"""
 {figure_name}_=pd.DataFrame.from_dict({parsed}) \n{figure_name} = px.scatter({figure_name}_,{scatter_list}) \n
-                     """
+                 """
 
         plotly_scatter = scatter_str
 
