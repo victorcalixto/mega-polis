@@ -155,7 +155,11 @@ except ImportError:
     networkx = None
 
 #scikit-learn
+<<<<<<< HEAD
 scikitlearn_d = ex_dependencies["scikit-learn"] = SvDependency("scikit-learn", "https://scikit-learn.org/")
+=======
+scikitlearn_d = ex_dependencies["scikitlearn"] = SvDependency("scikitlearn", "https://scikit-learn.org/")
+>>>>>>> 57d4c4d (Fixing unregister modules)
 scikitlearn_d.pip_installable = True
 
 try:
