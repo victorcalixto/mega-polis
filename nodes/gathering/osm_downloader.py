@@ -8,7 +8,6 @@ from sverchok.data_structure import updateNode
 
 #Megapolis Dependencies
 from megapolis.dependencies import osmnx as ox
-
 import re
 
 
@@ -235,7 +234,6 @@ class SvMegapolisOSMDownloader(bpy.types.Node, SverchCustomTreeNode):
 
         dictionary = {}
         dictionary[self.features] = True
-        message = []
 
         #if self.buildings == True:
         #dictionary["building"] = True
@@ -243,16 +241,15 @@ class SvMegapolisOSMDownloader(bpy.types.Node, SverchCustomTreeNode):
         #   dictionary["amenity"] = True
         # print(dictionary) 
         
-        buildings = ''
         print(dictionary)
 
         if self.download == True: 
             if self.download_method in DOWNLOADMETHOD.Address:
-                buildings = ox.geometries_from_address(address, dictionary, distance)
+                buildings = ox.geometries_from_address(str(address), dictionary, distance)
                 #address_ = re.sub('[^A-Za-z0-9]+', ' ',address) 
                 #buildings = buildings.loc[:,buildings.columns.str.contains(r'^((?!nodes).)*$')]
                 buildings = buildings.loc[:,buildings.columns.str.contains('building|geometry|addr:|amenity|operator|name|historic|brand|cuisine|delivery|drive|internet|opening|outdoor|smoking|takeway|website|layer|source|shop|tourism|wheelchair|office|information|roof|emergency|man|access|parking|fixme|construction|toilets|denomination|religion|height|wikidata|leisure|area|healthcare|levels|diet|email|description|note|old_name|type')]
-                #buildings.to_file(f"{folder}{address}_{self.features}.geojson", driver="GeoJSON")
+                buildings.to_file(f"{folder}{address}_{self.features}.geojson", driver="GeoJSON")
                 
                 #for geomtype in buildings.geom_type.unique():
                 #    buildings[buildings.geom_type == geomtype].to_file(f"{folder}{address}_{self.features}_{geomtype}")
@@ -300,7 +297,9 @@ class SvMegapolisOSMDownloader(bpy.types.Node, SverchCustomTreeNode):
 
                 #for geomtype in buildings.geom_type.unique():
                 #    buildings[buildings.geom_type == geomtype].to_file(f"{folder}{bbox}_{self.features}_{geomtype}.gpkg", driver="GPKG", layer=geomtype)
-
+        else:
+            buildings = ''
+        
         ## Output
         self.outputs["Output_Message"].sv_set(buildings)
         
