@@ -21,6 +21,7 @@ class SvMegapolisLinearModelSelection(SverchCustomTreeNode, bpy.types.Node):
     bl_idname = 'SvMegapolisLinearModelSelection'
     bl_label = 'Linear Model Selection'
     bl_icon = 'MESH_DATA'
+    sv_dependencies = {'sklearn'}
 
     # Hide Interactive Sockets
     def update_sockets(self, context):
@@ -70,11 +71,12 @@ class SvMegapolisLinearModelSelection(SverchCustomTreeNode, bpy.types.Node):
         ## Output
 
         self.outputs["Model"].sv_set(model_out)
-        
+
+
 def register():
-    if skl is not None:
-        bpy.utils.register_class(SvMegapolisLinearModelSelection)
+    bpy.utils.register_class(SvMegapolisLinearModelSelection)
+
+
 
 def unregister():
-    if skl is not None:
-        bpy.utils.unregister_class(SvMegapolisLinearModelSelection)
+    bpy.utils.unregister_class(SvMegapolisLinearModelSelection)

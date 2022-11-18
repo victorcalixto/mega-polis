@@ -22,7 +22,7 @@ class SvMegapolisDashboardServer(SverchCustomTreeNode, bpy.types.Node):
     bl_idname = 'SvMegapolisDashboardServer'
     bl_label = 'Dashboard Server'
     bl_icon = 'MESH_DATA'
-
+    sv_dependencies = {'psutil'}
     
     # Hide Interactive Sockets
     def update_sockets(self, context):

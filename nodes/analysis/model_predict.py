@@ -17,7 +17,7 @@ class SvMegapolisModelPredict(SverchCustomTreeNode, bpy.types.Node):
     bl_idname = 'SvMegapolisModelPredict'
     bl_label = 'Model Predict'
     bl_icon = 'MESH_DATA'
-    
+    sv_dependencies = {'sklearn'}
 
     # Hide Interactive Sockets
     def update_sockets(self, context):
@@ -72,11 +72,11 @@ class SvMegapolisModelPredict(SverchCustomTreeNode, bpy.types.Node):
         ## Outputs
         
         self.outputs["Predictions Array"].sv_set(predictions)
-        
+
+
 def register():
-    if skl is not None:
-        bpy.utils.register_class(SvMegapolisModelPredict)
+    bpy.utils.register_class(SvMegapolisModelPredict)
+
 
 def unregister():
-    if skl is not None:
-        bpy.utils.unregister_class(SvMegapolisModelPredict)
+    bpy.utils.unregister_class(SvMegapolisModelPredict)

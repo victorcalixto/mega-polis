@@ -30,6 +30,7 @@ class SvMegapolisGetSampleDataframe(SverchCustomTreeNode, bpy.types.Node):
     bl_idname = 'SvMegapolisGetSampleDataframe'
     bl_label = 'Get Sample Dataframe'
     bl_icon = 'MESH_DATA'
+    sv_dependencies = {'pandas'}
     # Hide Interactive Sockets
     
     def update_sockets(self, context):
@@ -92,10 +93,10 @@ class SvMegapolisGetSampleDataframe(SverchCustomTreeNode, bpy.types.Node):
 
         self.outputs["Dataframe"].sv_set(data)
 
+
 def register():
-    if pd is not None:
-        bpy.utils.register_class(SvMegapolisGetSampleDataframe)
+    bpy.utils.register_class(SvMegapolisGetSampleDataframe)
+
 
 def unregister():
-    if pd is not None:
-        bpy.utils.unregister_class(SvMegapolisGetSampleDataframe)
+    bpy.utils.unregister_class(SvMegapolisGetSampleDataframe)

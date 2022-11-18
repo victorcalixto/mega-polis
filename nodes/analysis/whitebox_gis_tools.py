@@ -22,7 +22,6 @@ class SvMegapolisWhiteboxGisTools(SverchCustomTreeNode, bpy.types.Node):
     bl_idname = 'SvMegapolisWhiteboxGisTools'
     bl_label = 'Whitebox Gis Tools'
     bl_icon = 'MESH_DATA'
-    
 
     # Hide Interactive Sockets
     def update_sockets(self, context):

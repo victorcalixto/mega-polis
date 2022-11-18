@@ -30,6 +30,7 @@ class SvMegapolisPlotDem(SverchCustomTreeNode, bpy.types.Node):
     bl_idname = 'SvMegapolisPlotDem'
     bl_label = 'Plot Dem'
     bl_icon = 'MESH_DATA'
+    sv_dependencies = {'richdem'}
 
     # Hide Interactive Sockets
     def update_sockets(self, context):
@@ -104,9 +105,8 @@ class SvMegapolisPlotDem(SverchCustomTreeNode, bpy.types.Node):
         
 
 def register():
-    if rd is not None:
-        bpy.utils.register_class(SvMegapolisPlotDem)
+    bpy.utils.register_class(SvMegapolisPlotDem)
+
 
 def unregister():
-    if rd is not None:
-        bpy.utils.unregister_class(SvMegapolisPlotDem)
+    bpy.utils.unregister_class(SvMegapolisPlotDem)

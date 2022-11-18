@@ -23,7 +23,7 @@ class SvMegapolisReadDem(SverchCustomTreeNode, bpy.types.Node):
     bl_idname = 'SvMegapolisReadDem'
     bl_label = 'Read DEM'
     bl_icon = 'MESH_DATA'
-    
+    sv_dependencies = {'rasterio'}
 
     def sv_init(self, context):
         # inputs
@@ -75,10 +75,10 @@ class SvMegapolisReadDem(SverchCustomTreeNode, bpy.types.Node):
         self.outputs["Faces"].sv_set(faces)
         self.outputs["DEM data"].sv_set(dem_data)
 
+
 def register():
-    if rio is not None:
-        bpy.utils.register_class(SvMegapolisReadDem)
+    bpy.utils.register_class(SvMegapolisReadDem)
+
 
 def unregister():
-    if rio is not None:
-        bpy.utils.unregister_class(SvMegapolisReadDem)
+    bpy.utils.unregister_class(SvMegapolisReadDem)

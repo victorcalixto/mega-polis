@@ -19,7 +19,7 @@ class SvMegapolisReadJson(SverchCustomTreeNode, bpy.types.Node):
     bl_idname = 'SvMegapolisReadJson'
     bl_label = 'Read JSON'
     bl_icon = 'MESH_DATA'
-    
+    sv_dependencies = {'pandas'}
 
     def sv_init(self, context):
         # inputs
@@ -54,10 +54,10 @@ class SvMegapolisReadJson(SverchCustomTreeNode, bpy.types.Node):
         self.outputs["JSON Data"].sv_set(data)
         self.outputs["JSON DF"].sv_set(df)
 
+
 def register():
-    if pd is not None:
-        bpy.utils.register_class(SvMegapolisReadJson)
+    bpy.utils.register_class(SvMegapolisReadJson)
+
 
 def unregister():
-    if pd is not None:
-        bpy.utils.unregister_class(SvMegapolisReadJson)
+    bpy.utils.unregister_class(SvMegapolisReadJson)

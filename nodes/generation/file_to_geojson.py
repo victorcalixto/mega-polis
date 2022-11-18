@@ -18,7 +18,7 @@ class SvMegapolisFileToGeoJson(SverchCustomTreeNode, bpy.types.Node):
     bl_idname = 'SvMegapolisFileToGeoJson'
     bl_label = 'File To GeoJson'
     bl_icon = 'MESH_DATA'
-    
+    sv_dependencies = {'geopandas'}
 
     def sv_init(self, context):
         # inputs
@@ -45,10 +45,10 @@ class SvMegapolisFileToGeoJson(SverchCustomTreeNode, bpy.types.Node):
         #Output
         self.outputs["GeoDataframe Output"].sv_set(geojson_out)
 
+
 def register():
-    if gpd is not None:
-        bpy.utils.register_class(SvMegapolisFileToGeoJson)
+    bpy.utils.register_class(SvMegapolisFileToGeoJson)
+
 
 def unregister():
-    if gpd is not None:
-        bpy.utils.unregister_class(SvMegapolisFileToGeoJson)
+    bpy.utils.unregister_class(SvMegapolisFileToGeoJson)

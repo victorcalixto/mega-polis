@@ -20,7 +20,7 @@ class SvMegapolisDashboardCreation(SverchCustomTreeNode, bpy.types.Node):
     bl_idname = 'SvMegapolisDashboardCreation'
     bl_label = 'Dashboard Creation'
     bl_icon = 'MESH_DATA'
-
+    sv_dependencies = {'streamlit'}
     
     # Hide Interactive Sockets
     def update_sockets(self, context):
@@ -128,11 +128,10 @@ def pyvista_streamlit(plotter,plot_width,plot_height):
 
         self.outputs["Output Message"].sv_set(template_df)
 
+
 def register():
-    if st is not None:
-        bpy.utils.register_class(SvMegapolisDashboardCreation)
+    bpy.utils.register_class(SvMegapolisDashboardCreation)
+
 
 def unregister():
-    if st is not None:
-        bpy.utils.unregister_class(SvMegapolisDashboardCreation)
-
+    bpy.utils.unregister_class(SvMegapolisDashboardCreation)

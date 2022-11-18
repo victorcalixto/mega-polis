@@ -19,7 +19,7 @@ class SvMegapolisPandasMapFeature(SverchCustomTreeNode, bpy.types.Node):
     bl_idname = 'SvMegapolisPandasMapFeature'
     bl_label = 'Pandas Map Feature'
     bl_icon = 'MESH_DATA'
-    
+    sv_dependencies = {'pandas'}
 
     def sv_init(self, context):
         # inputs
@@ -51,10 +51,10 @@ class SvMegapolisPandasMapFeature(SverchCustomTreeNode, bpy.types.Node):
         #Output
         self.outputs["Dataframe Output"].sv_set(df_mapped)
 
+
 def register():
-    if pd is not None:
-        bpy.utils.register_class(SvMegapolisPandasMapFeature)
+    bpy.utils.register_class(SvMegapolisPandasMapFeature)
+
 
 def unregister():
-    if pd is not None:
-        bpy.utils.unregister_class(SvMegapolisPandasMapFeature)
+    bpy.utils.unregister_class(SvMegapolisPandasMapFeature)

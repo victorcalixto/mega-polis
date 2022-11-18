@@ -31,7 +31,7 @@ class SvMegapolisOSMDownloader(SverchCustomTreeNode, bpy.types.Node):
     bl_idname = 'SvMegapolisOSMDownloader'
     bl_label = 'OSM Downloader'
     bl_icon = 'MESH_DATA'
-    
+    sv_dependencies = {'osmnx'}
 
     # Hide Interactive Sockets
     def update_sockets(self, context):
@@ -302,11 +302,11 @@ class SvMegapolisOSMDownloader(SverchCustomTreeNode, bpy.types.Node):
         
         ## Output
         self.outputs["Output_Message"].sv_set(buildings)
-        
+
+
 def register():
-    if ox is not None:
-        bpy.utils.register_class(SvMegapolisOSMDownloader)
+    bpy.utils.register_class(SvMegapolisOSMDownloader)
+
 
 def unregister():
-    if ox is not None:
-        bpy.utils.unregister_class(SvMegapolisOSMDownloader)
+    bpy.utils.unregister_class(SvMegapolisOSMDownloader)

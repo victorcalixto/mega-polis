@@ -20,6 +20,7 @@ class SvMegapolisCorrelation(SverchCustomTreeNode, bpy.types.Node):
     bl_idname = 'SvMegapolisCorrelation'
     bl_label = 'Correlation'
     bl_icon = 'MESH_DATA'
+    sv_dependencies = {'pandas'}
 
     # Hide Interactive Sockets
     def update_sockets(self, context):
@@ -66,9 +67,8 @@ class SvMegapolisCorrelation(SverchCustomTreeNode, bpy.types.Node):
 
 
 def register():
-    if pd is not None:
-        bpy.utils.register_class(SvMegapolisCorrelation)
+    bpy.utils.register_class(SvMegapolisCorrelation)
+
 
 def unregister():
-    if pd is not None:
-        bpy.utils.unregister_class(SvMegapolisCorrelation)
+    bpy.utils.unregister_class(SvMegapolisCorrelation)

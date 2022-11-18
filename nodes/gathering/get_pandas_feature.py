@@ -18,7 +18,7 @@ class SvMegapolisGetPandasFeature(SverchCustomTreeNode, bpy.types.Node):
     bl_idname = 'SvMegapolisGetPandasFeature'
     bl_label = 'Get Pandas Feature'
     bl_icon = 'MESH_DATA'
-    
+    sv_dependencies = {'pandas'}
 
     def sv_init(self, context):
         # inputs
@@ -41,10 +41,10 @@ class SvMegapolisGetPandasFeature(SverchCustomTreeNode, bpy.types.Node):
 
         self.outputs["Dataframe Out"].sv_set(data)
 
+
 def register():
-    if pd is not None:
-        bpy.utils.register_class(SvMegapolisGetPandasFeature)
+    bpy.utils.register_class(SvMegapolisGetPandasFeature)
+
 
 def unregister():
-    if pd is not None:
-        bpy.utils.unregister_class(SvMegapolisGetPandasFeature)
+    bpy.utils.unregister_class(SvMegapolisGetPandasFeature)

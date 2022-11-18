@@ -19,7 +19,7 @@ class SvMegapolisFileToGdf(SverchCustomTreeNode, bpy.types.Node):
     bl_idname = 'SvMegapolisFileToGdf'
     bl_label = 'File To Gdf'
     bl_icon = 'MESH_DATA'
-    
+    sv_dependencies = {'geopandas'}
 
     def sv_init(self, context):
         # inputs
@@ -42,10 +42,10 @@ class SvMegapolisFileToGdf(SverchCustomTreeNode, bpy.types.Node):
         #Output
         self.outputs["GeoDataframe Output"].sv_set(gdf_out)
 
+
 def register():
-    if gpd is not None:
-        bpy.utils.register_class(SvMegapolisFileToGdf)
+    bpy.utils.register_class(SvMegapolisFileToGdf)
+
 
 def unregister():
-    if gpd is not None:
-        bpy.utils.unregister_class(SvMegapolisFileToGdf)
+    bpy.utils.unregister_class(SvMegapolisFileToGdf)

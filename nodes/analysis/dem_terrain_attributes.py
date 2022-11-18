@@ -21,6 +21,7 @@ class SvMegapolisDemTerrainAttributes(SverchCustomTreeNode, bpy.types.Node):
     bl_idname = 'SvMegapolisDemTerrainAttributes'
     bl_label = 'Dem Terrain Attributes'
     bl_icon = 'MESH_DATA'
+    sv_dependencies = {'richdem'}
 
     # Hide Interactive Sockets
     def update_sockets(self, context):
@@ -86,9 +87,8 @@ class SvMegapolisDemTerrainAttributes(SverchCustomTreeNode, bpy.types.Node):
         
 
 def register():
-    if rd is not None:
-        bpy.utils.register_class(SvMegapolisDemTerrainAttributes)
+    bpy.utils.register_class(SvMegapolisDemTerrainAttributes)
+
 
 def unregister():
-    if rd is not None:
-        bpy.utils.unregister_class(SvMegapolisDemTerrainAttributes)
+    bpy.utils.unregister_class(SvMegapolisDemTerrainAttributes)

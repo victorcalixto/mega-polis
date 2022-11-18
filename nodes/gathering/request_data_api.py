@@ -20,7 +20,7 @@ class SvMegapolisRequestDataApi(SverchCustomTreeNode, bpy.types.Node):
     bl_idname = 'SvMegapolisRequestDataApi'
     bl_label = 'Request Data Api'
     bl_icon = 'MESH_DATA'
-    
+    sv_dependencies = {'requests'}
 
     # Hide Interactive Sockets
     def update_sockets(self, context):
@@ -89,11 +89,11 @@ class SvMegapolisRequestDataApi(SverchCustomTreeNode, bpy.types.Node):
         
         self.outputs["JSON out"].sv_set(json_out)
         self.outputs["Status Message"].sv_set(status)
-        
+
+
 def register():
-    if requests is not None:
-        bpy.utils.register_class(SvMegapolisRequestDataApi)
+    bpy.utils.register_class(SvMegapolisRequestDataApi)
+
 
 def unregister():
-    if requests is not None:
-        bpy.utils.unregister_class(SvMegapolisRequestDataApi)
+    bpy.utils.unregister_class(SvMegapolisRequestDataApi)

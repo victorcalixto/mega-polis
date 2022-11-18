@@ -29,6 +29,7 @@ class SvMegapolisLoadStreetNetwork(SverchCustomTreeNode, bpy.types.Node):
     bl_idname = 'SvMegapolisLoadStreetNetwork'
     bl_label = 'Load Street Network'
     bl_icon = 'MESH_DATA'
+    sv_dependencies = {'osmnx'}
 
     # Hide Interactive Sockets
     def update_sockets(self, context):
@@ -293,9 +294,8 @@ class SvMegapolisLoadStreetNetwork(SverchCustomTreeNode, bpy.types.Node):
         
 
 def register():
-    if ox is not None:
-        bpy.utils.register_class(SvMegapolisLoadStreetNetwork)
+    bpy.utils.register_class(SvMegapolisLoadStreetNetwork)
+
 
 def unregister():
-    if ox is not None:
-        bpy.utils.unregister_class(SvMegapolisLoadStreetNetwork)
+    bpy.utils.unregister_class(SvMegapolisLoadStreetNetwork)

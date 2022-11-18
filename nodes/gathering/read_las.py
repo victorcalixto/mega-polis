@@ -24,6 +24,7 @@ class SvMegapolisReadLas(SverchCustomTreeNode, bpy.types.Node):
     bl_idname = 'SvMegapolisReadLas'
     bl_label = 'Read LAS'
     bl_icon = 'MESH_DATA'
+    sv_dependencies = {'laspy'}
     
    # Hide Interactive Sockets
     def update_sockets(self, context):
@@ -131,9 +132,8 @@ class SvMegapolisReadLas(SverchCustomTreeNode, bpy.types.Node):
 
 
 def register():
-    if laspy is not None:
-        bpy.utils.register_class(SvMegapolisReadLas)
+    bpy.utils.register_class(SvMegapolisReadLas)
+
 
 def unregister():
-    if laspy is not None:
-        bpy.utils.unregister_class(SvMegapolisReadLas)
+    bpy.utils.unregister_class(SvMegapolisReadLas)

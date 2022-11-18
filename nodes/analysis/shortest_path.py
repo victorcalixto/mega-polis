@@ -31,6 +31,7 @@ class SvMegapolisShortestPath(SverchCustomTreeNode, bpy.types.Node):
     bl_idname = 'SvMegapolisShortestPath'
     bl_label = 'Shortest Path'
     bl_icon = 'MESH_DATA'
+    sv_dependencies = {'osmnx', 'networkx'}
 
     # Hide Interactive Sockets
     def update_sockets(self, context):
@@ -172,9 +173,8 @@ class SvMegapolisShortestPath(SverchCustomTreeNode, bpy.types.Node):
 
 
 def register():
-    if nx is not None:
-        bpy.utils.register_class(SvMegapolisShortestPath)
+    bpy.utils.register_class(SvMegapolisShortestPath)
+
 
 def unregister():
-    if nx is not None:
-        bpy.utils.unregister_class(SvMegapolisShortestPath)
+    bpy.utils.unregister_class(SvMegapolisShortestPath)

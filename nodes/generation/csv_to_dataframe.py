@@ -18,6 +18,7 @@ class SvMegapolisCsvToDataframe(SverchCustomTreeNode, bpy.types.Node):
     bl_idname = 'SvMegapolisCsvToDataframe'
     bl_label = 'CsvToDataframe'
     bl_icon = 'MESH_DATA'
+    sv_dependencies = {'pandas'}
     
     def sv_init(self, context):
         # inputs
@@ -42,10 +43,10 @@ class SvMegapolisCsvToDataframe(SverchCustomTreeNode, bpy.types.Node):
         #Output
         self.outputs["Dataframe Output"].sv_set(df)
 
+
 def register():
-    if pd is not None:
-        bpy.utils.register_class(SvMegapolisCsvToDataframe)
+    bpy.utils.register_class(SvMegapolisCsvToDataframe)
+
 
 def unregister():
-    if pd is not None:
-        bpy.utils.unregister_class(SvMegapolisCsvToDataframe)
+    bpy.utils.unregister_class(SvMegapolisCsvToDataframe)
