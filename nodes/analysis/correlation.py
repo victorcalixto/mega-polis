@@ -12,7 +12,7 @@ Correlation_method = namedtuple('CorrelationMethod', ['pearson', 'kendall','spea
 CORRELATIONMETHOD = Correlation_method('pearson','kendall','spearman')
 correlationmethod_items = [(i, i, '') for i in CORRELATIONMETHOD]
 
-class SvMegapolisCorrelation(bpy.types.Node, SverchCustomTreeNode):
+class SvMegapolisCorrelation(SverchCustomTreeNode, bpy.types.Node):
     """
     Triggers: Correlation
     Tooltip: Correlates a Dataframe using the methods; pearson, kendall, or spearman 

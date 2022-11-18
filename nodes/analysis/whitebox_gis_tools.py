@@ -14,7 +14,7 @@ import os, signal
 from megapolis.dependencies import psutil
 
 
-class SvMegapolisWhiteboxGisTools(bpy.types.Node, SverchCustomTreeNode):
+class SvMegapolisWhiteboxGisTools(SverchCustomTreeNode, bpy.types.Node):
     """
     Triggers: WhiteboxGisTools
     Tooltip: Opens a Whitebox Tool Window

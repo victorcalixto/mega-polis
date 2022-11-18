@@ -9,7 +9,7 @@ from sverchok.data_structure import updateNode
 
 from megapolis.dependencies import sklearn as skl
 
-class SvMegapolisModelPredict(bpy.types.Node, SverchCustomTreeNode):
+class SvMegapolisModelPredict(SverchCustomTreeNode, bpy.types.Node):
     """
     Triggers: Model Predict
     Tooltip: Model Predict

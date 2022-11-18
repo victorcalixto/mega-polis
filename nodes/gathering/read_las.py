@@ -16,7 +16,7 @@ def getCoordinates(las):
     return coordinates
 
 
-class SvMegapolisReadLas(bpy.types.Node, SverchCustomTreeNode):
+class SvMegapolisReadLas(SverchCustomTreeNode, bpy.types.Node):
     """
     Triggers: Read LAS
     Tooltip: Read a LAS Point Cloud File 

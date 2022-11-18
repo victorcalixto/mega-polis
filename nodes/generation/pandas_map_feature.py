@@ -11,7 +11,7 @@ from megapolis.dependencies import pandas as pd
 import json 
 
 
-class SvMegapolisPandasMapFeature(bpy.types.Node, SverchCustomTreeNode):
+class SvMegapolisPandasMapFeature(SverchCustomTreeNode, bpy.types.Node):
     """
     Triggers: PandasMapFeature
     Tooltip: Pandas Map Feature

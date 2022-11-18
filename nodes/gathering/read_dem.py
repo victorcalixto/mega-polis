@@ -15,7 +15,7 @@ def makeFaces(x_shape,y_shape):
     return xy
 
 
-class SvMegapolisReadDem(bpy.types.Node, SverchCustomTreeNode):
+class SvMegapolisReadDem(SverchCustomTreeNode, bpy.types.Node):
     """
     Triggers: Read DEM
     Tooltip: Read a Digital Elevation Model file (geotiff)

@@ -9,7 +9,7 @@ from sverchok.data_structure import updateNode
 #Megapolis Dependencies
 
 
-class SvMegapolisDashboardBokehPlotLine(bpy.types.Node, SverchCustomTreeNode):
+class SvMegapolisDashboardBokehPlotLine(SverchCustomTreeNode, bpy.types.Node):
     """
     Triggers: Dashboard Bokeh Plot Line
     Tooltip: Dashboard Bokeh Plot Line

@@ -13,7 +13,7 @@ Attribute_type = namedtuple('AttributeType', ['aspect', 'profile_curvature','pla
 ATTRIBUTETYPE = Attribute_type('aspect', 'profile_curvature','planform_curvature','curvature','slope_riserun','slope_degrees','slope_percentage','slope_radians')
 attributetype_items = [(i, i, '') for i in ATTRIBUTETYPE]
 
-class SvMegapolisDemTerrainAttributes(bpy.types.Node, SverchCustomTreeNode):
+class SvMegapolisDemTerrainAttributes(SverchCustomTreeNode, bpy.types.Node):
     """
     Triggers: Dem Terrain Attributes
     Tooltip: Provides methods for extract Terrain Attributes values: Aspect, Curvature, and Slope. 

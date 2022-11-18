@@ -13,7 +13,7 @@ Info_type = namedtuple('InfoType', ['info','head','tail','decribe'])
 INFOTYPE = Info_type('info','head','tail','describe')
 infotype_items = [(i, i, '') for i in INFOTYPE]
 
-class SvMegapolisDataframeUtils(bpy.types.Node, SverchCustomTreeNode):
+class SvMegapolisDataframeUtils(SverchCustomTreeNode, bpy.types.Node):
     """
     Triggers: Dataframe Utils
     Tooltip: Dataframe Utilits for Exploratory Data Analysis: info, head, tail, and decribe  

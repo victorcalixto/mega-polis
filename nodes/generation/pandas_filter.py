@@ -10,7 +10,7 @@ from sverchok.data_structure import updateNode
 from megapolis.dependencies import pandas as pd
 
 
-class SvMegapolisPandasFilter(bpy.types.Node, SverchCustomTreeNode):
+class SvMegapolisPandasFilter(SverchCustomTreeNode, bpy.types.Node):
     """
     Triggers: Pandas Filter
     Tooltip: Creates a Pandas Filter

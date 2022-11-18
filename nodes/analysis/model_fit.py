@@ -9,7 +9,7 @@ from sverchok.data_structure import updateNode
 
 from megapolis.dependencies import sklearn as skl
 
-class SvMegapolisModelFit(bpy.types.Node, SverchCustomTreeNode):
+class SvMegapolisModelFit(SverchCustomTreeNode, bpy.types.Node):
     """
     Triggers: Model Fit
     Tooltip: Model Fit

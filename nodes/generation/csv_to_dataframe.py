@@ -10,7 +10,7 @@ from sverchok.data_structure import updateNode
 from megapolis.dependencies import pandas as pd
 
 
-class SvMegapolisCsvToDataframe(bpy.types.Node, SverchCustomTreeNode):
+class SvMegapolisCsvToDataframe(SverchCustomTreeNode, bpy.types.Node):
     """
     Triggers: CsvToDataframe
     Tooltip: Creates a Dataframe from Csv File

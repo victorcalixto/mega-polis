@@ -9,7 +9,7 @@ from sverchok.data_structure import updateNode
 
 from megapolis.dependencies import sklearn as skl
 
-class SvMegapolisModelEvaluate(bpy.types.Node, SverchCustomTreeNode):
+class SvMegapolisModelEvaluate(SverchCustomTreeNode, bpy.types.Node):
     """
     Triggers: Model Evaluate
     Tooltip: Model Evaluate

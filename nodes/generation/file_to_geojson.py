@@ -10,7 +10,7 @@ from sverchok.data_structure import updateNode
 from megapolis.dependencies import geopandas as gpd
 import json
 
-class SvMegapolisFileToGeoJson(bpy.types.Node, SverchCustomTreeNode):
+class SvMegapolisFileToGeoJson(SverchCustomTreeNode, bpy.types.Node):
     """
     Triggers: FileToGeoJson
     Tooltip: File To GeoJson

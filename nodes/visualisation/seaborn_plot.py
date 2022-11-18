@@ -26,7 +26,7 @@ Plot = namedtuple('Plot', ['regplot', 'pairplot'])
 PLOT = Plot('regplot', 'pairplot')
 plot_items = [(i, i, '') for i in PLOT]
 
-class SvMegapolisSeabornPlot(bpy.types.Node, SverchCustomTreeNode):
+class SvMegapolisSeabornPlot(SverchCustomTreeNode, bpy.types.Node):
     """
     Triggers: Seaborn Plot
     Tooltip: Plot

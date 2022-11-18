@@ -399,7 +399,7 @@ class Detector:
 
 
 
-class SvMegapolisImageSegmentation(bpy.types.Node, SverchCustomTreeNode):
+class SvMegapolisImageSegmentation(SverchCustomTreeNode, bpy.types.Node):
     """
     Triggers: Image Segmentation
     Tooltip: Image Segmentation

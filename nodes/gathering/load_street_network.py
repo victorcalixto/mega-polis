@@ -21,7 +21,7 @@ Network_type = namedtuple('NetworkType', ['all', 'bike','drive','drive_service',
 NETWORKTYPE = Network_type('all', 'bike','drive','drive_service','walk')
 networktype_items = [(i, i, '') for i in NETWORKTYPE]
 
-class SvMegapolisLoadStreetNetwork(bpy.types.Node, SverchCustomTreeNode):
+class SvMegapolisLoadStreetNetwork(SverchCustomTreeNode, bpy.types.Node):
     """
     Triggers: Load Street Network
     Tooltip: Load Street Network

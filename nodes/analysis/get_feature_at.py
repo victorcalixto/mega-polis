@@ -9,7 +9,7 @@ from sverchok.data_structure import updateNode
 #Megapolis Dependencies
 from megapolis.dependencies import pandas as pd
 
-class SvMegapolisGetFeatureAt(bpy.types.Node, SverchCustomTreeNode):
+class SvMegapolisGetFeatureAt(SverchCustomTreeNode, bpy.types.Node):
     """
     Triggers: Correlation Matrix
     Tooltip: Get a Feture From a Dataframe at X and y features 

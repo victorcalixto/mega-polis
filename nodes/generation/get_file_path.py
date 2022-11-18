@@ -10,7 +10,7 @@ from sverchok.data_structure import updateNode
 import os
 
 
-class SvMegapolisGetFilePath(bpy.types.Node, SverchCustomTreeNode):
+class SvMegapolisGetFilePath(SverchCustomTreeNode, bpy.types.Node):
     """
     Triggers: GetFilePath
     Tooltip: Get File Path

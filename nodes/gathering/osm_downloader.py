@@ -23,7 +23,7 @@ features_items = [(i, i, '') for i in FEATURES]
 
 
 
-class SvMegapolisOSMDownloader(bpy.types.Node, SverchCustomTreeNode):
+class SvMegapolisOSMDownloader(SverchCustomTreeNode, bpy.types.Node):
     """
     Triggers: OSM Downloader
     Tooltip: Download an Open Streetmap file

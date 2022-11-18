@@ -7,7 +7,7 @@ from sverchok.data_structure import updateNode
 
 #Megapolis Dependencies
 
-class SvMegapolisCreateDictionary(bpy.types.Node, SverchCustomTreeNode):
+class SvMegapolisCreateDictionary(SverchCustomTreeNode, bpy.types.Node):
     """
     Triggers: Create Dictionary
     Tooltip: Create Dictionary

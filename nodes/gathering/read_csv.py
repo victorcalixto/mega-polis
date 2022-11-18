@@ -12,7 +12,7 @@ from megapolis.dependencies import pandas as pd
 import csv
 
 
-class SvMegapolisReadCsv(bpy.types.Node, SverchCustomTreeNode):
+class SvMegapolisReadCsv(SverchCustomTreeNode, bpy.types.Node):
     """
     Triggers: Read CSV
     Tooltip: Read CSV file

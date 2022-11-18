@@ -11,7 +11,7 @@ from megapolis.dependencies import wget
 
 import os
 
-class SvMegapolisDownloadDataUrl(bpy.types.Node, SverchCustomTreeNode):
+class SvMegapolisDownloadDataUrl(SverchCustomTreeNode, bpy.types.Node):
     """
     Triggers: Download Data Url
 

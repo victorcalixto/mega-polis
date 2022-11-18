@@ -31,7 +31,7 @@ filetypegis_items = [(i, i, '') for i in FILETYPEGIS]
 
 
 
-class SvMegapolisReadGis(bpy.types.Node, SverchCustomTreeNode):
+class SvMegapolisReadGis(SverchCustomTreeNode, bpy.types.Node):
     """
     Triggers: Read GIS
     Tooltip: Read GIS file (shapefile,geopackage, and geoJSON)

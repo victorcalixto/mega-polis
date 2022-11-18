@@ -11,7 +11,7 @@ from megapolis.dependencies import geopandas as gpd
 
 
 
-class SvMegapolisFileToGdf(bpy.types.Node, SverchCustomTreeNode):
+class SvMegapolisFileToGdf(SverchCustomTreeNode, bpy.types.Node):
     """
     Triggers: FileToGdf
     Tooltip: File To Gdf

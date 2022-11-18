@@ -9,7 +9,7 @@ from sverchok.data_structure import updateNode
 from megapolis.dependencies import pandas as pd
 
 
-class SvMegapolisPandasDataframe(bpy.types.Node, SverchCustomTreeNode):
+class SvMegapolisPandasDataframe(SverchCustomTreeNode, bpy.types.Node):
     """
     Triggers: Pandas Series
     Tooltip: Creates a Pandas Dataframe from a Pandas Series

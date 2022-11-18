@@ -22,7 +22,7 @@ DATAFRAME = Dataframe('iris', 'california_housing','diabetes','digits','wine')
 dataframe_items = [(i, i, '') for i in DATAFRAME]
 
 
-class SvMegapolisGetSampleDataframe(bpy.types.Node, SverchCustomTreeNode):
+class SvMegapolisGetSampleDataframe(SverchCustomTreeNode, bpy.types.Node):
     """
     Triggers: Get Sample Dataframe
     Tooltip: Get a Dataframe Sample

@@ -12,7 +12,7 @@ from megapolis.dependencies import visilibity as vis
 import math
 
 
-class SvMegapolisIsovists(bpy.types.Node, SverchCustomTreeNode):
+class SvMegapolisIsovists(SverchCustomTreeNode, bpy.types.Node):
     """
     Triggers: Isovists
     Tooltip: Creates a 2D Isovists based on a 2d Context

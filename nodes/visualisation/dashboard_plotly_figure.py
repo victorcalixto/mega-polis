@@ -9,7 +9,7 @@ from sverchok.data_structure import updateNode
 #Megapolis Dependencies
 
 
-class SvMegapolisDashboardPlotlyFigure(bpy.types.Node, SverchCustomTreeNode):
+class SvMegapolisDashboardPlotlyFigure(SverchCustomTreeNode, bpy.types.Node):
     """
     Triggers: Dashboard Plotly Figure
     Tooltip: Dashboard Plotly Figure

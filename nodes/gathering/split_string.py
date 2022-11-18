@@ -6,7 +6,7 @@ from sverchok.node_tree import SverchCustomTreeNode
 from sverchok.data_structure import updateNode
 
 
-class SvMegapolisSplitString(bpy.types.Node, SverchCustomTreeNode):
+class SvMegapolisSplitString(SverchCustomTreeNode, bpy.types.Node):
     """
     Triggers: Split String
     Tooltip: Splits a string into a list

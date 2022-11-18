@@ -11,7 +11,7 @@ from megapolis.dependencies import pandas as pd
 import json
 
 
-class SvMegapolisReadJson(bpy.types.Node, SverchCustomTreeNode):
+class SvMegapolisReadJson(SverchCustomTreeNode, bpy.types.Node):
     """
     Triggers: Read JSON
     Tooltip: Read JSON file

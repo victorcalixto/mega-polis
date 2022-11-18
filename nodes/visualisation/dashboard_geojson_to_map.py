@@ -9,7 +9,7 @@ from sverchok.data_structure import updateNode
 #Megapolis Dependencies
 import json
 
-class SvMegapolisDashboardGeojsonToMap(bpy.types.Node, SverchCustomTreeNode):
+class SvMegapolisDashboardGeojsonToMap(SverchCustomTreeNode, bpy.types.Node):
     """
     Triggers: Dashboard Geojson To Map
     Tooltip: Dashboard Geojson to Map

@@ -12,7 +12,7 @@ from megapolis.dependencies import streamlit as st
 
 #import json 
 
-class SvMegapolisDashboardDataframe(bpy.types.Node, SverchCustomTreeNode):
+class SvMegapolisDashboardDataframe(SverchCustomTreeNode, bpy.types.Node):
     """
     Triggers: Dashboard Dataframe
     Tooltip: Dashboard Dataframe

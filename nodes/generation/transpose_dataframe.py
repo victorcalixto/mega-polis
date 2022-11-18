@@ -10,7 +10,7 @@ from sverchok.data_structure import updateNode
 from megapolis.dependencies import pandas as pd
  
 
-class SvMegapolisTransposeDataframe(bpy.types.Node, SverchCustomTreeNode):
+class SvMegapolisTransposeDataframe(SverchCustomTreeNode, bpy.types.Node):
     """
     Triggers: Transpose Dataframe
     Tooltip: Transpose a Dataframe

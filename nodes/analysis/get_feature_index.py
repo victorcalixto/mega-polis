@@ -9,7 +9,7 @@ from sverchok.data_structure import updateNode
 #Megapolis Dependencies
 from megapolis.dependencies import pandas as pd
 
-class SvMegapolisGetFeatureIndex(bpy.types.Node, SverchCustomTreeNode):
+class SvMegapolisGetFeatureIndex(SverchCustomTreeNode, bpy.types.Node):
     """
     Triggers: Get Feature Index
     Tooltip: Get a Feature from a Daatframe at index of X and y features 

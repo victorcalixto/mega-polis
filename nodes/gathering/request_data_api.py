@@ -12,7 +12,7 @@ from datetime import datetime
 
 
 
-class SvMegapolisRequestDataApi(bpy.types.Node, SverchCustomTreeNode):
+class SvMegapolisRequestDataApi(SverchCustomTreeNode, bpy.types.Node):
     """
     Triggers: Request Data Api
     Tooltip: Request data from an Application Program Interface (API)

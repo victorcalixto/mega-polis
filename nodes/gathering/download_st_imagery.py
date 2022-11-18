@@ -25,7 +25,7 @@ import json
 import urllib.request
 
 
-class SvMegapolisDownloadStImagery(bpy.types.Node, SverchCustomTreeNode):
+class SvMegapolisDownloadStImagery(SverchCustomTreeNode, bpy.types.Node):
     """
     Triggers: Download Street Imagery
     Tooltip: Download Geo-Referenced Mapillary Street Imagery

@@ -13,7 +13,7 @@ Model_method = namedtuple('ModelMethod', ['linear', 'ransac','ridge','elasticnet
 MODELMETHOD = Model_method('linear','ransac','ridge','elasticnet','lasso')
 modelmethod_items = [(i, i, '') for i in MODELMETHOD]
 
-class SvMegapolisLinearModelSelection(bpy.types.Node, SverchCustomTreeNode):
+class SvMegapolisLinearModelSelection(SverchCustomTreeNode, bpy.types.Node):
     """
     Triggers: Linear Model Selection
     Tooltip: Selection of a Linear Model: Linear, RANSAC, Ridge, ElasticNet, Lasso 

@@ -31,7 +31,7 @@ sequential_items = [(i, i, '') for i in SEQUENTIAL]
 
 
 
-class SvMegapolisSequentialColormap(bpy.types.Node, SverchCustomTreeNode):
+class SvMegapolisSequentialColormap(SverchCustomTreeNode, bpy.types.Node):
     """
     Triggers: Sequential Colormap
     Tooltip: Sequential Colormap

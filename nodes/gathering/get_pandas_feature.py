@@ -10,7 +10,7 @@ from sverchok.data_structure import updateNode
 from megapolis.dependencies import pandas as pd
 
 
-class SvMegapolisGetPandasFeature(bpy.types.Node, SverchCustomTreeNode):
+class SvMegapolisGetPandasFeature(SverchCustomTreeNode, bpy.types.Node):
     """
     Triggers: Get Pandas Feature
     Tooltip: Gets a feature from a pandas series

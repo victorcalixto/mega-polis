@@ -9,7 +9,7 @@ from sverchok.data_structure import updateNode
 #Megapolis Dependencies
 
 
-class SvMegapolisDashboardLoadMap(bpy.types.Node, SverchCustomTreeNode):
+class SvMegapolisDashboardLoadMap(SverchCustomTreeNode, bpy.types.Node):
     """
     Triggers: Dashboard Load Map
     Tooltip: Dashboard Load Map

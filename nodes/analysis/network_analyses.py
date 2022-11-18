@@ -16,7 +16,7 @@ Analysis_method = namedtuple('AnalysisMethod', ['closeness_centrality','betweenn
 ANALYSISMETHOD = Analysis_method('closeness_centrality','betweenness_centrality','degree_centrality','basic')
 analysismethod_items = [(i, i, '') for i in ANALYSISMETHOD]
 
-class SvMegapolisNetworkAnalyses(bpy.types.Node, SverchCustomTreeNode):
+class SvMegapolisNetworkAnalyses(SverchCustomTreeNode, bpy.types.Node):
     """
     Triggers: Network Analyses
     Tooltip: Network Analises: Closeness Centrality and Degree Centrality  

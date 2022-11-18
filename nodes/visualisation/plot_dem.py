@@ -22,7 +22,7 @@ SEQUENTIAL = Sequential('viridis', 'plasma', 'inferno', 'magma', 'cividis','Grey
       'Wistia', 'hot', 'afmhot', 'gist_heat', 'copper')
 sequential_items = [(i, i, '') for i in SEQUENTIAL]
 
-class SvMegapolisPlotDem(bpy.types.Node, SverchCustomTreeNode):
+class SvMegapolisPlotDem(SverchCustomTreeNode, bpy.types.Node):
     """
     Triggers: Plot Dem
     Tooltip: Plot a Dem Array 

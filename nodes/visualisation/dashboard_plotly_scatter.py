@@ -8,7 +8,7 @@ from sverchok.data_structure import updateNode
 #Megapolis Dependencies
 import json 
 
-class SvMegapolisDashboardPlotlyScatter(bpy.types.Node, SverchCustomTreeNode):
+class SvMegapolisDashboardPlotlyScatter(SverchCustomTreeNode, bpy.types.Node):
     """
     Triggers: Dashboard Plotly Scatter
     Tooltip: Dashboard Plotly Scatter

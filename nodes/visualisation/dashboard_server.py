@@ -14,7 +14,7 @@ import sys
 
 from megapolis.dependencies import psutil
 
-class SvMegapolisDashboardServer(bpy.types.Node, SverchCustomTreeNode):
+class SvMegapolisDashboardServer(SverchCustomTreeNode, bpy.types.Node):
     """
     Triggers: Dashboard Server
     Tooltip: Dashboard Server

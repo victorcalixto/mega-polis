@@ -23,7 +23,7 @@ Path_type = namedtuple('PathType', ['length', 'travel_time'])
 PATHTYPE = Path_type('length','travel_time')
 pathtype_items = [(i, i, '') for i in PATHTYPE]
 
-class SvMegapolisShortestPath(bpy.types.Node, SverchCustomTreeNode):
+class SvMegapolisShortestPath(SverchCustomTreeNode, bpy.types.Node):
     """
     Triggers: Shortest Path
     Tooltip: Provides shortest path between two points based on lenght or time travel 
