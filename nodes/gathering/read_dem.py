@@ -8,11 +8,6 @@ from sverchok.data_structure import updateNode
 
 #Megapolis Dependencies
 from megapolis.dependencies import rasterio as rio
-<<<<<<< HEAD
-
-=======
-from megapolis.dependencies import pandas as pd
->>>>>>> 57d4c4d (Fixing unregister modules)
 import numpy as np
 
 def makeFaces(x_shape,y_shape):
