@@ -13,7 +13,7 @@ Model_method = namedtuple('ModelMethod', ['linear', 'ransac','ridge','elasticnet
 MODELMETHOD = Model_method('linear','ransac','ridge','elasticnet','lasso')
 modelmethod_items = [(i, i, '') for i in MODELMETHOD]
 
-class SvMegapolisLinearModelSelection(bpy.types.Node, SverchCustomTreeNode):
+class SvMegapolisLinearModelSelection(SverchCustomTreeNode, bpy.types.Node):
     """
     Triggers: Linear Model Selection
     Tooltip: Selection of a Linear Model: Linear, RANSAC, Ridge, ElasticNet, Lasso 
@@ -21,6 +21,7 @@ class SvMegapolisLinearModelSelection(bpy.types.Node, SverchCustomTreeNode):
     bl_idname = 'SvMegapolisLinearModelSelection'
     bl_label = 'Linear Model Selection'
     bl_icon = 'MESH_DATA'
+    sv_dependencies = {'sklearn'}
 
     # Hide Interactive Sockets
     def update_sockets(self, context):
@@ -70,11 +71,12 @@ class SvMegapolisLinearModelSelection(bpy.types.Node, SverchCustomTreeNode):
         ## Output
 
         self.outputs["Model"].sv_set(model_out)
-        
+
+
 def register():
-    if skl is not None:
-        bpy.utils.register_class(SvMegapolisLinearModelSelection)
+    bpy.utils.register_class(SvMegapolisLinearModelSelection)
+
+
 
 def unregister():
-    if skl is not None:
-        bpy.utils.unregister_class(SvMegapolisLinearModelSelection)
+    bpy.utils.unregister_class(SvMegapolisLinearModelSelection)

@@ -26,7 +26,7 @@ Plot = namedtuple('Plot', ['regplot', 'pairplot'])
 PLOT = Plot('regplot', 'pairplot')
 plot_items = [(i, i, '') for i in PLOT]
 
-class SvMegapolisSeabornPlot(bpy.types.Node, SverchCustomTreeNode):
+class SvMegapolisSeabornPlot(SverchCustomTreeNode, bpy.types.Node):
     """
     Triggers: Seaborn Plot
     Tooltip: Plot
@@ -34,7 +34,7 @@ class SvMegapolisSeabornPlot(bpy.types.Node, SverchCustomTreeNode):
     bl_idname = 'SvMegapolisSeabornPlot'
     bl_label = 'Seaborn Plot'
     bl_icon = 'MESH_DATA'
-    
+    sv_dependencies = {'matplotlib'}
 
     # Hide Interactive Sockets
     def update_sockets(self, context):
@@ -130,11 +130,9 @@ class SvMegapolisSeabornPlot(bpy.types.Node, SverchCustomTreeNode):
                 hex_name=secrets.token_hex(nbytes=16)
 
 
-
 def register():
-    if sns is not None:
-        bpy.utils.register_class(SvMegapolisSeabornPlot)
+    bpy.utils.register_class(SvMegapolisSeabornPlot)
+
 
 def unregister():
-    if sns is not None:
-        bpy.utils.unregister_class(SvMegapolisSeabornPlot)
+    bpy.utils.unregister_class(SvMegapolisSeabornPlot)

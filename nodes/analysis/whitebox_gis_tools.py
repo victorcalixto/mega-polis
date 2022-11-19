@@ -14,7 +14,7 @@ import os, signal
 from megapolis.dependencies import psutil
 
 
-class SvMegapolisWhiteboxGisTools(bpy.types.Node, SverchCustomTreeNode):
+class SvMegapolisWhiteboxGisTools(SverchCustomTreeNode, bpy.types.Node):
     """
     Triggers: WhiteboxGisTools
     Tooltip: Opens a Whitebox Tool Window
@@ -22,7 +22,6 @@ class SvMegapolisWhiteboxGisTools(bpy.types.Node, SverchCustomTreeNode):
     bl_idname = 'SvMegapolisWhiteboxGisTools'
     bl_label = 'Whitebox Gis Tools'
     bl_icon = 'MESH_DATA'
-    
 
     # Hide Interactive Sockets
     def update_sockets(self, context):

@@ -11,7 +11,7 @@ from subprocess import call
 
 import os
 
-class SvMegapolisObjectDetection(bpy.types.Node, SverchCustomTreeNode):
+class SvMegapolisObjectDetection(SverchCustomTreeNode, bpy.types.Node):
     """
     Triggers: Object Detection
     Tooltip: Object Dectection (Instance Segmentation using YoloV5)

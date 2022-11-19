@@ -21,7 +21,7 @@ Network_type = namedtuple('NetworkType', ['all', 'bike','drive','drive_service',
 NETWORKTYPE = Network_type('all', 'bike','drive','drive_service','walk')
 networktype_items = [(i, i, '') for i in NETWORKTYPE]
 
-class SvMegapolisLoadStreetNetwork(bpy.types.Node, SverchCustomTreeNode):
+class SvMegapolisLoadStreetNetwork(SverchCustomTreeNode, bpy.types.Node):
     """
     Triggers: Load Street Network
     Tooltip: Load Street Network
@@ -29,6 +29,7 @@ class SvMegapolisLoadStreetNetwork(bpy.types.Node, SverchCustomTreeNode):
     bl_idname = 'SvMegapolisLoadStreetNetwork'
     bl_label = 'Load Street Network'
     bl_icon = 'MESH_DATA'
+    sv_dependencies = {'osmnx'}
 
     # Hide Interactive Sockets
     def update_sockets(self, context):
@@ -293,9 +294,8 @@ class SvMegapolisLoadStreetNetwork(bpy.types.Node, SverchCustomTreeNode):
         
 
 def register():
-    if ox is not None:
-        bpy.utils.register_class(SvMegapolisLoadStreetNetwork)
+    bpy.utils.register_class(SvMegapolisLoadStreetNetwork)
+
 
 def unregister():
-    if ox is not None:
-        bpy.utils.unregister_class(SvMegapolisLoadStreetNetwork)
+    bpy.utils.unregister_class(SvMegapolisLoadStreetNetwork)

@@ -23,7 +23,7 @@ Path_type = namedtuple('PathType', ['length', 'travel_time'])
 PATHTYPE = Path_type('length','travel_time')
 pathtype_items = [(i, i, '') for i in PATHTYPE]
 
-class SvMegapolisShortestPath(bpy.types.Node, SverchCustomTreeNode):
+class SvMegapolisShortestPath(SverchCustomTreeNode, bpy.types.Node):
     """
     Triggers: Shortest Path
     Tooltip: Provides shortest path between two points based on lenght or time travel 
@@ -31,6 +31,7 @@ class SvMegapolisShortestPath(bpy.types.Node, SverchCustomTreeNode):
     bl_idname = 'SvMegapolisShortestPath'
     bl_label = 'Shortest Path'
     bl_icon = 'MESH_DATA'
+    sv_dependencies = {'osmnx', 'networkx'}
 
     # Hide Interactive Sockets
     def update_sockets(self, context):
@@ -172,9 +173,8 @@ class SvMegapolisShortestPath(bpy.types.Node, SverchCustomTreeNode):
 
 
 def register():
-    if nx is not None:
-        bpy.utils.register_class(SvMegapolisShortestPath)
+    bpy.utils.register_class(SvMegapolisShortestPath)
+
 
 def unregister():
-    if nx is not None:
-        bpy.utils.unregister_class(SvMegapolisShortestPath)
+    bpy.utils.unregister_class(SvMegapolisShortestPath)

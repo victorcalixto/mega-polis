@@ -10,7 +10,7 @@ from sverchok.data_structure import updateNode
 from megapolis.dependencies import pandas as pd
  
 
-class SvMegapolisTransposeDataframe(bpy.types.Node, SverchCustomTreeNode):
+class SvMegapolisTransposeDataframe(SverchCustomTreeNode, bpy.types.Node):
     """
     Triggers: Transpose Dataframe
     Tooltip: Transpose a Dataframe
@@ -18,7 +18,7 @@ class SvMegapolisTransposeDataframe(bpy.types.Node, SverchCustomTreeNode):
     bl_idname = 'SvMegapolisTransposeDataframe'
     bl_label = 'Transpose Dataframe'
     bl_icon = 'MESH_DATA'
-    
+    sv_dependencies = {'pandas'}
 
     def sv_init(self, context):
         # inputs
@@ -39,10 +39,10 @@ class SvMegapolisTransposeDataframe(bpy.types.Node, SverchCustomTreeNode):
         #Output
         self.outputs["Dataframe Output"].sv_set(df_transposed)
 
+
 def register():
-    if pd is not None:
-        bpy.utils.register_class(SvMegapolisTransposeDataframe)
+    bpy.utils.register_class(SvMegapolisTransposeDataframe)
+
 
 def unregister():
-    if pd is not None:
-        bpy.utils.unregister_class(SvMegapolisTransposeDataframe)
+    bpy.utils.unregister_class(SvMegapolisTransposeDataframe)

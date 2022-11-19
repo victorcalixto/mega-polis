@@ -15,7 +15,7 @@ def makeFaces(x_shape,y_shape):
     return xy
 
 
-class SvMegapolisReadDem(bpy.types.Node, SverchCustomTreeNode):
+class SvMegapolisReadDem(SverchCustomTreeNode, bpy.types.Node):
     """
     Triggers: Read DEM
     Tooltip: Read a Digital Elevation Model file (geotiff)
@@ -23,7 +23,7 @@ class SvMegapolisReadDem(bpy.types.Node, SverchCustomTreeNode):
     bl_idname = 'SvMegapolisReadDem'
     bl_label = 'Read DEM'
     bl_icon = 'MESH_DATA'
-    
+    sv_dependencies = {'rasterio'}
 
     def sv_init(self, context):
         # inputs
@@ -75,10 +75,10 @@ class SvMegapolisReadDem(bpy.types.Node, SverchCustomTreeNode):
         self.outputs["Faces"].sv_set(faces)
         self.outputs["DEM data"].sv_set(dem_data)
 
+
 def register():
-    if rio is not None:
-        bpy.utils.register_class(SvMegapolisReadDem)
+    bpy.utils.register_class(SvMegapolisReadDem)
+
 
 def unregister():
-    if rio is not None:
-        bpy.utils.unregister_class(SvMegapolisReadDem)
+    bpy.utils.unregister_class(SvMegapolisReadDem)

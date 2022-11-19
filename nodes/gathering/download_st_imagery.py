@@ -25,7 +25,7 @@ import json
 import urllib.request
 
 
-class SvMegapolisDownloadStImagery(bpy.types.Node, SverchCustomTreeNode):
+class SvMegapolisDownloadStImagery(SverchCustomTreeNode, bpy.types.Node):
     """
     Triggers: Download Street Imagery
     Tooltip: Download Geo-Referenced Mapillary Street Imagery
@@ -33,7 +33,7 @@ class SvMegapolisDownloadStImagery(bpy.types.Node, SverchCustomTreeNode):
     bl_idname = 'SvMegapolisDownloadStImagery'
     bl_label = 'Download Street Imagery'
     bl_icon = 'MESH_DATA'
-    
+    sv_dependencies = {'mapillary', 'requests'}
 
     # Hide Interactive Sockets
     def update_sockets(self, context):
@@ -211,11 +211,11 @@ class SvMegapolisDownloadStImagery(bpy.types.Node, SverchCustomTreeNode):
         self.outputs["Images_Index"].sv_set(images)
         self.outputs["Coordinates"].sv_set(coords)
         self.outputs["Output_Message"].sv_set(message)
-        
+
+
 def register():
-    if mly is not None:
-        bpy.utils.register_class(SvMegapolisDownloadStImagery)
+    bpy.utils.register_class(SvMegapolisDownloadStImagery)
+
 
 def unregister():
-    if mly is not None:
-        bpy.utils.unregister_class(SvMegapolisDownloadStImagery)
+    bpy.utils.unregister_class(SvMegapolisDownloadStImagery)

@@ -16,7 +16,7 @@ import webbrowser
 
 from megapolis.dependencies import psutil
 
-class SvMegapolisPythonServer(bpy.types.Node, SverchCustomTreeNode):
+class SvMegapolisPythonServer(SverchCustomTreeNode, bpy.types.Node):
     """
     Triggers: Python Server
     Tooltip: Python Server

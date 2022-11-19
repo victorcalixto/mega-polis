@@ -16,7 +16,7 @@ Analysis_method = namedtuple('AnalysisMethod', ['closeness_centrality','betweenn
 ANALYSISMETHOD = Analysis_method('closeness_centrality','betweenness_centrality','degree_centrality','basic')
 analysismethod_items = [(i, i, '') for i in ANALYSISMETHOD]
 
-class SvMegapolisNetworkAnalyses(bpy.types.Node, SverchCustomTreeNode):
+class SvMegapolisNetworkAnalyses(SverchCustomTreeNode, bpy.types.Node):
     """
     Triggers: Network Analyses
     Tooltip: Network Analises: Closeness Centrality and Degree Centrality  
@@ -24,6 +24,7 @@ class SvMegapolisNetworkAnalyses(bpy.types.Node, SverchCustomTreeNode):
     bl_idname = 'SvMegapolisNetworkAnalyses'
     bl_label = 'Network Analyses'
     bl_icon = 'MESH_DATA'
+    sv_dependencies = {'osmnx', 'networkx'}
 
     # Hide Interactive Sockets
     def update_sockets(self, context):
@@ -112,9 +113,8 @@ class SvMegapolisNetworkAnalyses(bpy.types.Node, SverchCustomTreeNode):
         
 
 def register():
-    if nx is not None:
-        bpy.utils.register_class(SvMegapolisNetworkAnalyses)
+    bpy.utils.register_class(SvMegapolisNetworkAnalyses)
+
 
 def unregister():
-    if nx is not None:
-        bpy.utils.unregister_class(SvMegapolisNetworkAnalyses)
+    bpy.utils.unregister_class(SvMegapolisNetworkAnalyses)

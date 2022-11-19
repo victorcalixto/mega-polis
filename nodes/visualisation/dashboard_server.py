@@ -14,7 +14,7 @@ import sys
 
 from megapolis.dependencies import psutil
 
-class SvMegapolisDashboardServer(bpy.types.Node, SverchCustomTreeNode):
+class SvMegapolisDashboardServer(SverchCustomTreeNode, bpy.types.Node):
     """
     Triggers: Dashboard Server
     Tooltip: Dashboard Server
@@ -22,7 +22,7 @@ class SvMegapolisDashboardServer(bpy.types.Node, SverchCustomTreeNode):
     bl_idname = 'SvMegapolisDashboardServer'
     bl_label = 'Dashboard Server'
     bl_icon = 'MESH_DATA'
-
+    sv_dependencies = {'psutil'}
     
     # Hide Interactive Sockets
     def update_sockets(self, context):

@@ -12,7 +12,7 @@ Correlation_method = namedtuple('CorrelationMethod', ['pearson', 'kendall','spea
 CORRELATIONMETHOD = Correlation_method('pearson','kendall','spearman')
 correlationmethod_items = [(i, i, '') for i in CORRELATIONMETHOD]
 
-class SvMegapolisCorrelation(bpy.types.Node, SverchCustomTreeNode):
+class SvMegapolisCorrelation(SverchCustomTreeNode, bpy.types.Node):
     """
     Triggers: Correlation
     Tooltip: Correlates a Dataframe using the methods; pearson, kendall, or spearman 
@@ -20,6 +20,7 @@ class SvMegapolisCorrelation(bpy.types.Node, SverchCustomTreeNode):
     bl_idname = 'SvMegapolisCorrelation'
     bl_label = 'Correlation'
     bl_icon = 'MESH_DATA'
+    sv_dependencies = {'pandas'}
 
     # Hide Interactive Sockets
     def update_sockets(self, context):
@@ -66,9 +67,8 @@ class SvMegapolisCorrelation(bpy.types.Node, SverchCustomTreeNode):
 
 
 def register():
-    if pd is not None:
-        bpy.utils.register_class(SvMegapolisCorrelation)
+    bpy.utils.register_class(SvMegapolisCorrelation)
+
 
 def unregister():
-    if pd is not None:
-        bpy.utils.unregister_class(SvMegapolisCorrelation)
+    bpy.utils.unregister_class(SvMegapolisCorrelation)

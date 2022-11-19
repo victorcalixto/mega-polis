@@ -9,7 +9,7 @@ from sverchok.data_structure import updateNode
 
 from megapolis.dependencies import sklearn as skl
 
-class SvMegapolisModelEvaluate(bpy.types.Node, SverchCustomTreeNode):
+class SvMegapolisModelEvaluate(SverchCustomTreeNode, bpy.types.Node):
     """
     Triggers: Model Evaluate
     Tooltip: Model Evaluate
@@ -17,7 +17,7 @@ class SvMegapolisModelEvaluate(bpy.types.Node, SverchCustomTreeNode):
     bl_idname = 'SvMegapolisModelEvaluate'
     bl_label = 'Model Evaluate'
     bl_icon = 'MESH_DATA'
-    
+    sv_dependencies = {'sklearn'}
 
     # Hide Interactive Sockets
     def update_sockets(self, context):
@@ -65,10 +65,10 @@ class SvMegapolisModelEvaluate(bpy.types.Node, SverchCustomTreeNode):
         self.outputs["r2"].sv_set(predictions)
         self.outputs["rmse"].sv_set(predictions)
 
+
 def register():
-    if skl is not None:
-        bpy.utils.register_class(SvMegapolisModelEvaluate)
+    bpy.utils.register_class(SvMegapolisModelEvaluate)
+
 
 def unregister():
-    if skl is not None:
-        bpy.utils.unregister_class(SvMegapolisModelEvaluate)
+    bpy.utils.unregister_class(SvMegapolisModelEvaluate)

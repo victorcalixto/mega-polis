@@ -13,7 +13,7 @@ def makeFaces(list,x_shape,y_shape):
             list.append([x*x_shape+y,x*x_shape+y+1,(x+1)*x_shape+y+1,(x+1)*x_shape+y])
 
 
-class SvMegapolisFacesFromVertices(bpy.types.Node, SverchCustomTreeNode):
+class SvMegapolisFacesFromVertices(SverchCustomTreeNode, bpy.types.Node):
     """
     Triggers: FacesFromVertices
     Tooltip: Faces from Vertices

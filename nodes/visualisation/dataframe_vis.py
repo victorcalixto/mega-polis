@@ -68,7 +68,7 @@ def format_to_text(data):
     return out
 
 
-class SvMegapolisDataframeVis(bpy.types.Node, SverchCustomTreeNode):
+class SvMegapolisDataframeVis(SverchCustomTreeNode, bpy.types.Node):
     """
     Triggers: Dataframe to Sverchok Text
     Tooltip: Quickly write A Dataframe from NodeView to text datablock

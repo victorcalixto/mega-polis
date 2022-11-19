@@ -22,7 +22,7 @@ DATAFRAME = Dataframe('iris', 'california_housing','diabetes','digits','wine')
 dataframe_items = [(i, i, '') for i in DATAFRAME]
 
 
-class SvMegapolisGetSampleDataframe(bpy.types.Node, SverchCustomTreeNode):
+class SvMegapolisGetSampleDataframe(SverchCustomTreeNode, bpy.types.Node):
     """
     Triggers: Get Sample Dataframe
     Tooltip: Get a Dataframe Sample
@@ -30,6 +30,7 @@ class SvMegapolisGetSampleDataframe(bpy.types.Node, SverchCustomTreeNode):
     bl_idname = 'SvMegapolisGetSampleDataframe'
     bl_label = 'Get Sample Dataframe'
     bl_icon = 'MESH_DATA'
+    sv_dependencies = {'pandas'}
     # Hide Interactive Sockets
     
     def update_sockets(self, context):
@@ -92,10 +93,10 @@ class SvMegapolisGetSampleDataframe(bpy.types.Node, SverchCustomTreeNode):
 
         self.outputs["Dataframe"].sv_set(data)
 
+
 def register():
-    if pd is not None:
-        bpy.utils.register_class(SvMegapolisGetSampleDataframe)
+    bpy.utils.register_class(SvMegapolisGetSampleDataframe)
+
 
 def unregister():
-    if pd is not None:
-        bpy.utils.unregister_class(SvMegapolisGetSampleDataframe)
+    bpy.utils.unregister_class(SvMegapolisGetSampleDataframe)

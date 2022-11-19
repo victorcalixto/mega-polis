@@ -7,7 +7,7 @@ from sverchok.data_structure import updateNode
 
 #Megapolis Dependencies
 
-class SvMegapolisDashboardMarkdown(bpy.types.Node, SverchCustomTreeNode):
+class SvMegapolisDashboardMarkdown(SverchCustomTreeNode, bpy.types.Node):
     """
     Triggers: Dashboard Markdown
     Tooltip: Dashboard Markdown

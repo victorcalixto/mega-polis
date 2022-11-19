@@ -9,7 +9,7 @@ from sverchok.data_structure import updateNode
 #Megapolis Dependencies
 import os
 
-class SvMegapolisWebVRConnector(bpy.types.Node, SverchCustomTreeNode):
+class SvMegapolisWebVRConnector(SverchCustomTreeNode, bpy.types.Node):
     """
     Triggers: Web VR Connector
     Tooltip: Web VR Connector

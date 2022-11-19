@@ -9,7 +9,7 @@ from sverchok.data_structure import updateNode
 
 from megapolis.dependencies import sklearn as skl
 
-class SvMegapolisModelFit(bpy.types.Node, SverchCustomTreeNode):
+class SvMegapolisModelFit(SverchCustomTreeNode, bpy.types.Node):
     """
     Triggers: Model Fit
     Tooltip: Model Fit
@@ -17,7 +17,7 @@ class SvMegapolisModelFit(bpy.types.Node, SverchCustomTreeNode):
     bl_idname = 'SvMegapolisModelFit'
     bl_label = 'Model Fit'
     bl_icon = 'MESH_DATA'
-    
+    sv_dependencies = {'sklearn'}
 
     # Hide Interactive Sockets
     def update_sockets(self, context):
@@ -92,11 +92,11 @@ class SvMegapolisModelFit(bpy.types.Node, SverchCustomTreeNode):
         ## Outputs
         
         self.outputs["Model Out"].sv_set(model_out)
-        
+
+
 def register():
-    if skl is not None:
-        bpy.utils.register_class(SvMegapolisModelFit)
+    bpy.utils.register_class(SvMegapolisModelFit)
+
 
 def unregister():
-    if skl is not None:
-        bpy.utils.unregister_class(SvMegapolisModelFit)
+    bpy.utils.unregister_class(SvMegapolisModelFit)

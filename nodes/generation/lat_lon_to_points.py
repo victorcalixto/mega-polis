@@ -15,7 +15,7 @@ except:
 
 
 
-class SvMegapolisLatLonToPoints(bpy.types.Node, SverchCustomTreeNode):
+class SvMegapolisLatLonToPoints(SverchCustomTreeNode, bpy.types.Node):
     """
     Triggers: LatLonToPoints
     Tooltip: Lat-Lon To Points

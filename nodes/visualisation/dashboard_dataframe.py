@@ -12,7 +12,7 @@ from megapolis.dependencies import streamlit as st
 
 #import json 
 
-class SvMegapolisDashboardDataframe(bpy.types.Node, SverchCustomTreeNode):
+class SvMegapolisDashboardDataframe(SverchCustomTreeNode, bpy.types.Node):
     """
     Triggers: Dashboard Dataframe
     Tooltip: Dashboard Dataframe
@@ -20,7 +20,7 @@ class SvMegapolisDashboardDataframe(bpy.types.Node, SverchCustomTreeNode):
     bl_idname = 'SvMegapolisDashboardDataframe'
     bl_label = 'Dashboard Dataframe'
     bl_icon = 'MESH_DATA'
-
+    sv_dependencies = {'pandas', 'streamlit'}
     
     # Hide Interactive Sockets
     def update_sockets(self, context):
@@ -63,10 +63,8 @@ st.dataframe(pd.DataFrame.from_dict({df}))\n
 
 
 def register():
-    if st is not None:
-        bpy.utils.register_class(SvMegapolisDashboardDataframe)
+    bpy.utils.register_class(SvMegapolisDashboardDataframe)
+
 
 def unregister():
-    if st is not None:
-        bpy.utils.unregister_class(SvMegapolisDashboardDataframe)
-
+    bpy.utils.unregister_class(SvMegapolisDashboardDataframe)

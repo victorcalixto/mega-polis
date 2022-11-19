@@ -22,7 +22,7 @@ SEQUENTIAL = Sequential('viridis', 'plasma', 'inferno', 'magma', 'cividis','Grey
       'Wistia', 'hot', 'afmhot', 'gist_heat', 'copper')
 sequential_items = [(i, i, '') for i in SEQUENTIAL]
 
-class SvMegapolisPlotDem(bpy.types.Node, SverchCustomTreeNode):
+class SvMegapolisPlotDem(SverchCustomTreeNode, bpy.types.Node):
     """
     Triggers: Plot Dem
     Tooltip: Plot a Dem Array 
@@ -30,6 +30,7 @@ class SvMegapolisPlotDem(bpy.types.Node, SverchCustomTreeNode):
     bl_idname = 'SvMegapolisPlotDem'
     bl_label = 'Plot Dem'
     bl_icon = 'MESH_DATA'
+    sv_dependencies = {'richdem'}
 
     # Hide Interactive Sockets
     def update_sockets(self, context):
@@ -104,9 +105,8 @@ class SvMegapolisPlotDem(bpy.types.Node, SverchCustomTreeNode):
         
 
 def register():
-    if rd is not None:
-        bpy.utils.register_class(SvMegapolisPlotDem)
+    bpy.utils.register_class(SvMegapolisPlotDem)
+
 
 def unregister():
-    if rd is not None:
-        bpy.utils.unregister_class(SvMegapolisPlotDem)
+    bpy.utils.unregister_class(SvMegapolisPlotDem)

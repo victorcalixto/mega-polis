@@ -13,7 +13,7 @@ Attribute_type = namedtuple('AttributeType', ['aspect', 'profile_curvature','pla
 ATTRIBUTETYPE = Attribute_type('aspect', 'profile_curvature','planform_curvature','curvature','slope_riserun','slope_degrees','slope_percentage','slope_radians')
 attributetype_items = [(i, i, '') for i in ATTRIBUTETYPE]
 
-class SvMegapolisDemTerrainAttributes(bpy.types.Node, SverchCustomTreeNode):
+class SvMegapolisDemTerrainAttributes(SverchCustomTreeNode, bpy.types.Node):
     """
     Triggers: Dem Terrain Attributes
     Tooltip: Provides methods for extract Terrain Attributes values: Aspect, Curvature, and Slope. 
@@ -21,6 +21,7 @@ class SvMegapolisDemTerrainAttributes(bpy.types.Node, SverchCustomTreeNode):
     bl_idname = 'SvMegapolisDemTerrainAttributes'
     bl_label = 'Dem Terrain Attributes'
     bl_icon = 'MESH_DATA'
+    sv_dependencies = {'richdem'}
 
     # Hide Interactive Sockets
     def update_sockets(self, context):
@@ -86,9 +87,8 @@ class SvMegapolisDemTerrainAttributes(bpy.types.Node, SverchCustomTreeNode):
         
 
 def register():
-    if rd is not None:
-        bpy.utils.register_class(SvMegapolisDemTerrainAttributes)
+    bpy.utils.register_class(SvMegapolisDemTerrainAttributes)
+
 
 def unregister():
-    if rd is not None:
-        bpy.utils.unregister_class(SvMegapolisDemTerrainAttributes)
+    bpy.utils.unregister_class(SvMegapolisDemTerrainAttributes)

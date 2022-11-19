@@ -11,7 +11,7 @@ from megapolis.dependencies import wget
 
 import os
 
-class SvMegapolisDownloadDataUrl(bpy.types.Node, SverchCustomTreeNode):
+class SvMegapolisDownloadDataUrl(SverchCustomTreeNode, bpy.types.Node):
     """
     Triggers: Download Data Url
 
@@ -20,7 +20,7 @@ class SvMegapolisDownloadDataUrl(bpy.types.Node, SverchCustomTreeNode):
     bl_idname = 'SvMegapolisDownloadDataUrl'
     bl_label = 'Download Data Url'
     bl_icon = 'MESH_DATA'
-
+    sv_dependencies = {'wget'}
 
     # Hide Interactive Sockets
     def update_sockets(self, context):
@@ -85,9 +85,8 @@ class SvMegapolisDownloadDataUrl(bpy.types.Node, SverchCustomTreeNode):
 
 
 def register():
-    if wget is not None:
-        bpy.utils.register_class(SvMegapolisDownloadDataUrl)
+    bpy.utils.register_class(SvMegapolisDownloadDataUrl)
+
 
 def unregister():
-    if wget is not None:
-        bpy.utils.unregister_class(SvMegapolisDownloadDataUrl)
+    bpy.utils.unregister_class(SvMegapolisDownloadDataUrl)

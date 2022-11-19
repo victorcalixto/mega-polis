@@ -31,7 +31,7 @@ filetypegis_items = [(i, i, '') for i in FILETYPEGIS]
 
 
 
-class SvMegapolisReadGis(bpy.types.Node, SverchCustomTreeNode):
+class SvMegapolisReadGis(SverchCustomTreeNode, bpy.types.Node):
     """
     Triggers: Read GIS
     Tooltip: Read GIS file (shapefile,geopackage, and geoJSON)
@@ -39,7 +39,7 @@ class SvMegapolisReadGis(bpy.types.Node, SverchCustomTreeNode):
     bl_idname = 'SvMegapolisReadGis'
     bl_label = 'Read Gis'
     bl_icon = 'MESH_DATA'
-    
+    sv_dependencies = {'geopandas', 'osmnx'}
 
     # Hide Interactive Sockets
     def update_sockets(self, context):
@@ -499,10 +499,10 @@ class SvMegapolisReadGis(bpy.types.Node, SverchCustomTreeNode):
         ##Geopandas dataframe
         self.outputs["Gdf_Out"].sv_set(gdf)
 
+
 def register():
-    if ox is not None:
-        bpy.utils.register_class(SvMegapolisReadGis)
+    bpy.utils.register_class(SvMegapolisReadGis)
+
 
 def unregister():
-    if ox is not None:
-        bpy.utils.unregister_class(SvMegapolisReadGis)
+    bpy.utils.unregister_class(SvMegapolisReadGis)

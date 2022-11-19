@@ -12,7 +12,7 @@ from megapolis.dependencies import pandas as pd
 import csv
 
 
-class SvMegapolisReadCsv(bpy.types.Node, SverchCustomTreeNode):
+class SvMegapolisReadCsv(SverchCustomTreeNode, bpy.types.Node):
     """
     Triggers: Read CSV
     Tooltip: Read CSV file
@@ -20,7 +20,7 @@ class SvMegapolisReadCsv(bpy.types.Node, SverchCustomTreeNode):
     bl_idname = 'SvMegapolisReadCsv'
     bl_label = 'Read CSV'
     bl_icon = 'MESH_DATA'
-    
+    sv_dependencies = {'pandas'}
 
     def sv_init(self, context):
         # inputs
@@ -65,10 +65,10 @@ class SvMegapolisReadCsv(bpy.types.Node, SverchCustomTreeNode):
         self.outputs["CSV Dict"].sv_set(csv_dict)
         self.outputs["CSV DF"].sv_set(df)
 
+
 def register():
-    if pd is not None:
-        bpy.utils.register_class(SvMegapolisReadCsv)
+    bpy.utils.register_class(SvMegapolisReadCsv)
+
 
 def unregister():
-    if pd is not None:
-        bpy.utils.unregister_class(SvMegapolisReadCsv)
+    bpy.utils.unregister_class(SvMegapolisReadCsv)

@@ -12,7 +12,7 @@ from megapolis.dependencies import visilibity as vis
 import math
 
 
-class SvMegapolisIsovists(bpy.types.Node, SverchCustomTreeNode):
+class SvMegapolisIsovists(SverchCustomTreeNode, bpy.types.Node):
     """
     Triggers: Isovists
     Tooltip: Creates a 2D Isovists based on a 2d Context
@@ -20,6 +20,7 @@ class SvMegapolisIsovists(bpy.types.Node, SverchCustomTreeNode):
     bl_idname = 'SvMegapolisIsovists'
     bl_label = 'Isovists'
     bl_icon = 'MESH_DATA'
+    sv_dependencies = {'visilibity'}
     
     def update_sockets(self, context):
         """ need to do UX transformation before updating node"""
@@ -102,10 +103,10 @@ class SvMegapolisIsovists(bpy.types.Node, SverchCustomTreeNode):
         self.outputs["Vertices Out"].sv_set(vertices_out)
         self.outputs["Isovists Vertices"].sv_set(isovists_verts)
 
+
 def register():
-    if vis is not None:
-        bpy.utils.register_class(SvMegapolisIsovists)
+    bpy.utils.register_class(SvMegapolisIsovists)
+
 
 def unregister():
-    if vis is not None:
-        bpy.utils.unregister_class(SvMegapolisIsovists)
+    bpy.utils.unregister_class(SvMegapolisIsovists)

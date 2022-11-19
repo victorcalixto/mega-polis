@@ -13,7 +13,7 @@ Info_type = namedtuple('InfoType', ['info','head','tail','decribe'])
 INFOTYPE = Info_type('info','head','tail','describe')
 infotype_items = [(i, i, '') for i in INFOTYPE]
 
-class SvMegapolisDataframeUtils(bpy.types.Node, SverchCustomTreeNode):
+class SvMegapolisDataframeUtils(SverchCustomTreeNode, bpy.types.Node):
     """
     Triggers: Dataframe Utils
     Tooltip: Dataframe Utilits for Exploratory Data Analysis: info, head, tail, and decribe  
@@ -21,6 +21,7 @@ class SvMegapolisDataframeUtils(bpy.types.Node, SverchCustomTreeNode):
     bl_idname = 'SvMegapolisDataframeUtils'
     bl_label = 'Dataframe Utils'
     bl_icon = 'MESH_DATA'
+    sv_dependencies = {'pandas'}
 
     # Hide Interactive Sockets
     def update_sockets(self, context):
@@ -105,11 +106,11 @@ class SvMegapolisDataframeUtils(bpy.types.Node, SverchCustomTreeNode):
         ## Output
 
         self.outputs["Value"].sv_set(value)
-        
+
+
 def register():
-    if pd is not None:
-        bpy.utils.register_class(SvMegapolisDataframeUtils)
+    bpy.utils.register_class(SvMegapolisDataframeUtils)
+
 
 def unregister():
-    if pd is not None:
-        bpy.utils.unregister_class(SvMegapolisDataframeUtils)
+    bpy.utils.unregister_class(SvMegapolisDataframeUtils)

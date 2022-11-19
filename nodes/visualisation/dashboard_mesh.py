@@ -9,7 +9,7 @@ from sverchok.data_structure import updateNode
 #Megapolis Dependencies
 
 
-class SvMegapolisDashboardMesh(bpy.types.Node, SverchCustomTreeNode):
+class SvMegapolisDashboardMesh(SverchCustomTreeNode, bpy.types.Node):
     """
     Triggers: Dashboard Mesh
     Tooltip: Dashboard Mesh

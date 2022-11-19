@@ -10,7 +10,7 @@ from sverchok.data_structure import updateNode
 from megapolis.dependencies import pandas as pd
 
 
-class SvMegapolisPandasSeries(bpy.types.Node, SverchCustomTreeNode):
+class SvMegapolisPandasSeries(SverchCustomTreeNode, bpy.types.Node):
     """
     Triggers: Pandas Series
     Tooltip: Creates a Pandas Series from a list
@@ -18,7 +18,7 @@ class SvMegapolisPandasSeries(bpy.types.Node, SverchCustomTreeNode):
     bl_idname = 'SvMegapolisPandasSeries'
     bl_label = 'Pandas Series'
     bl_icon = 'MESH_DATA'
-    
+    sv_dependencies = {'pandas'}
 
     def sv_init(self, context):
         # inputs
@@ -38,10 +38,10 @@ class SvMegapolisPandasSeries(bpy.types.Node, SverchCustomTreeNode):
         
         self.outputs["Pandas Series"].sv_set(pd_series)
 
+
 def register():
-    if pd is not None:
-        bpy.utils.register_class(SvMegapolisPandasSeries)
+    bpy.utils.register_class(SvMegapolisPandasSeries)
+
 
 def unregister():
-    if pd is not None:
-        bpy.utils.unregister_class(SvMegapolisPandasSeries)
+    bpy.utils.unregister_class(SvMegapolisPandasSeries)

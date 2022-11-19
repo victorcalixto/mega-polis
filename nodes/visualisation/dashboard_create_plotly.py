@@ -16,7 +16,7 @@ plottype_items = [(i, i, '') for i in PLOTTYPE]
 #Megapolis Dependencies
 import json 
 
-class SvMegapolisDashboardCreatePlotly(bpy.types.Node, SverchCustomTreeNode):
+class SvMegapolisDashboardCreatePlotly(SverchCustomTreeNode, bpy.types.Node):
     """
     Triggers: Dashboard Create Plotly
     Tooltip: Dashboard Create Plotly
