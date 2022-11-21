@@ -243,7 +243,6 @@ class SvMegapolisReadGis(SverchCustomTreeNode, bpy.types.Node):
 
         linestrings_verts= [[next(it_lns) for _ in range(size)] for size in ls_linestrings]
 
-        #print(linestrings_verts)
 
         ## lineStrings Edges
 
@@ -326,11 +325,7 @@ class SvMegapolisReadGis(SverchCustomTreeNode, bpy.types.Node):
 
         for i in soma_list:
             new_list_2.append([])
-            #print(i)
             
-            #for j in range(0,i):
-              #  print(soma_list.index(i))
-             #   new_list_2[soma_list.index(i)].append(j)
         for i in range(0,len(soma_list)):
             for j in range(0,soma_list[i]):
                  new_list_2[i].append(j) 
@@ -345,7 +340,6 @@ class SvMegapolisReadGis(SverchCustomTreeNode, bpy.types.Node):
         m_edges_shift = []
 
         for i in range(len(new_list_3)):
-            print(i)
             m_edges_shift.append([])
             for j in range(len(new_list_3[i])):
                 m_edges_shift[i].append([])
@@ -409,7 +403,6 @@ class SvMegapolisReadGis(SverchCustomTreeNode, bpy.types.Node):
         #################################################################################################################################
         ## Polygons Features
 
-        #print(polygons_features[0])
 
         ### Getting Polygons ID
 
