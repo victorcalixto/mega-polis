@@ -31,7 +31,7 @@ filetypegis_items = [(i, i, '') for i in FILETYPEGIS]
 
 
 
-class SvMegapolisReadGis(SverchCustomTreeNode, bpy.types.Node):
+class SvMegapolisReadGis(bpy.types.Node, SverchCustomTreeNode):
     """
     Triggers: Read GIS
     Tooltip: Read GIS file (shapefile,geopackage, and geoJSON)
@@ -39,7 +39,7 @@ class SvMegapolisReadGis(SverchCustomTreeNode, bpy.types.Node):
     bl_idname = 'SvMegapolisReadGis'
     bl_label = 'Read Gis'
     bl_icon = 'MESH_DATA'
-    sv_dependencies = {'geopandas', 'osmnx'}
+    
 
     # Hide Interactive Sockets
     def update_sockets(self, context):
@@ -288,83 +288,95 @@ class SvMegapolisReadGis(SverchCustomTreeNode, bpy.types.Node):
 
 
         ########################################################################################################
-        #Multipolygons
 
-        multipolygons_size = []
+        # Multipolygons
 
-        for i in multipolygons:
-            multipolygons_size.append(len(i))
-
+        #multipolygons_size = []
+        
+        #for i in multipolygons:
+        #    multipolygons_size.append(len(i))
+        multipolygons_size = [len(i) for i in multipolygons]
         #Creating Vertices MultiPolygons
 
         multipolygons_verts_1 = [item + (0,) for i in multipolygons for j in i for k in j for item in k]
 
-        ls_multipolygons =[]
+        #ls_multipolygons =[]
 
-        for i in multipolygons:
-            for j in i:
-                for k in j:
-                    ls_multipolygons.append(len(k))    
+        #for i in multipolygons:
+        #    for j in i:
+        #        for k in j:
+        #            ls_multipolygons.append(len(k))    
+        ls_multipolygons = [len(k) for i in multipolygons for j in i for k in j]
 
         it_mult = iter(multipolygons_verts_1)
 
         multipolygons_verts= [[next(it_mult) for _ in range(size)] for size in ls_multipolygons]
 
-        m_pl_size = []
+        #m_pl_size = []
 
-        for i in multipolygons_verts:
-            m_pl_size.append(len(i))
+        #for i in multipolygons_verts:
+        #    m_pl_size.append(len(i))
 
+        m_pl_size = [len(i) for i in multipolygons_verts]
+        ## Mulipolygons divide verts in number of polygons
+
+        mp_verts_to_clean = unequal_divide(multipolygons_verts,multipolygons_size)
+
+
+        ## Mulipolygons delete list level
+
+        mp_verts = [list(itertools.chain(*sub)) for sub in mp_verts_to_clean]
+
+        # MultiPolygon Edges
+
+        ## Manipulations in list to create edges
 
         new_list = unequal_divide(m_pl_size,multipolygons_size)
         new_list_2= []
 
-
         soma_list = []
+        
         for i in new_list:
            soma_list.append(sum(i))
 
         for i in soma_list:
             new_list_2.append([])
-            #print(i)
             
-            #for j in range(0,i):
-              #  print(soma_list.index(i))
-             #   new_list_2[soma_list.index(i)].append(j)
         for i in range(0,len(soma_list)):
+           # print(i)
             for j in range(0,soma_list[i]):
                  new_list_2[i].append(j) 
-                  
+
         new_list_3 =[]
 
         for i in range(0, len(new_list_2)):
             lista = new_list_2[i]
             chunks = new_list[i]
             new_list_3.append(unequal_divide(lista, chunks))
-
-        m_edges_shift = []
-
-        for i in range(len(new_list_3)):
-            print(i)
-            m_edges_shift.append([])
-            for j in range(len(new_list_3[i])):
-                m_edges_shift[i].append([])
-                for k in range(0,len(new_list_3[i][j])):
-                    v1 = new_list_3[i][j][k]
-                    v2 = new_list_3[i][j][k]+1
-                    e = (v1,v2)
-                    m_edges_shift[i][j].append(e)
+            
+        unested_new_list_3 = [list(itertools.chain(*sub)) for sub in new_list_3]
         
-        mp_edges= [removeLastElement(j) for i in m_edges_shift for j in i]
-        mp_edges = [list(itertools.chain(*sub)) for sub in m_edges_shift]
+        edges_ =[]
+
+        sizes_edges = []
+
+        for i in unested_new_list_3:
+            sizes_edges.append(len(i))
+            
+        for i in unested_new_list_3:
+           for j in i:
+               v1=j
+               v2=j+1
+               if v2 == len(i):
+                   v2=0
+               e=(v1,v2)
+               edges_.append(e)
+
+        edges_final = unequal_divide(edges_, sizes_edges)
         
-        mp_verts_to_clean = unequal_divide(multipolygons_verts,multipolygons_size)
-
-        mp_verts = [list(itertools.chain(*sub)) for sub in mp_verts_to_clean]
-
-           
-        ###########################################################################################
-
+        mp_edges = [removeLastElement(i) for i in edges_final] 
+        
+###########################################################################################
         #Polygons
 
         ## Creating Vertices Polygons
@@ -478,10 +490,10 @@ class SvMegapolisReadGis(SverchCustomTreeNode, bpy.types.Node):
         ##Geopandas dataframe
         self.outputs["Gdf_Out"].sv_set(gdf)
 
-
 def register():
-    bpy.utils.register_class(SvMegapolisReadGis)
-
+    if ox is not None:
+        bpy.utils.register_class(SvMegapolisReadGis)
 
 def unregister():
-    bpy.utils.unregister_class(SvMegapolisReadGis)
+    if ox is not None:
+        bpy.utils.unregister_class(SvMegapolisReadGis)
