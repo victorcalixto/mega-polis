@@ -25,7 +25,9 @@ addon.
 
 This add-on is part of an ongoing research, and it still very experimental and under HEAVILY development.  
 
-Meanwhile, the documentation is prepared, you can check this [![demonstration:](https://www.youtube.com/embed/lTRNIa2PwhQ)
+Meanwhile, the documentation is prepared, you can check this demonstration:
+
+[<img src="https://img.youtube.com/vi/lTRNIa2PwhQ/maxresdefault.jpg" width="50%">](https://www.youtube.com/lTRNIa2PwhQ)
 
 
 Features
