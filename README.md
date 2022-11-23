@@ -25,6 +25,9 @@ addon.
 
 This add-on is part of an ongoing research, and it still very experimental and under HEAVILY development.  
 
+Meanwhile, the documentation is prepared, you can check this demonstration:
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/lTRNIa2PwhQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 
 Features
