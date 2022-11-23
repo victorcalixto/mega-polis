@@ -27,7 +27,7 @@ This add-on is part of an ongoing research, and it still very experimental and u
 
 Meanwhile, the documentation is prepared, you can check this demonstration:
 
-[<img src="https://img.youtube.com/vi/watch?v=lTRNIa2PwhQ&t=1071s/maxresdefault.jpg" width="50%">](https://www.youtube.com/watch?v=lTRNIa2PwhQ&t=1071s)
+[![Watch the video](https://img.youtube.com/vi/lTRNIa2PwhQ/maxresdefault.jpg)](https://youtu.be/lTRNIa2PwhQ)
 
 Features
 --------
