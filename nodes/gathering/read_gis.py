@@ -396,7 +396,9 @@ class SvMegapolisReadGis(SverchCustomTreeNode, bpy.types.Node):
 
         ## Remove Extra Edges
 
-        polygons_edges= [removeLastElement(i) for i in polygons_edges_h]
+        #polygons_edges= [removeLastElement(i) for i in polygons_edges_h]
+        polygons_edges= polygons_edges_h
+
 
 
 
