@@ -117,7 +117,7 @@ Installation
 * Check the add-on options to install all dependencies*.
 * Save preferences, if you want to enable the add-on permanently.
 
-##### Dependencies Notes*
+##### About Dependencies*
 
 The **Mapillary** depency requires that you install an older version of numpy compared to Sverchok. You can install the older version, then update numpy after install Mapillary
 
