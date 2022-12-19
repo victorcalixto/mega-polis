@@ -16,20 +16,9 @@ import sys
 import importlib
 from pathlib import Path
 import nodeitems_utils
-import bl_operators
 
-import sverchok
-from sverchok.core import sv_registration_utils, make_node_list
-from sverchok.utils import auto_gather_node_classes, get_node_class_reference
-
-from sverchok.core import make_node_list
-from sverchok.utils import auto_gather_node_classes, yaml_parser
-from sverchok.utils.logging import info, debug
-
+from sverchok.utils import yaml_parser
 from sverchok.ui.nodeview_space_menu import add_node_menu
-
-from sverchok.node_tree import SverchCustomTreeNode
-from sverchok.data_structure import updateNode, zip_long_repeat
 from sverchok.utils.logging import info, debug
 
 # make sverchok the root module name, (if sverchok dir not named exactly "sverchok")
@@ -186,12 +175,10 @@ def register():
     add_node_menu.register()
     settings.register()
     icons.register()
-     
 
     register_nodes()
-    extra_nodes = importlib.import_module(".nodes", "megapolis")
-    auto_gather_node_classes(extra_nodes)
     show_welcome()
+
     
 def unregister():
     global our_menu_classes
