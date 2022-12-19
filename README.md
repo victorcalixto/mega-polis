@@ -29,10 +29,10 @@ Meanwhile, the documentation is prepared, you can check this demonstration:
 
 [![Watch the video](https://img.youtube.com/vi/lTRNIa2PwhQ/maxresdefault.jpg)](https://youtu.be/lTRNIa2PwhQ)
 
+<img src="https://community.osarch.org/uploads/editor/z9/z4mow9t071rz.gif"/>
 
-![](https://community.osarch.org/uploads/editor/z9/z4mow9t071rz.gif)(https://community.osarch.org/uploads/editor/z9/z4mow9t071rz.gif)
+<img src="https://community.osarch.org/uploads/editor/ix/l882bk7h2h94.gif"/>
 
-![](https://community.osarch.org/uploads/editor/ix/l882bk7h2h94.gif)(https://community.osarch.org/uploads/editor/z9/z4mow9t071rz.gif)
 
 Features
 --------
