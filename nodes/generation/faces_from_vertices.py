@@ -50,7 +50,7 @@ class SvMegapolisFacesFromVertices(SverchCustomTreeNode, bpy.types.Node):
         faces = [faces_s]
 
         #Outputs       
-        self.outputs["CSV List"].sv_set(faces)
+        self.outputs["Faces"].sv_set(faces)
 
 def register():
     bpy.utils.register_class(SvMegapolisFacesFromVertices)
