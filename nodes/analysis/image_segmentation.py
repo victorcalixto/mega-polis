@@ -407,7 +407,7 @@ class SvMegapolisImageSegmentation(SverchCustomTreeNode, bpy.types.Node):
     bl_idname = 'SvMegapolisImageSegmentation'
     bl_label = 'ImageSegmentation'
     bl_icon = 'MESH_DATA'
-    sv_dependencies = {'sv2', 'torch', 'pandas'}
+    sv_dependencies = {'cv2', 'torch', 'pandas'}
 
     # Hide Interactive Sockets
     def update_sockets(self, context):
