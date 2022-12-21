@@ -54,6 +54,8 @@ class SvMegapolisWebVRConnector(SverchCustomTreeNode, bpy.types.Node):
         self.inputs.new('SvStringsSocket', "Folder")
         self.inputs.new('SvVerticesSocket', "Vertices")
         self.inputs.new('SvStringsSocket', "Faces")
+        self.inputs.new('SvStringsSocket', "Material")
+
 
 
         #Outputs
@@ -71,11 +73,13 @@ class SvMegapolisWebVRConnector(SverchCustomTreeNode, bpy.types.Node):
 
     def process(self):
     
-        if not self.inputs["Folder"].is_linked or not self.inputs["Vertices"].is_linked or not self.inputs["Faces"].is_linked :
+        if not self.inputs["Folder"].is_linked or not self.inputs["Vertices"].is_linked or not self.inputs["Faces"].is_linked or not self.inputs["Material"].is_linked  :
             return
         self.folder = self.inputs["Folder"].sv_get(deepcopy = False)
         self.vertices = self.inputs["Vertices"].sv_get(deepcopy = False)
         self.faces = self.inputs["Faces"].sv_get(deepcopy = False)
+        self.material = self.inputs["Material"].sv_get(deepcopy = False)
+
 
 
         aframe_folder=self.folder[0][0]
@@ -83,11 +87,7 @@ class SvMegapolisWebVRConnector(SverchCustomTreeNode, bpy.types.Node):
         faces= self.faces
         height = self.height
         width = self.width
-
-        size ="a-scene[height:{0}px;width:{1}px;]".format(height,width)
-
-        size = size.replace("[","{")
-        size = size.replace("]","}")
+        material = self.material[0][0] 
 
         vertices_str=''
         for i in vertices:
@@ -100,9 +100,10 @@ class SvMegapolisWebVRConnector(SverchCustomTreeNode, bpy.types.Node):
                     else:
                         vertices_str=vertices_str+f"{k} "
                         count = count+1
-
-
+        """
         faces_str=''
+
+        faces_list = []
         for i in faces:
             for j in i:
                 count= 0
@@ -113,28 +114,79 @@ class SvMegapolisWebVRConnector(SverchCustomTreeNode, bpy.types.Node):
                     else:
                         faces_str=faces_str+f"{k} "
                         count = count+1
+        """
+        faces_list = []
+        for i in faces:
+            for j in i:
+                    faces_list.append(f"geometry.faces.push(new THREE.Face3{j[0],j[1],j[2]});")
+
+        faces_str = ''
+        for i in faces_list:
+            faces_str=faces_str+f"{i}\n"
+            
+        #vertices_str=vertices_str[:-1]
+
+        #faces_str=faces_str[:-1]
 
 
-        vertices_str=vertices_str[:-1]
-        faces_str=faces_str[:-1]
+
+
         try:
             os.mkdir(aframe_folder)
         except:
             pass
 
+
+        script_=f"""
+        AFRAME.registerGeometry('example',@
+              schema: @
+                vertices: @
+                  default: ['-10 10 0', '-10 -10 0', '10 -10 0', '10 -10 0'],
+                !
+              !,
+
+              init: function (data) @
+                var geometry = new THREE.Geometry();
+                geometry.vertices = data.vertices.map(function (vertex) @
+                    var points = vertex.split(' ').map(function(x)@return parseFloat(x);!);
+                    return new THREE.Vector3(points[0], points[2], points[1]);
+                !);
+                geometry.computeBoundingBox();
+                {faces_str}
+                geometry.mergeVertices();
+                geometry.computeFaceNormals();
+                geometry.computeVertexNormals();
+                this.geometry = geometry;
+              !
+            !);
+            """
+
+        script_=script_.replace("@","{")
+        script_=script_.replace("!" , "}")
+
+
+
         html=f"""
+          <html>
           <head>
-            <script src='https://aframe.io/releases/0.5.0/aframe.js'></script>
-             <script src="https://raw.githubusercontent.com/andreasplesch/aframe-indexedfaceset-geometry/master/dist/aframe-indexedfaceset-geometry.min.js"></script>
-          </head>
-          <body>
-            <a-scene>
-              <a-indexedfaceset vertices="{vertices_str}" faces="{faces_str}"></a-indexedfaceset>
+            <script src='https://aframe.io/releases/1.1.0/aframe.min.js'></script>
+            <script src='https://livejs.com/live.js'></script>
+           
+          <script >
+               {script_}
+             </script>
+          
+          </head> 
+             
+             
+            <a-scene onchange="reloadThePage()">
+              <a-entity  id=geo geometry="primitive: example; vertices: {vertices_str}" material="{material}"></a-entity>
+              
+              
               <a-sky color='#ECECEC'></a-sky>
             </a-scene>
-          
-          </body>
-
+            
+           </html>
         """
 
         #component = f"components.html(\"\"\"{html}\"\"\",height={height},width={width},scrolling=False)"
@@ -143,9 +195,10 @@ class SvMegapolisWebVRConnector(SverchCustomTreeNode, bpy.types.Node):
 
         vertices_out=vertices_str
         faces_out = faces_str
-        if self.create ==True:
-            with open(f"{aframe_folder}/index.html", "w") as f:
-                f.write(html)
+
+        with open(f"{aframe_folder}/index.html", "w") as f:
+            f.write(html)
+
 
         ## Output
 
