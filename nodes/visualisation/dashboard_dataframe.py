@@ -47,7 +47,7 @@ class SvMegapolisDashboardDataframe(SverchCustomTreeNode, bpy.types.Node):
         
         self.dataframe = self.inputs["Dataframe"].sv_get(deepcopy = False)
 
-        df=self.dataframe[0]
+        df=self.dataframe
         #df = pd.io.json.build_table_schema(df)
         df = pd.DataFrame.to_json(df)
 
