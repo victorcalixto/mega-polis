@@ -34,7 +34,7 @@ class SvMegapolisTransposeDataframe(SverchCustomTreeNode, bpy.types.Node):
 
         data = self.df.T
 
-        df_tranposed = data
+        df_transposed = data
 
         #Output
         self.outputs["Dataframe Output"].sv_set(df_transposed)

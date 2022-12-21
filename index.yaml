@@ -77,7 +77,6 @@
         - Generation Supporting Tools:
             - SvMegapolisFileToGdf
             - SvMegapolisFileToGeoJson
-            - SvMegapolisCsvToDataframe
 
     - Visualisation:
         - icon_name: OUTLINER_OB_FORCE_FIELD

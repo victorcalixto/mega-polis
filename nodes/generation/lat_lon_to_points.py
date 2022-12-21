@@ -82,11 +82,11 @@ class SvMegapolisLatLonToPoints(SverchCustomTreeNode, bpy.types.Node):
             for i in latlon:
                x = i[0]
                y = i[1]
-               x,y = transform(in_latlon,out_proj, x,y)
+               x,y = transform(in_latlon,out_proj, y,x)
                z = 0
                coords.append([x,y,z])
         else:
-            x,y = transform(in_latlon,out_proj, lat,lon)
+            x,y = transform(in_latlon,out_proj, lon,lat)
             z = 0
             coords.append([x,y,z])
 
