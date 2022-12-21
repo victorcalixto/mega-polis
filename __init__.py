@@ -85,7 +85,6 @@ def nodes_index():
                 ("generation.pandas_map_feature","SvMegapolisPandasMapFeature"),
                 ("generation.file_to_gdf","SvMegapolisFileToGdf"),
                 ("generation.file_to_geojson","SvMegapolisFileToGeoJson"),
-                ("generation.csv_to_dataframe","SvMegapolisCsvToDataframe"),
                 ("generation.sequential_colormap","SvMegapolisSequentialColormap"),
                 ("generation.colormap","SvMegapolisColormap"),
                 ("generation.get_file_path","SvMegapolisGetFilePath"),
