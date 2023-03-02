@@ -14,12 +14,12 @@ bl_info = {
 
 import sys
 import importlib
+import logging
 from pathlib import Path
 import nodeitems_utils
 
 from sverchok.utils import yaml_parser
 from sverchok.ui.nodeview_space_menu import add_node_menu
-from sverchok.utils.logging import info, debug
 
 # make sverchok the root module name, (if sverchok dir not named exactly "sverchok")
 if __name__ != "megapolis":
@@ -29,6 +29,9 @@ if __name__ != "megapolis":
 import megapolis
 from megapolis import icons, settings #menu, settings, sockets, examples
 from megapolis.utils import show_welcome
+
+logger = logging.getLogger('sverchok.megapolis')
+
 
 def nodes_index():
     return [
@@ -141,7 +144,7 @@ reload_event = False
 
 if "bpy" in locals():
     reload_event = True
-    info("Reloading MEGAPOLIS...")
+    logger.info("Reloading MEGAPOLIS...")
 
 
 import bpy
@@ -150,7 +153,7 @@ def register_nodes():
     node_modules = make_node_list()
     for module in node_modules:
         module.register()
-    info("Registered %s nodes", len(node_modules))
+    logger.info("Registered %s nodes", len(node_modules))
 
 def unregister_nodes():
     global imported_modules
@@ -163,13 +166,13 @@ our_menu_classes = []
 def reload_modules():
     global imported_modules
     for im in imported_modules:
-        debug("Reloading: %s", im)
+        logger.debug("Reloading: %s", im)
         importlib.reload(im)
 
 def register():
     global our_menu_classes
 
-    debug("Registering megapolis")
+    logger.debug("Registering megapolis")
 
     add_node_menu.register()
     settings.register()
