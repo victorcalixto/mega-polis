@@ -59,7 +59,7 @@ st.dataframe(pd.DataFrame.from_dict({df}))\n
 
         ## Output
 
-        self.outputs["Dashboard Dataframe"].sv_set(st_df)
+        self.outputs["Dashboard Dataframe"].sv_set([st_df])
 
 
 def register():

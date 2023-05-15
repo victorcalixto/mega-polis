@@ -136,8 +136,16 @@ class SvMegapolisShortestPath(SverchCustomTreeNode, bpy.types.Node):
 
         total_time = sumOfList(travel_time, len(travel_time))
         total_dist = sumOfList(edges_lengths,len(edges_lengths))
+        
+        geometry_path = []
 
-        geometry_path = [attributes[attributes.index(i)]['geometry'] for i in attributes]
+        for i in range(0,len(attributes)):
+            try:
+                geometry_path.append(attributes[i]['geometry'])
+            except:
+                continue
+
+        #geometry_path = [attributes[attributes.index(i)]['geometry'] for i in attributes]
 
 
         geometries = [list(zip([i.coords[0][0]],[i.coords[0][1]],[0])) for i in geometry_path]

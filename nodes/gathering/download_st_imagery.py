@@ -62,8 +62,8 @@ class SvMegapolisDownloadStImagery(SverchCustomTreeNode, bpy.types.Node):
         # inputs
         self.inputs.new('SvStringsSocket', "Folder")
         self.inputs.new('SvStringsSocket', "Radius")
-        self.inputs.new('SvStringsSocket', "Longitude")
         self.inputs.new('SvStringsSocket', "Latitude")
+        self.inputs.new('SvStringsSocket', "Longitude")
         self.inputs.new('SvStringsSocket', "Max_Num_Photos")
 
         # outputs
@@ -86,8 +86,8 @@ class SvMegapolisDownloadStImagery(SverchCustomTreeNode, bpy.types.Node):
        
         self.folder = self.inputs["Folder"].sv_get(deepcopy = False)
         self.radius = self.inputs["Radius"].sv_get(deepcopy = False)
-        self.longitude = self.inputs["Longitude"].sv_get(deepcopy = False)
         self.latitude = self.inputs["Latitude"].sv_get(deepcopy = False)
+        self.longitude = self.inputs["Longitude"].sv_get(deepcopy = False)
         self.max_photos = self.inputs["Max_Num_Photos"].sv_get(deepcopy = False)
 
         folder_name = str(self.folder[0][0])

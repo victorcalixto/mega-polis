@@ -39,7 +39,7 @@ class SvMegapolisReadLas(SverchCustomTreeNode, bpy.types.Node):
     subsampling_factor: IntProperty(
         name="subsampling_factor",
         description="Decrease the number of Points by a Factor",
-        default= 150,
+        default= 1,
         min= 1,
         update=update_sockets)
     

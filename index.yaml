@@ -65,7 +65,9 @@
         - Generation Design Tools: 
             - SvMegapolisLatLonToPoints
             - SvMegapolisFacesFromVertices
-            
+            - SvMegapolisPointToLatLon
+            - SvMegapolisFilterLas
+
         - Generation Data Tools:
             - SvMegapolisPandasFilter
             - SvMegapolisTransposeDataframe

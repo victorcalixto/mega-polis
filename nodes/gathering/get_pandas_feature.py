@@ -27,6 +27,8 @@ class SvMegapolisGetPandasFeature(SverchCustomTreeNode, bpy.types.Node):
 
         #outputs
         self.outputs.new('SvStringsSocket', "Dataframe Out")
+        self.outputs.new('SvStringsSocket', "List Out")
+
 
     def process(self):
         if not self.inputs["Dataframe"].is_linked or not self.inputs["Feature"].is_linked:
@@ -38,8 +40,11 @@ class SvMegapolisGetPandasFeature(SverchCustomTreeNode, bpy.types.Node):
         data = self.df[feature]
 
         df_out = data
+        list_out = df_out.tolist()
 
         self.outputs["Dataframe Out"].sv_set(data)
+        self.outputs["List Out"].sv_set(list_out)
+
 
 
 def register():

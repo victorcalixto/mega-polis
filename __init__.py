@@ -91,7 +91,11 @@ def nodes_index():
                 ("generation.sequential_colormap","SvMegapolisSequentialColormap"),
                 ("generation.colormap","SvMegapolisColormap"),
                 ("generation.get_file_path","SvMegapolisGetFilePath"),
-                ("generation.create_dictionary","SvMegapolisCreateDictionary")
+                ("generation.create_dictionary","SvMegapolisCreateDictionary"),
+                ("generation.point_to_latlon","SvMegapolisPointToLatLon"),
+                ("generation.filter_las","SvMegapolisFilterLas")
+
+
 
 
                 ]),
