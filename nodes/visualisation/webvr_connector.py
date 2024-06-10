@@ -120,7 +120,7 @@ class SvMegapolisWebVRConnector(SverchCustomTreeNode, bpy.types.Node):
             for j in i:
                     faces_list.append(f"geometry.faces.push(new THREE.Face3{j[0],j[1],j[2]});")
 
-        faces_str = ''
+        faces_str  = ''
         for i in faces_list:
             faces_str=faces_str+f"{i}\n"
             
@@ -165,25 +165,27 @@ class SvMegapolisWebVRConnector(SverchCustomTreeNode, bpy.types.Node):
         script_=script_.replace("!" , "}")
 
 
-
+        import time
+        tm = time.ctime()
         html=f"""
           <html>
           <head>
+          <meta date={tm}>
             <script src='https://aframe.io/releases/1.1.0/aframe.min.js'></script>
             <script src='https://livejs.com/live.js'></script>
            
           <script >
                {script_}
              </script>
-          
           </head> 
              
              
             <a-scene onchange="reloadThePage()">
-              <a-entity  id=geo geometry="primitive: example; vertices: {vertices_str}" material="{material}"></a-entity>
+              <a-entity id="light" "type: point; color: yellow; intensity: 1" position="-5 -5 5"></a-entity>
+              <a-entity  id=geo geometry="primitive: example; vertices: {vertices_str}" light="type: point; color: #aaffdd; intensity: 2" material="{material}"> </a-entity>
               
               
-              <a-sky color='#ECECEC'></a-sky>
+              <a-sky color='#77CCAA'></a-sky>
             </a-scene>
             
            </html>
@@ -212,3 +214,6 @@ def register():
 
 def unregister():
     bpy.utils.unregister_class(SvMegapolisWebVRConnector)
+
+
+if __name__ == '__main__': register()
