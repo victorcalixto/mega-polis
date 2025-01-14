@@ -25,7 +25,9 @@ addon.
 
 This add-on is part of an ongoing research, and it still very experimental and under HEAVILY development.  
 
-Meanwhile, the documentation is prepared, you can check this demonstration:
+While the documentation is not ready, you can check the thesis chapter that describes the  tool development [here](https://www.victorcalixto.xyz/phd_thesis/ct-development.html)
+
+Also, you can check this demonstration:
 
 [![Watch the video](https://img.youtube.com/vi/lTRNIa2PwhQ/maxresdefault.jpg)](https://youtu.be/lTRNIa2PwhQ)
 
