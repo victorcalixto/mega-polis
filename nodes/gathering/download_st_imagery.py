@@ -32,7 +32,7 @@ class SvMegapolisDownloadStImagery(SverchCustomTreeNode, bpy.types.Node):
     """
     bl_idname = 'SvMegapolisDownloadStImagery'
     bl_label = 'Download Street Imagery'
-    bl_icon = 'MESH_DATA'
+    bl_icon = 'IMAGE_RGB'
     sv_dependencies = {'mapillary', 'requests'}
 
     # Hide Interactive Sockets
@@ -60,10 +60,11 @@ class SvMegapolisDownloadStImagery(SverchCustomTreeNode, bpy.types.Node):
 
     def sv_init(self, context):
         # inputs
+        self.inputs.new('SvStringsSocket', "Mapillary_Key")
         self.inputs.new('SvStringsSocket', "Folder")
-        self.inputs.new('SvStringsSocket', "Radius")
-        self.inputs.new('SvStringsSocket', "Latitude")
+        #self.inputs.new('SvStringsSocket', "Radius")
         self.inputs.new('SvStringsSocket', "Longitude")
+        self.inputs.new('SvStringsSocket', "Latitude")
         self.inputs.new('SvStringsSocket', "Max_Num_Photos")
 
         # outputs
@@ -83,56 +84,41 @@ class SvMegapolisDownloadStImagery(SverchCustomTreeNode, bpy.types.Node):
          
         if self.download == False or not self.inputs["Folder"].is_linked:
             return
-       
+        self.mapillary_key = self.inputs["Mapillary_Key"].sv_get(deepcopy = False) 
         self.folder = self.inputs["Folder"].sv_get(deepcopy = False)
-        self.radius = self.inputs["Radius"].sv_get(deepcopy = False)
-        self.latitude = self.inputs["Latitude"].sv_get(deepcopy = False)
+        #self.radius = self.inputs["Radius"].sv_get(deepcopy = False)
         self.longitude = self.inputs["Longitude"].sv_get(deepcopy = False)
+        self.latitude = self.inputs["Latitude"].sv_get(deepcopy = False)
         self.max_photos = self.inputs["Max_Num_Photos"].sv_get(deepcopy = False)
 
+        mapillary_key = str(self.mapillary_key[0][0])
         folder_name = str(self.folder[0][0])
         projection = self.projection 
-        radius= self.radius[0][0]
+        #radius= float(self.radius[0][0])
         longitude =float(self.longitude[0][0])
         latitude = float(self.latitude[0][0])
         max_photos = self.max_photos[0][0]
-        
 
         location = []
-        #location_detect = []
-        key = 'MLY|5526116027433453|857ad8b276f638faf29e70b5b46921fd'
-
-        mly.interface.set_access_token(key)
-
-        #images_dict = mly.interface.images_in_geojson(gdf_json, mode='r')
-
-        images_dict = mly.interface.get_image_close_to(longitude=longitude, latitude=latitude, radius=radius)
-
-        #df = gpd.read_file(images_dict)
-
+        mly.interface.set_access_token(mapillary_key)
+        print(f"longitude: {longitude}")
+        print(f"latitude:{latitude}")
+        # Use this when the kwargs are fixed
+        #images_dict = mly.interface.get_image_close_to(longitude=longitude,latitude=latitude,radius=radius)
+        images_dict = mly.interface.get_image_close_to(longitude,latitude)
         data = images_dict.to_dict()
-
+        print(data)
         images_id = mly.utils.extract.extract_properties(data,properties=['id'])
-
         message = []
 
-        #print(images_id)
-
         def downloadImages(images,folder_name,location,message):
-            #images = images['id']
             try:
                 os.mkdir(folder_name)
-                #folder_detect = f"{folder_name}_detect"
-                #os.mkdir(folder_detect)
             except:
                 pass
             for i in images:
-                header = {'Authorization' : 'OAuth {}'.format(key)}
-                #url = 'https://graph.mapillary.com/{}?fields=thumb_2048_url'.format(i)
-                #url = f"https://www.mapillary.com/embed?image_key={i}"
-                url_json=f"https://graph.mapillary.com/{i}?access_token={key}&fields=thumb_original_url,computed_geometry,captured_at,computed_compass_angle"    
-                #url_detections=f"https://graph.mapillary.com/{i}/detections?access_token={key}&fields=created_at,geometry,image,value"
-                #print(data["thumb_original_url"])
+                header = {'Authorization' : 'OAuth {}'.format(mapillary_key)}
+                url_json=f"https://graph.mapillary.com/{i}?access_token={mapillary_key}&fields=thumb_original_url,computed_geometry,captured_at,computed_compass_angle"    
                 
                 response = requests.get(url_json,headers=header)
                 data = response.json()
@@ -144,66 +130,31 @@ class SvMegapolisDownloadStImagery(SverchCustomTreeNode, bpy.types.Node):
                         f.write(image_data)
                 print(f"Downloaded {i}.jpg in {folder_name}")
                 location.append(data["computed_geometry"]["coordinates"])
+                print(location)
                 message.append(f"Downloaded {i}.jpg in {folder_name}")
-                
-                
-                
-                """ Detections
-                response = requests.get(url_detections,headers=header)
-                data_detect = response.json()
-                image_url_detect = data['thumb_original_url']
-                if response.status_code == 200:
-                    with open(f"./{folder_name}_detect/{i}_detect.jpg", 'wb') as f:
-                        image_data_detect = requests.get(image_url_detect, stream=True).content
-                        f.write(image_data_detect)
-                print(f"Downloaded {i}_detect.jpg in {folder_name}_detect")
-                location_detect.append(data["computed_geometry"]["coordinates"])
-                print(data_detect)
-                message.append(f"Downloaded {i}_detect.jpg in {folder_name}_detect")
-                """
-
-
 
         images = images_id['id']
 
-
-        #delete it later
         slice = images[0:int(max_photos)]
-
-        #change name to  images
 
         if self.download == True:
             t1 = threading.Thread(target=downloadImages, args=(slice,folder_name,location,message))
             t1.start()
             t1.join()
-          
-        #downloadImages(slice,folder_name,location,location_detect) 
-
 
         coords = []
 
-
-
-        #in_latlon = CRS.from_proj4("+proj=latlon")
-        #out_proj = Proj(self.projection)
-        
         transformer = Transformer.from_crs("+proj=latlon",f"epsg:{self.projection}")
-
 
         for i in location:
            x = i[0]
            y = i[1]
            x,y = transformer.transform(x,y)
-           #x,y = transform(in_latlon,out_proj, x,y)
            z = 0
            coords.append([x,y,z])
-          
-
 
         coords = [coords]
-
         coordinates = coords
-
         images_index = images
 
         ## Outputs
@@ -211,7 +162,6 @@ class SvMegapolisDownloadStImagery(SverchCustomTreeNode, bpy.types.Node):
         self.outputs["Images_Index"].sv_set(images)
         self.outputs["Coordinates"].sv_set(coords)
         self.outputs["Output_Message"].sv_set(message)
-
 
 def register():
     bpy.utils.register_class(SvMegapolisDownloadStImagery)

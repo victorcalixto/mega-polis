@@ -22,6 +22,10 @@ FEATURES = Features('aerialway', 'aeroway','amenity','barrier','boundary','build
 features_items = [(i, i, '') for i in FEATURES]
 
 
+def get_buildings_types(buildings):
+    """Return a list of buildings types for OSM downloader"""
+    buildings_types = buildings.loc[:,buildings.columns.str.contains('building|geometry|addr:|amenity|operator|name|historic|brand|cuisine|delivery|drive|internet|opening|outdoor|smoking|takeway|website|layer|source|shop|tourism|wheelchair|office|information|roof|emergency|man|access|parking|fixme|construction|toilets|denomination|religion|height|wikidata|leisure|area|healthcare|levels|diet|email|description|note|old_name|type')]
+    return buildings_types 
 
 class SvMegapolisOSMDownloader(SverchCustomTreeNode, bpy.types.Node):
     """
@@ -43,15 +47,10 @@ class SvMegapolisOSMDownloader(SverchCustomTreeNode, bpy.types.Node):
         if self.download_method in DOWNLOADMETHOD.Address:
             set_hide(self.inputs['Address'], False)
             set_hide(self.inputs['Folder'], False)
-
-
             set_hide(self.inputs['Distance'], False)
-
             set_hide(self.inputs['Place'], True)
-            
             set_hide(self.inputs['Coordinate_X'], True)
             set_hide(self.inputs['Coordinate_Y'], True)
-
             set_hide(self.inputs['North'], True)
             set_hide(self.inputs['South'], True)
             set_hide(self.inputs['East'], True)
@@ -60,15 +59,10 @@ class SvMegapolisOSMDownloader(SverchCustomTreeNode, bpy.types.Node):
         elif self.download_method in DOWNLOADMETHOD.Place:
             set_hide(self.inputs['Address'], True)
             set_hide(self.inputs['Folder'], False)
-
-
             set_hide(self.inputs['Distance'], True)
-
             set_hide(self.inputs['Place'], False)
-            
             set_hide(self.inputs['Coordinate_X'], True)
             set_hide(self.inputs['Coordinate_Y'], True)
-
             set_hide(self.inputs['North'], True)
             set_hide(self.inputs['South'], True)
             set_hide(self.inputs['East'], True)
@@ -77,15 +71,10 @@ class SvMegapolisOSMDownloader(SverchCustomTreeNode, bpy.types.Node):
         elif self.download_method in DOWNLOADMETHOD.Point:
             set_hide(self.inputs['Address'], True)
             set_hide(self.inputs['Folder'], False)
-
-
             set_hide(self.inputs['Distance'], False)
-
             set_hide(self.inputs['Place'], True)
-            
             set_hide(self.inputs['Coordinate_X'], False)
             set_hide(self.inputs['Coordinate_Y'], False)
-
             set_hide(self.inputs['North'], True)
             set_hide(self.inputs['South'], True)
             set_hide(self.inputs['East'], True)
@@ -95,15 +84,10 @@ class SvMegapolisOSMDownloader(SverchCustomTreeNode, bpy.types.Node):
         else:
             set_hide(self.inputs['Address'], True)
             set_hide(self.inputs['Folder'], False)
-
-
             set_hide(self.inputs['Distance'], True)
-
             set_hide(self.inputs['Place'], True)
-            
             set_hide(self.inputs['Coordinate_X'], True)
             set_hide(self.inputs['Coordinate_Y'], True)
-
             set_hide(self.inputs['North'], False)
             set_hide(self.inputs['South'], False)
             set_hide(self.inputs['East'], False)
@@ -136,31 +120,22 @@ class SvMegapolisOSMDownloader(SverchCustomTreeNode, bpy.types.Node):
         # inputs
         self.inputs.new('SvStringsSocket', "Address")
         self.inputs.new('SvStringsSocket', "Place")
-       
-        
         self.inputs.new('SvStringsSocket', "Coordinate_X")
         self.inputs.new('SvStringsSocket', "Coordinate_Y")
-       
         self.inputs.new('SvStringsSocket', "North")
         self.inputs.new('SvStringsSocket', "South")
         self.inputs.new('SvStringsSocket', "East")
         self.inputs.new('SvStringsSocket', "West")
-       
-
         self.inputs['Place'].hide_safe = True 
-        
         self.inputs['Coordinate_X'].hide_safe = True 
         self.inputs['Coordinate_Y'].hide_safe = True 
         self.inputs['North'].hide_safe = True 
         self.inputs['South'].hide_safe = True 
         self.inputs['East'].hide_safe = True 
         self.inputs['West'].hide_safe = True 
-        
         self.inputs.new('SvStringsSocket', "Distance")
         self.inputs.new('SvStringsSocket', "Folder")
        
-
-
         # outputs
 
         self.outputs.new('SvStringsSocket', "Output_Message")
@@ -171,10 +146,9 @@ class SvMegapolisOSMDownloader(SverchCustomTreeNode, bpy.types.Node):
         layout.prop(self, 'download_method', expand=True)
         layout.prop(self, 'features')
 
-
     def draw_buttons_ext(self, context, layout):
         self.draw_buttons(context, layout)
-
+    
     def process(self):
          
         if self.download_method in DOWNLOADMETHOD.Address:
@@ -188,7 +162,6 @@ class SvMegapolisOSMDownloader(SverchCustomTreeNode, bpy.types.Node):
             distance = self.distance[0][0]
             folder = self.folder[0][0]
 
-
         elif self.download_method in DOWNLOADMETHOD.Place:
             if not self.inputs["Place"].is_linked or not self.inputs["Folder"].is_linked:
                 return
@@ -198,9 +171,6 @@ class SvMegapolisOSMDownloader(SverchCustomTreeNode, bpy.types.Node):
             folder = self.folder[0][0]
             place = self.place[0][0]
 
-
-
-
         elif self.download_method in DOWNLOADMETHOD.Point:
             if not self.inputs["Coordinate_X"].is_linked or not self.inputs["Coordinate_Y"].is_linked or not self.inputs["Distance"].is_linked or not self.inputs["Folder"].is_linked :
                 return
@@ -209,12 +179,10 @@ class SvMegapolisOSMDownloader(SverchCustomTreeNode, bpy.types.Node):
             self.distance = self.inputs["Distance"].sv_get(deepcopy = False)
             self.folder = self.inputs["Folder"].sv_get(deepcopy = False)
             
-
             coordinate_x = self.coordinate_x[0][0]
             coordinate_y = self.coordinate_y[0][0]
             distance = self.distance[0][0]
             folder = self.folder[0][0]
-
 
         else:
             if not self.inputs["North"].is_linked or not self.inputs["South"].is_linked or not self.inputs["East"].is_linked or not self.inputs["West"].is_linked  or not self.inputs["Folder"].is_linked  :
@@ -223,7 +191,6 @@ class SvMegapolisOSMDownloader(SverchCustomTreeNode, bpy.types.Node):
             self.south = self.inputs["South"].sv_get(deepcopy = False)
             self.east = self.inputs["East"].sv_get(deepcopy = False)
             self.west = self.inputs["West"].sv_get(deepcopy = False)
-
             self.folder = self.inputs["Folder"].sv_get(deepcopy = False)
             
             north = self.north[0][0]
@@ -235,68 +202,31 @@ class SvMegapolisOSMDownloader(SverchCustomTreeNode, bpy.types.Node):
         dictionary = {}
         dictionary[self.features] = True
 
-        #if self.buildings == True:
-        #dictionary["building"] = True
-        #if self.amenity == True:
-        #   dictionary["amenity"] = True
-        # print(dictionary) 
-        
-        print(dictionary)
-
         if self.download == True: 
             if self.download_method in DOWNLOADMETHOD.Address:
-                buildings = ox.geometries_from_address(str(address), dictionary, distance)
-                #address_ = re.sub('[^A-Za-z0-9]+', ' ',address) 
-                #buildings = buildings.loc[:,buildings.columns.str.contains(r'^((?!nodes).)*$')]
-                buildings = buildings.loc[:,buildings.columns.str.contains('building|geometry|addr:|amenity|operator|name|historic|brand|cuisine|delivery|drive|internet|opening|outdoor|smoking|takeway|website|layer|source|shop|tourism|wheelchair|office|information|roof|emergency|man|access|parking|fixme|construction|toilets|denomination|religion|height|wikidata|leisure|area|healthcare|levels|diet|email|description|note|old_name|type')]
+                buildings = ox.features.features_from_address(str(address), dictionary, distance)
+                buildings = get_buildings_types(buildings)
                 buildings.to_file(f"{folder}{address}_{self.features}.geojson", driver="GeoJSON")
-                
-                #for geomtype in buildings.geom_type.unique():
-                #    buildings[buildings.geom_type == geomtype].to_file(f"{folder}{address}_{self.features}_{geomtype}")
 
             elif self.download_method in DOWNLOADMETHOD.Place:
-                buildings = ox.geometries_from_place(str(place), dictionary)
-                #place_ = re.sub('[^A-Za-z0-9]+', ' ',place) 
-                #buildings.to_file(f"{folder}{place_}_{self.features}.geojson", driver="GeoJSON", index =True)
-                buildings = buildings.loc[:,buildings.columns.str.contains('building|geometry|addr:|amenity|operator|name|historic|brand|cuisine|delivery|drive|internet|opening|outdoor|smoking|takeway|website|layer|source|shop|tourism|wheelchair|office|information|roof|emergency|man|access|parking|fixme|construction|toilets|denomination|religion|height|wikidata|leisure|area|healthcare|levels|diet|email|description|note|old_name|type')]
-                
-
-                #buildings = buildings.loc[:,buildings.columns.str.contains('building:|addr:|geometry|amenity')]
-                #buildings = buildings.loc[:,buildings.columns.str.contains(r'^((?!nodes).)*$')]
-                
+                buildings = ox.features.features_from_place(str(place), dictionary)
+                buildings = get_buildings_types(buildings)
                 buildings.to_file(f"{folder}{place}_{self.features}.geojson", driver="GeoJSON")
-                
-
-                #print(buildings)
-                #buildings = buildings.loc[:,buildings.columns.str.contains('addr:|geometry')]
-                #for geomtype in buildings.geom_type.unique():
-                #    buildings[buildings.geom_type == geomtype].to_file(f"{folder}{place}_{self.features}_{geomtype}")
-
 
             elif self.download_method in DOWNLOADMETHOD.Point:
                 point = (float(coordinate_x),float(coordinate_y))
                 point_name = re.sub('[^A-Za-z0-9]+',' ', str(point_name))
-                buildings = ox.geometries_from_point(point, dictionary, distance)
-                buildings = buildings.loc[:,buildings.columns.str.contains('building|geometry|addr:|amenity|operator|name|historic|brand|cuisine|delivery|drive|internet|opening|outdoor|smoking|takeway|website|layer|source|shop|tourism|wheelchair|office|information|roof|emergency|man|access|parking|fixme|construction|toilets|denomination|religion|height|wikidata|leisure|area|healthcare|levels|diet|email|description|note|old_name|type')]
-                
+                buildings = ox.features.features_from_point(point, dictionary, distance)
+                buildings = get_buildings_types(buildings)
                 buildings.to_file(f"{folder}{point_name}_{self.features}.geojson", driver="GeoJSON")
-                
-
-
-                #for geomtype in buildings.geom_type.unique():
-                #    buildings[buildings.geom_type == geomtype].to_file(f"{folder}{point_name}_{self.features}_{geomtype}.gpkg", driver="GPKG", layer=geomtype)
 
             else:
                 bbox = f'{north}_{south}_{east}_{west}'
-                buildings = ox.geometries_from_bbox(north,south,east,west, dictionary)
+                buildings = ox.features.features_from_bbox(north,south,east,west, dictionary)
                 bbox_ = re.sub('[^A-Za-z0-9]+', ' ',bbox) 
-                buildings = buildings.loc[:,buildings.columns.str.contains('building|geometry|addr:|amenity|operator|name|historic|brand|cuisine|delivery|drive|internet|opening|outdoor|smoking|takeway|website|layer|source|shop|tourism|wheelchair|office|information|roof|emergency|man|access|parking|fixme|construction|toilets|denomination|religion|height|wikidata|leisure|area|healthcare|levels|diet|email|description|note|old_name|type')]
-                
+                buildings = get_buildings_types(buildings)
                 buildings.to_file(f"{folder}{bbox_}_{self.features}.geojson", driver="GeoJSON")
-                
 
-                #for geomtype in buildings.geom_type.unique():
-                #    buildings[buildings.geom_type == geomtype].to_file(f"{folder}{bbox}_{self.features}_{geomtype}.gpkg", driver="GPKG", layer=geomtype)
         else:
             buildings = ''
         

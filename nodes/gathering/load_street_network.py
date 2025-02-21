@@ -21,6 +21,38 @@ Network_type = namedtuple('NetworkType', ['all', 'bike','drive','drive_service',
 NETWORKTYPE = Network_type('all', 'bike','drive','drive_service','walk')
 networktype_items = [(i, i, '') for i in NETWORKTYPE]
 
+
+###### Functions #######
+
+def chunk(it, size):
+    it = iter(it)
+    return iter(lambda: tuple(itertools.islice(it, size)), ())
+
+def unequal_divide(iterable, chunks):
+    it = iter(iterable)
+    return [list(itertools.islice(it, c)) for c in chunks]
+
+def removeLastElement(givenlist):
+    # using pop() function
+    givenlist.pop()
+    # return the result list
+    return givenlist
+
+def shift(seq, n=0):
+    a = n % len(seq)
+    return seq[-a:] + seq[:-a]
+
+def get_gdf_geometry(gdf_geometry,gdf_mapping, geometry_type):
+    return [gdf_mapping["features"][i]["geometry"]["coordinates"] for i in range(0,len(gdf_geometry)) if gdf_mapping["features"][i]["geometry"]["type"] == geometry_type]
+       
+
+def get_gdf_features(gdf_geometry,gdf_mapping,features, geometry_type):
+    return [ features["features"][i] for i in range(0,len(gdf_geometry)) if gdf_mapping["features"][i]["geometry"]["type"] == geometry_type]
+
+
+#####----------------#####
+
+
 class SvMegapolisLoadStreetNetwork(SverchCustomTreeNode, bpy.types.Node):
     """
     Triggers: Load Street Network
@@ -58,8 +90,6 @@ class SvMegapolisLoadStreetNetwork(SverchCustomTreeNode, bpy.types.Node):
         description="Distance",
         default=1000,
         update=update_sockets)
-    
-
 
     def sv_init(self, context):
         # inputs
@@ -104,82 +134,34 @@ class SvMegapolisLoadStreetNetwork(SverchCustomTreeNode, bpy.types.Node):
 
         G = ox.projection.project_graph(G, to_crs=self.projection)
 
-        gdf = ox.utils_graph.graph_to_gdfs(G, nodes=True, edges=True, node_geometry=True, fill_edge_geometry=True)
+        gdf = ox.convert.graph_to_gdfs(G, nodes=True, edges=True, node_geometry=True, fill_edge_geometry=True)
 
 
-        poly=gdf[0]["geometry"]
-
-
-        test = mapping(poly)
-
+        gdf_points=gdf[0]["geometry"]
+        gdf_mapping_points = mapping(gdf_geometry)
         all_features= mapping(gdf[0])
-
-        poly_edges=gdf[1]["geometry"]
-        test_edges = mapping(poly_edges)
+        gdf_edges=gdf[1]["geometry"]
+        gdf_mapping_edges = mapping(gdf_edges)
 
         all_features_edges= mapping(gdf[1])
 
 
-        #print(gdf)
-        #geometry = gdf[0]["geometry"]
-        #geometry = gdf[1]["geometry"]
-
-        #print(geometry)
-        #al_features= mapping(gdf)
-
-        linestrings = []
-        linestrings_features = []
-
-
-        points = []
-        points_features = []
-
-
-        ###### Functions #######
-
-        def chunk(it, size):
-            it = iter(it)
-            return iter(lambda: tuple(itertools.islice(it, size)), ())
-
-        def unequal_divide(iterable, chunks):
-            it = iter(iterable)
-            return [list(itertools.islice(it, c)) for c in chunks]
-
-        def removeLastElement(givenlist):
-            # using pop() function
-            givenlist.pop()
-            # return the result list
-            return givenlist
-
-        def shift(seq, n=0):
-            a = n % len(seq)
-            return seq[-a:] + seq[:-a]
-
-        #####-------------------------------#####
-
         # Points
 
-        for i in range(0,len(poly)):
-            if test["features"][i]["geometry"]["type"] == "Point":
-                points.append(test["features"][i]["geometry"]["coordinates"])
-                points_features.append(all_features["features"][i])
+        points = get_gdf_geometry(gdf_points,gdf_mapping_points, "Point")
+        points_features= get_gdf_features(gdf_points,gdf_mapping+points,all_features,"Point")
 
         ###########################################################################################
 
         # Edges
 
-        for i in range(0,len(poly_edges)):
-            if test_edges["features"][i]["geometry"]["type"] == "LineString":
-                linestrings.append(test_edges["features"][i]["geometry"]["coordinates"])
-                linestrings_features.append(all_features_edges["features"][i])
-        ###########################################################################################
-
-
+        linestrings = get_gdf_geometry(gdf_edges,gdf_mapping_edges, "LineString")
+        linestrings_features= get_gdf_features(gdf_edges,gdf_mapping_edges,all_features_edges,"LineString")
+ 
 
         # Points
 
         points_verts = [[i + (0,)] for i in points]
-
 
         # Points Features
 
@@ -191,17 +173,12 @@ class SvMegapolisLoadStreetNetwork(SverchCustomTreeNode, bpy.types.Node):
 
         ### Getting Points Features
 
-        points_keys = []
-        points_values = []
-
-        for i in points_features:
-                points_keys.append(i['properties'].keys())
-                points_values.append(i['properties'].values())
+        points_keys = [list(i['properties'].keys()) for i in points_features]
+        points_values = [list(i['properties'].values()) for i in points_features]
 
         #######################################################################################################
 
         # LineString
-
 
         ## LineStrings Vertices
 
@@ -223,12 +200,11 @@ class SvMegapolisLoadStreetNetwork(SverchCustomTreeNode, bpy.types.Node):
         ### Creating List of Edges LineStrings
         linestrings_edges_p = []
         linestrings_edges_x = []
-
-        for i in linestrings_verts:
-            linestrings_edges_p.append([])
-            for j in i:
-                linestrings_edges_p[linestrings_verts.index(i)].append(i.index(j))
-
+        
+        linestrings_edges_p = [
+            [idx for idx, _ in enumerate(i)]
+            for i in linestrings_verts
+            ]
         ### Creating Second List of Edges (Shifted List)
 
         linestrings_edges_z = [linestrings_edges_p[linestrings_edges_p.index(items)][1:] + linestrings_edges_p[linestrings_edges_p.index(items)][:1] for items in linestrings_edges_p]
@@ -243,19 +219,14 @@ class SvMegapolisLoadStreetNetwork(SverchCustomTreeNode, bpy.types.Node):
 
         ## LineString Features
 
-
         ### Getting LineString ID
 
         linestrings_id=[i['id'] for i in linestrings_features]
 
         ### Getting Polygons Features
 
-        linestrings_keys = []
-        linestrings_values = []
-
-        for i in linestrings_features:
-                linestrings_keys.append(i['properties'].keys())
-                linestrings_values.append(i['properties'].values())
+        linestrings_keys = [list(i['properties'].keys()) for i in linestrings_features]
+        linestrings_values = [list(i['properties'].values()) for i in linestrings_features]
 
         ########################################################################################################
 
