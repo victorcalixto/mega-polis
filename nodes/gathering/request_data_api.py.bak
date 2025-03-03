@@ -1,8 +1,12 @@
 import bpy
 from bpy.props import BoolProperty
+
 from sverchok.node_tree import SverchCustomTreeNode
 from sverchok.data_structure import updateNode
-import requests
+
+#Megapolis Dependencies
+
+from megapolis.dependencies import requests
 
 
 class SvMegapolisRequestDataApi(SverchCustomTreeNode, bpy.types.Node):
@@ -12,51 +16,51 @@ class SvMegapolisRequestDataApi(SverchCustomTreeNode, bpy.types.Node):
     """
     bl_idname = 'SvMegapolisRequestDataApi'
     bl_label = 'Request Data Api'
-    bl_icon = 'URL'
+    bl_icon = 'MESH_DATA'
     sv_dependencies = {'requests'}
 
     # Hide Interactive Sockets
     def update_sockets(self, context):
-        """Need to do UX transformation before updating node."""
+        """ need to do UX transformation before updating node"""
         def set_hide(sock, status):
             if sock.hide_safe != status:
                 sock.hide_safe = status
         
-        updateNode(self, context)
+        updateNode(self,context)
 
-    # Blender Properties Buttons
+    #Blender Properties Buttons
+    
     download: BoolProperty(
-        name='Download',
+        name='download', 
         default=False,
-        description='Download the requested data',
-        update=update_sockets
-    )
+        description='Download the requested data', 
+        update=update_sockets)
 
     def sv_init(self, context):
-        # Inputs
+        # inputs
         self.inputs.new('SvStringsSocket', "API URL")
         self.inputs.new('SvStringsSocket', "Folder")
 
-        # Outputs
+        # outputs
+        
         self.outputs.new('SvStringsSocket', "JSON out")
         self.outputs.new('SvStringsSocket', "Status Message")
-
-    def draw_buttons(self, context, layout):
+                    
+    def draw_buttons(self,context, layout):
         layout.prop(self, 'download')
 
     def draw_buttons_ext(self, context, layout):
         self.draw_buttons(context, layout)
 
     def process(self):
-        if not self.inputs["API URL"].is_linked or not self.inputs["Folder"].is_linked:
+        if not self.inputs["API URL"].is_linked or not self.inputs["Folder"].is_linked: 
             return
-
-        self.url_in = self.inputs["API URL"].sv_get(deepcopy=False)
-        self.folder = self.inputs["Folder"].sv_get(deepcopy=False)
+        self.url_in = self.inputs["API URL"].sv_get(deepcopy = False)
+        self.folder = self.inputs["Folder"].sv_get(deepcopy = False)
 
         url = self.url_in[0][0]
         folder_name = str(self.folder[0][0])
-
+        
         response = requests.get(url)
         status_response = response.status_code
 
@@ -64,19 +68,22 @@ class SvMegapolisRequestDataApi(SverchCustomTreeNode, bpy.types.Node):
             status = "Data Collected"
             status = str(status_response)
 
-            name = url.split("/")[-1]
+            name = url.split("/")
+            name = name[-1]
             json_out = response.json()
-
+            
             if self.download:
                 try:
                     with open(f"{folder_name}/{name}", 'w') as f:
                         f.write(response.text)
+                        f.close()
                 except UnicodeDecodeError:
-                    pass
+                     pass
         else:
-            status = f"Status code {status_response}. For requests API HTTP responses, refer to: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status"
+            status = f"Status code {status_response}. For requests API HTTP reponses look at the reference: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status"
 
-        # Outputs
+        ## Outputs
+        
         self.outputs["JSON out"].sv_set(json_out)
         self.outputs["Status Message"].sv_set(status)
 
@@ -87,4 +94,3 @@ def register():
 
 def unregister():
     bpy.utils.unregister_class(SvMegapolisRequestDataApi)
-

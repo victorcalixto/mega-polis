@@ -1,17 +1,22 @@
 import bpy
 from bpy.props import EnumProperty
-from collections import namedtuple
+
+#from collections import namedtuple
 from sverchok.node_tree import SverchCustomTreeNode
 from sverchok.data_structure import updateNode
+from collections import namedtuple
 
-# Megapolis Dependencies
+#Megapolis Dependencies
+
 try:
     import sklearn.datasets as datasets
-except ImportError:
+except:
     pass
 
-Dataframe = namedtuple('Dataframe', ['iris', 'california_housing', 'diabetes', 'digits', 'wine'])
-DATAFRAME = Dataframe('iris', 'california_housing', 'diabetes', 'digits', 'wine')
+
+
+Dataframe = namedtuple('Dataframe', ['iris', 'california_housing','diabetes','digits','wine'])
+DATAFRAME = Dataframe('iris', 'california_housing','diabetes','digits','wine')
 dataframe_items = [(i, i, '') for i in DATAFRAME]
 
 
@@ -22,19 +27,20 @@ class SvMegapolisGetSampleDataframe(SverchCustomTreeNode, bpy.types.Node):
     """
     bl_idname = 'SvMegapolisGetSampleDataframe'
     bl_label = 'Get Sample Dataframe'
-    bl_icon = 'TEXT'
+    bl_icon = 'MESH_DATA'
     sv_dependencies = {'pandas'}
-
     # Hide Interactive Sockets
+    
     def update_sockets(self, context):
-        """ UX transformation before updating node """
+        """ need to do UX transformation before updating node"""
         def set_hide(sock, status):
             if sock.hide_safe != status:
                 sock.hide_safe = status
 
-        updateNode(self, context)
+        updateNode(self,context)
 
-    # Blender Properties Buttons
+    #Blender Properties Buttons
+    
     dataframe: EnumProperty(
         name='dataframe', items=dataframe_items,
         default="iris",
@@ -42,14 +48,17 @@ class SvMegapolisGetSampleDataframe(SverchCustomTreeNode, bpy.types.Node):
         update=update_sockets)
 
     def sv_init(self, context):
-        # Outputs
+        # inputs
+       
+        #outputs
         self.outputs.new('SvStringsSocket', "Dataframe")
     
-    def draw_buttons(self, context, layout):
+    def draw_buttons(self,context, layout):
         layout.prop(self, 'dataframe')
 
     def draw_buttons_ext(self, context, layout):
         self.draw_buttons(context, layout)
+
 
     def process(self):
         if self.dataframe in DATAFRAME.iris:
@@ -63,13 +72,11 @@ class SvMegapolisGetSampleDataframe(SverchCustomTreeNode, bpy.types.Node):
             df = list(housing)
             df = df[0]
             data = df
-
         elif self.dataframe in DATAFRAME.diabetes:
             diabetes = datasets.load_diabetes(return_X_y=True, as_frame=True)
             df = list(diabetes)
             df = df[0]
             data = df
-
         elif self.dataframe in DATAFRAME.digits:
             digits = datasets.load_digits(return_X_y=True, as_frame=True)
             df = list(digits)
@@ -91,4 +98,3 @@ def register():
 
 def unregister():
     bpy.utils.unregister_class(SvMegapolisGetSampleDataframe)
-

@@ -9,11 +9,9 @@ from sverchok.data_structure import updateNode
 #Megapolis Dependencies
 from megapolis.dependencies import seaborn as sns
 
-import  threading
-
+import threading
 
 from megapolis.dependencies import matplotlib
-
 
 try: 
     import matplotlib.pyplot as plt
@@ -108,8 +106,6 @@ class SvMegapolisSeabornPlot(SverchCustomTreeNode, bpy.types.Node):
                 exec(f"t1_{hex_name}.start()")
             else:
                 hex_name=secrets.token_hex(nbytes=16)
-
-
                 
         else:
             if not self.inputs["Dataframe"].is_linked or not self.inputs["Feature X"].is_linked or not self.inputs["Feature y"].is_linked :
@@ -128,7 +124,6 @@ class SvMegapolisSeabornPlot(SverchCustomTreeNode, bpy.types.Node):
                 exec(f"t2_{hex_name}.start()")
             else:
                 hex_name=secrets.token_hex(nbytes=16)
-
 
 def register():
     bpy.utils.register_class(SvMegapolisSeabornPlot)

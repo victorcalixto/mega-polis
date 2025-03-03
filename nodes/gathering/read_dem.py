@@ -1,84 +1,83 @@
 import bpy
-from bpy.props import IntProperty, EnumProperty
-
-#from collections import namedtuple
-from sverchok.node_tree import SverchCustomTreeNode
-from sverchok.data_structure import updateNode
-
-
-#Megapolis Dependencies
-from megapolis.dependencies import rasterio as rio
+import rasterio as rio
 import numpy as np
+from sverchok.node_tree import SverchCustomTreeNode
 
-def makeFaces(x_shape,y_shape):
-    xy = [[x*x_shape+y,x*x_shape+y+1,(x+1)*x_shape+y+1,(x+1)*x_shape+y] for x in range(y_shape-1) for y in range(x_shape-1)]
-    return xy
+
+# Megapolis Dependencies
+
+def make_faces(x_shape, y_shape):
+    """Generate faces for a grid based on the shape."""
+    return [
+        [x * x_shape + y, x * x_shape + y + 1, (x + 1) * x_shape + y + 1, (x + 1) * x_shape + y]
+        for x in range(y_shape - 1) for y in range(x_shape - 1)
+    ]
 
 
 class SvMegapolisReadDem(SverchCustomTreeNode, bpy.types.Node):
     """
     Triggers: Read DEM
-    Tooltip: Read a Digital Elevation Model file (geotiff)
+    Tooltip: Read a Digital Elevation Model file (GeoTIFF)
     """
     bl_idname = 'SvMegapolisReadDem'
     bl_label = 'Read DEM'
-    bl_icon = 'MESH_DATA'
+    bl_icon = 'VIEW_PERSPECTIVE'
     sv_dependencies = {'rasterio'}
 
     def sv_init(self, context):
-        # inputs
+        """Initialize the inputs and outputs for the node."""
+        # Inputs
         self.inputs.new('SvFilePathSocket', "Path")
-       
-        #outputs
+        
+        # Outputs
         self.outputs.new('SvVerticesSocket', "Vertices")
         self.outputs.new('SvStringsSocket', "Faces")
         self.outputs.new('SvStringsSocket', "DEM data")
 
     def process(self):
+        """Process the DEM file and set the outputs."""
         if not self.inputs["Path"].is_linked:
             return
-        self.path = self.inputs["Path"].sv_get(deepcopy = False)
-      
-        path = self.path[0][0]
 
-        dem = rio.open(path)
-        dem_arr = dem.read(1).astype('float64')
+        self.path = self.inputs["Path"].sv_get(deepcopy=False)
+        file_path = self.path[0][0]
 
-        dim_x = dem.width
-        dim_y = dem.height
-        
-        #origin = dem.transform * (0, 0)
-        
-        band1 = dem.read(1)
-        height = band1.shape[0]
-        width = band1.shape[1]
-        cols, rows = np.meshgrid(np.arange(width), np.arange(height))
+        with rio.open(file_path) as dem:
+            dem_arr = dem.read(1).astype('float64')
 
-        xs, ys = rio.transform.xy(dem.transform, rows, cols)
-        lons= np.array(xs)
-        lats = np.array(ys)
+            dim_x = dem.width
+            dim_y = dem.height
 
-        xyz = np.stack((lons, lats,band1),-1)
-        dem.sample([lons,lats])
+            band1 = dem.read(1)
+            height, width = band1.shape
+            cols, rows = np.meshgrid(np.arange(width), np.arange(height))
 
-        grid = makeFaces(dim_x,dim_y)
+            xs, ys = rio.transform.xy(dem.transform, rows, cols)
+            lons = np.array(xs)
+            lats = np.array(ys)
 
-        xyz= np.reshape(xyz , (dim_x * dim_y , 3))
+            xyz = np.stack((lons, lats, band1), -1)
 
-        vertices = [xyz]
+            grid = make_faces(dim_x, dim_y)
 
-        faces = [grid]
+            xyz = np.reshape(xyz, (dim_x * dim_y, 3))
 
-        dem_data = dem_arr
+            vertices = [xyz]
+            faces = [grid]
+            dem_data = dem_arr
 
-        self.outputs["Vertices"].sv_set(vertices)
-        self.outputs["Faces"].sv_set(faces)
-        self.outputs["DEM data"].sv_set(dem_data)
+            # Set the outputs
+            self.outputs["Vertices"].sv_set(vertices)
+            self.outputs["Faces"].sv_set(faces)
+            self.outputs["DEM data"].sv_set(dem_data)
 
 
 def register():
+    """Register the custom node class."""
     bpy.utils.register_class(SvMegapolisReadDem)
 
 
 def unregister():
+    """Unregister the custom node class."""
     bpy.utils.unregister_class(SvMegapolisReadDem)
+

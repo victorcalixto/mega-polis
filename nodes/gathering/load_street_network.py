@@ -1,268 +1,175 @@
 import bpy
 from bpy.props import IntProperty, EnumProperty
-
 from collections import namedtuple
 from sverchok.node_tree import SverchCustomTreeNode
 from sverchok.data_structure import updateNode
 
-#Megapolis Dependencies
-from megapolis.dependencies import osmnx as ox
-from megapolis.dependencies import shapely
+# Megapolis Dependencies
+try:
+    from megapolis.dependencies import osmnx as ox
+except ImportError:
+    ox = None  
 
 try:
     from shapely.geometry import mapping
-except:
-    pass
+except ImportError:
+    mapping = None
 
 import itertools
 
+# Define network types
+NetworkType = namedtuple("NetworkType", ["all", "bike", "drive", "drive_service", "walk"])
+NETWORK_TYPE = NetworkType("all", "bike", "drive", "drive_service", "walk")
+network_type_items = [(i, i, "") for i in NETWORK_TYPE]
 
-Network_type = namedtuple('NetworkType', ['all', 'bike','drive','drive_service','walk'])
-NETWORKTYPE = Network_type('all', 'bike','drive','drive_service','walk')
-networktype_items = [(i, i, '') for i in NETWORKTYPE]
+##### Utility Functions #####
 
-
-###### Functions #######
-
-def chunk(it, size):
-    it = iter(it)
-    return iter(lambda: tuple(itertools.islice(it, size)), ())
-
-def unequal_divide(iterable, chunks):
-    it = iter(iterable)
-    return [list(itertools.islice(it, c)) for c in chunks]
-
-def removeLastElement(givenlist):
-    # using pop() function
-    givenlist.pop()
-    # return the result list
-    return givenlist
+def chunk(iterable, size):
+    """Splits an iterable into fixed-size chunks."""
+    iterator = iter(iterable)
+    return iter(lambda: tuple(itertools.islice(iterator, size)), ())
 
 def shift(seq, n=0):
+    """Shifts a sequence cyclically by n places."""
     a = n % len(seq)
     return seq[-a:] + seq[:-a]
 
-def get_gdf_geometry(gdf_geometry,gdf_mapping, geometry_type):
-    return [gdf_mapping["features"][i]["geometry"]["coordinates"] for i in range(0,len(gdf_geometry)) if gdf_mapping["features"][i]["geometry"]["type"] == geometry_type]
-       
+def get_gdf_geometry(gdf_geometry, gdf_mapping, geometry_type):
+    """Extracts geometries of a specific type from a GeoDataFrame."""
+    return [
+        gdf_mapping["features"][i]["geometry"]["coordinates"]
+        for i in range(len(gdf_geometry))
+        if gdf_mapping["features"][i]["geometry"]["type"] == geometry_type
+    ]
 
-def get_gdf_features(gdf_geometry,gdf_mapping,features, geometry_type):
-    return [ features["features"][i] for i in range(0,len(gdf_geometry)) if gdf_mapping["features"][i]["geometry"]["type"] == geometry_type]
+def get_gdf_features(gdf_geometry, gdf_mapping, features, geometry_type):
+    """Extracts feature properties for a specific geometry type."""
+    return [
+        features["features"][i]
+        for i in range(len(gdf_geometry))
+        if gdf_mapping["features"][i]["geometry"]["type"] == geometry_type
+    ]
 
 
-#####----------------#####
-
+##### Main Node Class #####
 
 class SvMegapolisLoadStreetNetwork(SverchCustomTreeNode, bpy.types.Node):
     """
     Triggers: Load Street Network
-    Tooltip: Load Street Network
+    Tooltip: Loads a street network based on an address.
     """
-    bl_idname = 'SvMegapolisLoadStreetNetwork'
-    bl_label = 'Load Street Network'
-    bl_icon = 'MESH_DATA'
-    sv_dependencies = {'osmnx'}
+    bl_idname = "SvMegapolisLoadStreetNetwork"
+    bl_label = "Load Street Network"
+    bl_icon = "MOD_MULTIRES"
+    sv_dependencies = {"osmnx"}
 
-    # Hide Interactive Sockets
     def update_sockets(self, context):
-        """ need to do UX transformation before updating node"""
-        def set_hide(sock, status):
-            if sock.hide_safe != status:
-                sock.hide_safe = status
-        updateNode(self,context)
+        """Handles UX updates before updating node."""
+        updateNode(self, context)
 
-    #Blender Properties Buttons
-
+    # Blender Properties Buttons
     projection: IntProperty(
-        name="projection",
-        description="CSR Projection Number",
+        name="Projection",
+        description="CRS Projection Number",
         default=4236,
-        update=update_sockets)
+        update=update_sockets
+    )
     
-    networktype: EnumProperty(
-        name='networktype', items=networktype_items,
+    network_type: EnumProperty(
+        name="Network Type",
+        items=network_type_items,
         default="drive",
-        description='Choose Network Type', 
-        update=update_sockets)
+        description="Choose Network Type",
+        update=update_sockets
+    )
     
     distance: IntProperty(
-        name="distance",
-        description="Distance",
+        name="Distance",
+        description="Search radius (in meters)",
         default=1000,
-        update=update_sockets)
+        update=update_sockets
+    )
 
     def sv_init(self, context):
-        # inputs
-        self.inputs.new('SvStringsSocket', "Address")
-        
-        # outputs
-        
-        self.outputs.new('SvVerticesSocket', "Nodes")
-        self.outputs.new('SvStringsSocket', "Nodes_ID")
-        self.outputs.new('SvStringsSocket', "Nodes_Keys")
-        self.outputs.new('SvStringsSocket', "Nodes_Values")
-        
-        self.outputs.new('SvVerticesSocket', "Edges_Verts")
-        self.outputs.new('SvStringsSocket', "Edges")
-        self.outputs.new('SvStringsSocket', "Edges_ID")
-        self.outputs.new('SvStringsSocket', "Edges_Keys")
-        self.outputs.new('SvStringsSocket', "Edges_Values")
-        
-        self.outputs.new('SvStringsSocket', "DF")
-        self.outputs.new('SvStringsSocket', "Network")
+        """Initializes input and output sockets."""
+        self.inputs.new("SvStringsSocket", "Address")
 
+        self.outputs.new("SvVerticesSocket", "Nodes")
+        self.outputs.new("SvStringsSocket", "Nodes_ID")
+        self.outputs.new("SvStringsSocket", "Nodes_Keys")
+        self.outputs.new("SvStringsSocket", "Nodes_Values")
 
-    def draw_buttons(self,context, layout):
-        layout.prop(self, 'projection')
-        layout.prop(self, 'networktype', expand=True)
-        layout.prop(self, 'distance')
+        self.outputs.new("SvVerticesSocket", "Edges_Verts")
+        self.outputs.new("SvStringsSocket", "Edges")
+        self.outputs.new("SvStringsSocket", "Edges_ID")
+        self.outputs.new("SvStringsSocket", "Edges_Keys")
+        self.outputs.new("SvStringsSocket", "Edges_Values")
 
+        self.outputs.new("SvStringsSocket", "DF")
+        self.outputs.new("SvStringsSocket", "Network")
+
+    def draw_buttons(self, context, layout):
+        """Draws UI buttons in the Blender panel."""
+        layout.prop(self, "projection")
+        layout.prop(self, "network_type", expand=True)
+        layout.prop(self, "distance")
 
     def draw_buttons_ext(self, context, layout):
+        """Extends UI layout."""
         self.draw_buttons(context, layout)
 
     def process(self):
-         
-        if not self.inputs["Address"].is_linked:
+        """Processes the node and retrieves OSM street network data."""
+        if not self.inputs["Address"].is_linked or ox is None:
             return
-        self.address = self.inputs["Address"].sv_get(deepcopy = False)
-        distance = self.distance 
+        
+        address = str(self.inputs["Address"].sv_get(deepcopy=False)[0][0])
+        distance = self.distance
 
-        address = str(self.address[0][0])
-
-        G = ox.graph_from_address(address,dist=distance,network_type=self.networktype)
-
+        # Load street network
+        G = ox.graph_from_address(address, dist=distance, network_type=self.network_type)
         G = ox.projection.project_graph(G, to_crs=self.projection)
 
-        gdf = ox.convert.graph_to_gdfs(G, nodes=True, edges=True, node_geometry=True, fill_edge_geometry=True)
+        # Convert to GeoDataFrames
+        gdf_nodes, gdf_edges = ox.convert.graph_to_gdfs(G, nodes=True, edges=True, node_geometry=True, fill_edge_geometry=True)
 
-
-        gdf_points=gdf[0]["geometry"]
-        gdf_mapping_points = mapping(gdf_geometry)
-        all_features= mapping(gdf[0])
-        gdf_edges=gdf[1]["geometry"]
-        gdf_mapping_edges = mapping(gdf_edges)
-
-        all_features_edges= mapping(gdf[1])
-
-
-        # Points
-
-        points = get_gdf_geometry(gdf_points,gdf_mapping_points, "Point")
-        points_features= get_gdf_features(gdf_points,gdf_mapping+points,all_features,"Point")
-
-        ###########################################################################################
-
-        # Edges
-
-        linestrings = get_gdf_geometry(gdf_edges,gdf_mapping_edges, "LineString")
-        linestrings_features= get_gdf_features(gdf_edges,gdf_mapping_edges,all_features_edges,"LineString")
- 
-
-        # Points
+        # Process nodes
+        gdf_mapping_nodes = mapping(gdf_nodes)
+        points = get_gdf_geometry(gdf_nodes["geometry"], gdf_mapping_nodes, "Point")
+        points_features = get_gdf_features(gdf_nodes["geometry"], gdf_mapping_nodes, mapping(gdf_nodes), "Point")
 
         points_verts = [[i + (0,)] for i in points]
+        points_id = [i["id"] for i in points_features]
+        points_keys = [list(i["properties"].keys()) for i in points_features]
+        points_values = [list(i["properties"].values()) for i in points_features]
 
-        # Points Features
+        # Process edges
+        gdf_mapping_edges = mapping(gdf_edges)
+        linestrings = get_gdf_geometry(gdf_edges["geometry"], gdf_mapping_edges, "LineString")
+        linestrings_features = get_gdf_features(gdf_edges["geometry"], gdf_mapping_edges, mapping(gdf_edges), "LineString")
 
-        ## Getting Points ID
+        edges_verts = [[tuple(i) + (0,) for i in line] for line in linestrings]
+        edges_id = [i["id"] for i in linestrings_features]
+        edges_keys = [list(i["properties"].keys()) for i in linestrings_features]
+        edges_values = [list(i["properties"].values()) for i in linestrings_features]
 
-        points_id=[i['id'] for i in points_features]
+        edges = [list(zip(verts[:-1], verts[1:])) for verts in edges_verts]
 
-        ## Getting Points Features
+        # Output results
+        self.outputs["Nodes"].sv_set(points_verts)
+        self.outputs["Nodes_ID"].sv_set(points_id)
+        self.outputs["Nodes_Keys"].sv_set(points_keys)
+        self.outputs["Nodes_Values"].sv_set(points_values)
 
-        ### Getting Points Features
-
-        points_keys = [list(i['properties'].keys()) for i in points_features]
-        points_values = [list(i['properties'].values()) for i in points_features]
-
-        #######################################################################################################
-
-        # LineString
-
-        ## LineStrings Vertices
-
-        linestrings_verts_1 = [items + (0,) for i in linestrings for items in i]
-
-        ## Getting Lines Size
-
-        ls_linestrings=[len(linestrings[i]) for i in range(0,len(linestrings))]
-
-        ## Slice Linestrings
-
-        it_lns = iter(linestrings_verts_1)
-
-        linestrings_verts= [[next(it_lns) for _ in range(size)] for size in ls_linestrings]
-
-
-        ## lineStrings Edges
-
-        ### Creating List of Edges LineStrings
-        linestrings_edges_p = []
-        linestrings_edges_x = []
-        
-        linestrings_edges_p = [
-            [idx for idx, _ in enumerate(i)]
-            for i in linestrings_verts
-            ]
-        ### Creating Second List of Edges (Shifted List)
-
-        linestrings_edges_z = [linestrings_edges_p[linestrings_edges_p.index(items)][1:] + linestrings_edges_p[linestrings_edges_p.index(items)][:1] for items in linestrings_edges_p]
-
-        ### Zip First and Second List of Edges
-
-        linestrings_edges_h=[list(zip(linestrings_edges_p[items],linestrings_edges_z[items])) for items in range(0,len(linestrings_edges_p))]
-
-        ### Remove Extra Edges
-
-        linestrings_edges= [removeLastElement(i) for i in linestrings_edges_h]
-
-        ## LineString Features
-
-        ### Getting LineString ID
-
-        linestrings_id=[i['id'] for i in linestrings_features]
-
-        ### Getting Polygons Features
-
-        linestrings_keys = [list(i['properties'].keys()) for i in linestrings_features]
-        linestrings_values = [list(i['properties'].values()) for i in linestrings_features]
-
-        ########################################################################################################
-
-        #### OUTPUTS
-
-        nodes = points_verts
-        nodes_id = points_id
-        nodes_keys = points_keys
-        nodes_values = points_values
-
-
-        edges_verts = linestrings_verts
-        edges = linestrings_edges
-        edges_id = linestrings_id
-        edges_keys = linestrings_keys
-        edges_values = linestrings_values
-
-        geoDataFrame = gdf
-        nx = G
-        
-        ## Output
-
-        self.outputs["Nodes"].sv_set(nodes)
-        self.outputs["Nodes_ID"].sv_set(nodes_id)
-        self.outputs["Nodes_Keys"].sv_set(nodes_keys)
-        self.outputs["Nodes_Values"].sv_set(nodes_values)
-        
         self.outputs["Edges_Verts"].sv_set(edges_verts)
         self.outputs["Edges"].sv_set(edges)
         self.outputs["Edges_ID"].sv_set(edges_id)
         self.outputs["Edges_Keys"].sv_set(edges_keys)
         self.outputs["Edges_Values"].sv_set(edges_values)
-        
-        self.outputs["DF"].sv_set(geoDataFrame)
-        self.outputs["Network"].sv_set(nx)
-        
+
+        self.outputs["DF"].sv_set((gdf_nodes, gdf_edges))
+        self.outputs["Network"].sv_set(G)
+
 
 def register():
     bpy.utils.register_class(SvMegapolisLoadStreetNetwork)
@@ -270,3 +177,4 @@ def register():
 
 def unregister():
     bpy.utils.unregister_class(SvMegapolisLoadStreetNetwork)
+

@@ -1,7 +1,12 @@
 import bpy
+
+#from collections import namedtuple
 from sverchok.node_tree import SverchCustomTreeNode
+
+
+#Megapolis Dependencies
+from megapolis.dependencies import pandas as pd
 import json
-import pandas as pd
 
 
 class SvMegapolisReadJson(SverchCustomTreeNode, bpy.types.Node):
@@ -11,27 +16,28 @@ class SvMegapolisReadJson(SverchCustomTreeNode, bpy.types.Node):
     """
     bl_idname = 'SvMegapolisReadJson'
     bl_label = 'Read JSON'
-    bl_icon = 'FILE_TEXT'
+    bl_icon = 'MESH_DATA'
     sv_dependencies = {'pandas'}
 
     def sv_init(self, context):
-        # Inputs
+        # inputs
         self.inputs.new('SvFilePathSocket', "Path")
-        
-        # Outputs
+       
+        #outputs
         self.outputs.new('SvStringsSocket', "JSON Data")
         self.outputs.new('SvStringsSocket', "JSON DF")
 
     def process(self):
         if not self.inputs["Path"].is_linked:
             return
-        
-        self.path = self.inputs["Path"].sv_get(deepcopy=False)
+        self.path = self.inputs["Path"].sv_get(deepcopy = False)
+      
         file_name = self.path[0][0]
         
         # Opening JSON file
+
         with open(file_name) as f:
-            data = json.load(f)
+           data = json.load(f)
 
         df = pd.read_json(file_name)
 
@@ -45,4 +51,3 @@ def register():
 
 def unregister():
     bpy.utils.unregister_class(SvMegapolisReadJson)
-

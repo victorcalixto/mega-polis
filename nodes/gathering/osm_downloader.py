@@ -1,236 +1,142 @@
 import bpy
+import re
 from bpy.props import BoolProperty, EnumProperty
-
 from collections import namedtuple
 from sverchok.node_tree import SverchCustomTreeNode
 from sverchok.data_structure import updateNode
-
-
-#Megapolis Dependencies
 from megapolis.dependencies import osmnx as ox
-import re
 
+DownloadMethod = namedtuple('DownloadMethod', ['Address', 'Place', 'Point', 'Bbox'])
+DOWNLOAD_METHOD = DownloadMethod('Address', 'Place', 'Point', 'Bbox')
+download_method_items = [(i, i, '') for i in DOWNLOAD_METHOD]
 
-Download_method = namedtuple('DownloadMethod', ['Address', 'Place','Point','Bbox'])
-DOWNLOADMETHOD = Download_method('Address', 'Place','Point','Bbox')
-downloadmethod_items = [(i, i, '') for i in DOWNLOADMETHOD]
-
-
-Features = namedtuple('Features', ['aerialway', 'aeroway','amenity','barrier','boundary','building', 'craft','emergency','geolofical','healthcare','highway','historic','landuse','leisure','man_made','military','natural','office','place','power','public_transport','railway','route','sport','telecom','tourism','water','waterway','additional_properties','annotations','name','properties','references','restrictions'])
-
-FEATURES = Features('aerialway', 'aeroway','amenity','barrier','boundary','building', 'craft','emergency','geolofical','healthcare','highway','historic','landuse','leisure','man_made','military','natural','office','place','power','public_transport','railway','route','sport','telecom','tourism','water','waterway','additional_properties','annotations','name','properties','references','restrictions')
+Features = namedtuple(
+    'Features', [
+        'aerialway', 'aeroway', 'amenity', 'barrier', 'boundary', 'building',
+        'craft', 'emergency', 'geological', 'healthcare', 'highway', 'historic',
+        'landuse', 'leisure', 'man_made', 'military', 'natural', 'office',
+        'place', 'power', 'public_transport', 'railway', 'route', 'sport',
+        'telecom', 'tourism', 'water', 'waterway', 'additional_properties',
+        'annotations', 'name', 'properties', 'references', 'restrictions'
+    ]
+)
+FEATURES = Features(*Features._fields)
 features_items = [(i, i, '') for i in FEATURES]
 
 
 def get_buildings_types(buildings):
-    """Return a list of buildings types for OSM downloader"""
-    buildings_types = buildings.loc[:,buildings.columns.str.contains('building|geometry|addr:|amenity|operator|name|historic|brand|cuisine|delivery|drive|internet|opening|outdoor|smoking|takeway|website|layer|source|shop|tourism|wheelchair|office|information|roof|emergency|man|access|parking|fixme|construction|toilets|denomination|religion|height|wikidata|leisure|area|healthcare|levels|diet|email|description|note|old_name|type')]
-    return buildings_types 
+    """Return a list of building types for OSM downloader."""
+    return buildings.loc[:, buildings.columns.str.contains(
+        'building|geometry|addr:|amenity|operator|name|historic|brand|cuisine|'
+        'delivery|drive|internet|opening|outdoor|smoking|takeway|website|'
+        'layer|source|shop|tourism|wheelchair|office|information|roof|'
+        'emergency|man|access|parking|fixme|construction|toilets|denomination|'
+        'religion|height|wikidata|leisure|area|healthcare|levels|diet|email|'
+        'description|note|old_name|type'
+    )]
+
 
 class SvMegapolisOSMDownloader(SverchCustomTreeNode, bpy.types.Node):
     """
     Triggers: OSM Downloader
-    Tooltip: Download an Open Streetmap file
+    Tooltip: Download an OpenStreetMap file.
     """
     bl_idname = 'SvMegapolisOSMDownloader'
     bl_label = 'OSM Downloader'
-    bl_icon = 'MESH_DATA'
+    bl_icon = 'URL'
     sv_dependencies = {'osmnx'}
 
-    # Hide Interactive Sockets
     def update_sockets(self, context):
-        """ need to do UX transformation before updating node"""
+        """Update node sockets based on the selected download method."""
         def set_hide(sock, status):
             if sock.hide_safe != status:
                 sock.hide_safe = status
 
-        if self.download_method in DOWNLOADMETHOD.Address:
-            set_hide(self.inputs['Address'], False)
-            set_hide(self.inputs['Folder'], False)
-            set_hide(self.inputs['Distance'], False)
-            set_hide(self.inputs['Place'], True)
-            set_hide(self.inputs['Coordinate_X'], True)
-            set_hide(self.inputs['Coordinate_Y'], True)
-            set_hide(self.inputs['North'], True)
-            set_hide(self.inputs['South'], True)
-            set_hide(self.inputs['East'], True)
-            set_hide(self.inputs['West'], True)
+        hide_map = {
+            DOWNLOAD_METHOD.Address: ['Place', 'Coordinate_X', 'Coordinate_Y', 'North', 'South', 'East', 'West'],
+            DOWNLOAD_METHOD.Place: ['Address', 'Distance', 'Coordinate_X', 'Coordinate_Y', 'North', 'South', 'East', 'West'],
+            DOWNLOAD_METHOD.Point: ['Address', 'Place', 'North', 'South', 'East', 'West'],
+            DOWNLOAD_METHOD.Bbox: ['Address', 'Place', 'Coordinate_X', 'Coordinate_Y', 'Distance']
+        }
 
-        elif self.download_method in DOWNLOADMETHOD.Place:
-            set_hide(self.inputs['Address'], True)
-            set_hide(self.inputs['Folder'], False)
-            set_hide(self.inputs['Distance'], True)
-            set_hide(self.inputs['Place'], False)
-            set_hide(self.inputs['Coordinate_X'], True)
-            set_hide(self.inputs['Coordinate_Y'], True)
-            set_hide(self.inputs['North'], True)
-            set_hide(self.inputs['South'], True)
-            set_hide(self.inputs['East'], True)
-            set_hide(self.inputs['West'], True)
+        for sock in self.inputs:
+            set_hide(sock, sock.name in hide_map.get(self.download_method, []))
 
-        elif self.download_method in DOWNLOADMETHOD.Point:
-            set_hide(self.inputs['Address'], True)
-            set_hide(self.inputs['Folder'], False)
-            set_hide(self.inputs['Distance'], False)
-            set_hide(self.inputs['Place'], True)
-            set_hide(self.inputs['Coordinate_X'], False)
-            set_hide(self.inputs['Coordinate_Y'], False)
-            set_hide(self.inputs['North'], True)
-            set_hide(self.inputs['South'], True)
-            set_hide(self.inputs['East'], True)
-            set_hide(self.inputs['West'], True)
-
-
-        else:
-            set_hide(self.inputs['Address'], True)
-            set_hide(self.inputs['Folder'], False)
-            set_hide(self.inputs['Distance'], True)
-            set_hide(self.inputs['Place'], True)
-            set_hide(self.inputs['Coordinate_X'], True)
-            set_hide(self.inputs['Coordinate_Y'], True)
-            set_hide(self.inputs['North'], False)
-            set_hide(self.inputs['South'], False)
-            set_hide(self.inputs['East'], False)
-            set_hide(self.inputs['West'], False)
-
-        updateNode(self,context)
-
-    #Blender Properties Buttons
+        updateNode(self, context)
 
     download: BoolProperty(
         name="download",
-        description="Run the Node to Download",
+        description="Run the node to download",
         default=False,
-        update=update_sockets)
+        update=update_sockets
+    )
 
     download_method: EnumProperty(
-        name='download_method', items=downloadmethod_items,
+        name='download_method',
+        items=download_method_items,
         default="Address",
-        description='Choose an OSM Download Method', 
-        update=update_sockets)
-    
+        description='Choose an OSM Download Method',
+        update=update_sockets
+    )
+
     features: EnumProperty(
-        name='features', items=features_items,
+        name='features',
+        items=features_items,
         default="building",
-        description='Choose a Feature to Download', 
-        update=update_sockets)
+        description='Choose a feature to download',
+        update=update_sockets
+    )
 
     def sv_init(self, context):
-        
-        # inputs
-        self.inputs.new('SvStringsSocket', "Address")
-        self.inputs.new('SvStringsSocket', "Place")
-        self.inputs.new('SvStringsSocket', "Coordinate_X")
-        self.inputs.new('SvStringsSocket', "Coordinate_Y")
-        self.inputs.new('SvStringsSocket', "North")
-        self.inputs.new('SvStringsSocket', "South")
-        self.inputs.new('SvStringsSocket', "East")
-        self.inputs.new('SvStringsSocket', "West")
-        self.inputs['Place'].hide_safe = True 
-        self.inputs['Coordinate_X'].hide_safe = True 
-        self.inputs['Coordinate_Y'].hide_safe = True 
-        self.inputs['North'].hide_safe = True 
-        self.inputs['South'].hide_safe = True 
-        self.inputs['East'].hide_safe = True 
-        self.inputs['West'].hide_safe = True 
-        self.inputs.new('SvStringsSocket', "Distance")
-        self.inputs.new('SvStringsSocket', "Folder")
-       
-        # outputs
+        """Initialize node inputs and outputs."""
+        inputs = [
+            "Address", "Place", "Coordinate_X", "Coordinate_Y",
+            "North", "South", "East", "West", "Distance", "Folder"
+        ]
+
+        for input_name in inputs:
+            self.inputs.new('SvStringsSocket', input_name)
+            self.inputs[input_name].hide_safe = True
 
         self.outputs.new('SvStringsSocket', "Output_Message")
-        
-        
-    def draw_buttons(self,context, layout):
+
+    def draw_buttons(self, context, layout):
         layout.prop(self, 'download')
         layout.prop(self, 'download_method', expand=True)
         layout.prop(self, 'features')
 
-    def draw_buttons_ext(self, context, layout):
-        self.draw_buttons(context, layout)
-    
     def process(self):
-         
-        if self.download_method in DOWNLOADMETHOD.Address:
-            if not self.inputs["Address"].is_linked or not self.inputs["Distance"].is_linked or not self.inputs["Folder"].is_linked :
-                return
-            self.address = self.inputs["Address"].sv_get(deepcopy = False)
-            self.distance = self.inputs["Distance"].sv_get(deepcopy = False)
-            self.folder = self.inputs["Folder"].sv_get(deepcopy = False)
-            
-            address = self.address[0][0]
-            distance = self.distance[0][0]
-            folder = self.folder[0][0]
+        """Process node execution."""
+        if self.download:
+            folder = self.inputs["Folder"].sv_get(deepcopy=False)[0][0]
+            query_param = None
 
-        elif self.download_method in DOWNLOADMETHOD.Place:
-            if not self.inputs["Place"].is_linked or not self.inputs["Folder"].is_linked:
-                return
-            self.place = self.inputs["Place"].sv_get(deepcopy = False)
-            self.folder = self.inputs["Folder"].sv_get(deepcopy = False)
+            if self.download_method == DOWNLOAD_METHOD.Address:
+                query_param = self.inputs["Address"].sv_get(deepcopy=False)[0][0]
+                distance = self.inputs["Distance"].sv_get(deepcopy=False)[0][0]
+                buildings = ox.features.features_from_address(query_param, {self.features: True}, distance)
 
-            folder = self.folder[0][0]
-            place = self.place[0][0]
+            elif self.download_method == DOWNLOAD_METHOD.Place:
+                query_param = self.inputs["Place"].sv_get(deepcopy=False)[0][0]
+                buildings = ox.features.features_from_place(query_param, {self.features: True})
 
-        elif self.download_method in DOWNLOADMETHOD.Point:
-            if not self.inputs["Coordinate_X"].is_linked or not self.inputs["Coordinate_Y"].is_linked or not self.inputs["Distance"].is_linked or not self.inputs["Folder"].is_linked :
-                return
-            self.coordinate_x = self.inputs["Coordinate_X"].sv_get(deepcopy = False)
-            self.coordinate_y = self.inputs["Coordinate_Y"].sv_get(deepcopy = False)
-            self.distance = self.inputs["Distance"].sv_get(deepcopy = False)
-            self.folder = self.inputs["Folder"].sv_get(deepcopy = False)
-            
-            coordinate_x = self.coordinate_x[0][0]
-            coordinate_y = self.coordinate_y[0][0]
-            distance = self.distance[0][0]
-            folder = self.folder[0][0]
-
-        else:
-            if not self.inputs["North"].is_linked or not self.inputs["South"].is_linked or not self.inputs["East"].is_linked or not self.inputs["West"].is_linked  or not self.inputs["Folder"].is_linked  :
-                return
-            self.north = self.inputs["North"].sv_get(deepcopy = False)
-            self.south = self.inputs["South"].sv_get(deepcopy = False)
-            self.east = self.inputs["East"].sv_get(deepcopy = False)
-            self.west = self.inputs["West"].sv_get(deepcopy = False)
-            self.folder = self.inputs["Folder"].sv_get(deepcopy = False)
-            
-            north = self.north[0][0]
-            south= self.south[0][0]
-            east = self.east[0][0]
-            west = self.west[0][0]
-            folder = self.folder[0][0]
-
-        dictionary = {}
-        dictionary[self.features] = True
-
-        if self.download == True: 
-            if self.download_method in DOWNLOADMETHOD.Address:
-                buildings = ox.features.features_from_address(str(address), dictionary, distance)
-                buildings = get_buildings_types(buildings)
-                buildings.to_file(f"{folder}{address}_{self.features}.geojson", driver="GeoJSON")
-
-            elif self.download_method in DOWNLOADMETHOD.Place:
-                buildings = ox.features.features_from_place(str(place), dictionary)
-                buildings = get_buildings_types(buildings)
-                buildings.to_file(f"{folder}{place}_{self.features}.geojson", driver="GeoJSON")
-
-            elif self.download_method in DOWNLOADMETHOD.Point:
-                point = (float(coordinate_x),float(coordinate_y))
-                point_name = re.sub('[^A-Za-z0-9]+',' ', str(point_name))
-                buildings = ox.features.features_from_point(point, dictionary, distance)
-                buildings = get_buildings_types(buildings)
-                buildings.to_file(f"{folder}{point_name}_{self.features}.geojson", driver="GeoJSON")
+            elif self.download_method == DOWNLOAD_METHOD.Point:
+                coord_x = float(self.inputs["Coordinate_X"].sv_get(deepcopy=False)[0][0])
+                coord_y = float(self.inputs["Coordinate_Y"].sv_get(deepcopy=False)[0][0])
+                distance = self.inputs["Distance"].sv_get(deepcopy=False)[0][0]
+                buildings = ox.features.features_from_point((coord_x, coord_y), {self.features: True}, distance)
 
             else:
-                bbox = f'{north}_{south}_{east}_{west}'
-                buildings = ox.features.features_from_bbox(north,south,east,west, dictionary)
-                bbox_ = re.sub('[^A-Za-z0-9]+', ' ',bbox) 
-                buildings = get_buildings_types(buildings)
-                buildings.to_file(f"{folder}{bbox_}_{self.features}.geojson", driver="GeoJSON")
+                north, south, east, west = [
+                    float(self.inputs[dim].sv_get(deepcopy=False)[0][0])
+                    for dim in ["North", "South", "East", "West"]
+                ]
+                buildings = ox.features.features_from_bbox(north, south, east, west, {self.features: True})
 
-        else:
-            buildings = ''
-        
-        ## Output
+            buildings = get_buildings_types(buildings)
+            filename = re.sub('[^A-Za-z0-9]+', ' ', f"{query_param}_{self.features}.geojson")
+            buildings.to_file(f"{folder}{filename}", driver="GeoJSON")
+
         self.outputs["Output_Message"].sv_set(buildings)
 
 
@@ -240,3 +146,4 @@ def register():
 
 def unregister():
     bpy.utils.unregister_class(SvMegapolisOSMDownloader)
+

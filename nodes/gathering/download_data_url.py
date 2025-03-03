@@ -1,87 +1,72 @@
+import os
 import bpy
-from bpy.props import IntProperty, EnumProperty, BoolProperty
-
-#from collections import namedtuple
+from bpy.props import BoolProperty
+from sverchok.data_structure import updateNode
 from sverchok.node_tree import SverchCustomTreeNode
-from sverchok.data_structure import node_id, multi_socket, updateNode, levels_of_list_or_np
-
-
-#Megapolis Dependencies
 from megapolis.dependencies import wget
 
-import os
 
 class SvMegapolisDownloadDataUrl(SverchCustomTreeNode, bpy.types.Node):
     """
-    Triggers: Download Data Url
+    Node to download data from a provided URL.
 
-    Tooltip: Download data from a weblink (Uniform Resource Locator - URL)
+    Tooltip: Downloads data from a web link (Uniform Resource Locator - URL).
     """
-    bl_idname = 'SvMegapolisDownloadDataUrl'
-    bl_label = 'Download Data Url'
-    bl_icon = 'MESH_DATA'
-    sv_dependencies = {'wget'}
+    bl_idname = "SvMegapolisDownloadDataUrl"
+    bl_label = "Download Data Url"
+    bl_icon = "URL"
+    sv_dependencies = {"wget"}
 
-    # Hide Interactive Sockets
     def update_sockets(self, context):
-        """ need to do UX transformation before updating node"""
-        def set_hide(sock, status):
-            if sock.hide_safe != status:
-                sock.hide_safe = status
-        
-        updateNode(self,context)
+        """Perform UX transformation before updating the node."""
+        updateNode(self, context)
 
     download: BoolProperty(
-        name='download', 
+        name="Download",
         default=False,
-        description='Download', 
-        update=update_sockets)
-
+        description="Download file from the URL",
+        update=update_sockets
+    )
 
     def sv_init(self, context):
-        # inputs
-        self.inputs.new('SvStringsSocket', "URL")
-        self.inputs.new('SvStringsSocket', "Folder")
-        
-        #outputs
-        self.outputs.new('SvStringsSocket', "Output Message")
-   
+        """Initialize input and output sockets."""
+        self.inputs.new("SvStringsSocket", "URL")
+        self.inputs.new("SvStringsSocket", "Folder")
+        self.outputs.new("SvStringsSocket", "Output Message")
 
-
-    def draw_buttons(self,context, layout):
-        layout.prop(self, 'download')
+    def draw_buttons(self, context, layout):
+        """Draw buttons in the node UI."""
+        layout.prop(self, "download")
 
     def draw_buttons_ext(self, context, layout):
+        """Extended UI layout."""
         self.draw_buttons(context, layout)
 
- 
     def process(self):
-        if not self.inputs["URL"].is_linked or not self.inputs["Folder"].is_linked  :
+        """Handle the download process."""
+        if not self.inputs["URL"].is_linked or not self.inputs["Folder"].is_linked:
             return
-        self.url = self.inputs["URL"].sv_get(deepcopy = False)
-        self.folder = self.inputs["Folder"].sv_get(deepcopy = False)
-        
-        folder_name = self.folder[0][0]
-        message = ''
-        
-        if self.download == True: 
-            if len(self.url[0])<= 1:
-                url = self.url[0][0]
-                name= os.path.basename(url)
-                filename = wget.download(url, f"{folder_name}/{name}")
-                message = [f"{filename} downloaded sucessful"]
-            else:
-                messages = []
-                filenames = []
-                for i in self.url[0]:
-                    name= os.path.basename(i)
-                    filename = wget.download(i, f"{folder_name}/{name}")
-                    messages.append(i)
-                message = [f"{messages} downloaded sucessful"]
-        #outputs
 
+        urls = self.inputs["URL"].sv_get(deepcopy=False)
+        folders = self.inputs["Folder"].sv_get(deepcopy=False)
+
+        if not urls or not folders or not urls[0] or not folders[0]:
+            return
+
+        folder_name = folders[0][0]
+        message = []
+
+        if self.download:
+            for url in urls[0]:
+                if not url:
+                    continue
+                file_name = os.path.basename(url)
+                file_path = os.path.join(folder_name, file_name)
+                wget.download(url, file_path)
+                message.append(f"{file_name} downloaded successfully")
+
+        # Output message
         self.outputs["Output Message"].sv_set(message)
-
 
 
 def register():
@@ -90,3 +75,4 @@ def register():
 
 def unregister():
     bpy.utils.unregister_class(SvMegapolisDownloadDataUrl)
+
