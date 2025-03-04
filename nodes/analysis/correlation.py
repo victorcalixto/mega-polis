@@ -1,69 +1,60 @@
 import bpy
 from bpy.props import EnumProperty
-
 from collections import namedtuple
 from sverchok.node_tree import SverchCustomTreeNode
 from sverchok.data_structure import updateNode
 
-#Megapolis Dependencies
-from megapolis.dependencies import pandas as pd
+# Define correlation methods
+CorrelationMethod = namedtuple('CorrelationMethod', ['pearson', 'kendall', 'spearman'])
+CORRELATION_METHODS = CorrelationMethod('pearson', 'kendall', 'spearman')
+correlation_method_items = [(method, method, '') for method in CORRELATION_METHODS]
 
-Correlation_method = namedtuple('CorrelationMethod', ['pearson', 'kendall','spearman'])
-CORRELATIONMETHOD = Correlation_method('pearson','kendall','spearman')
-correlationmethod_items = [(i, i, '') for i in CORRELATIONMETHOD]
 
 class SvMegapolisCorrelation(SverchCustomTreeNode, bpy.types.Node):
     """
     Triggers: Correlation
-    Tooltip: Correlates a Dataframe using the methods; pearson, kendall, or spearman 
+    Tooltip: Correlates a Dataframe using the methods; pearson, kendall, or spearman.
     """
     bl_idname = 'SvMegapolisCorrelation'
     bl_label = 'Correlation'
-    bl_icon = 'MESH_DATA'
+    bl_icon = 'SNAP_EDGE'
     sv_dependencies = {'pandas'}
 
-    # Hide Interactive Sockets
-    def update_sockets(self, context):
-        """ need to do UX transformation before updating node"""
-        def set_hide(sock, status):
-            if sock.hide_safe != status:
-                sock.hide_safe = status
-        updateNode(self,context)
-
-    #Blender Properties Buttons
-    
+    # Blender Properties Buttons
     correlation: EnumProperty(
-        name='Method', items=correlationmethod_items,
+        name='Method',
+        items=correlation_method_items,
         default="pearson",
-        description='Choose a correlation method', 
-        update=update_sockets)
+        description='Choose a correlation method',
+        update=lambda self, context: updateNode(self, context)
+    )
 
     def sv_init(self, context):
-        # inputs
+        """Initialize inputs and outputs."""
         self.inputs.new('SvStringsSocket', "Dataframe")
-        # outputs
         self.outputs.new('SvStringsSocket', "Correlation")
 
-    def draw_buttons(self,context, layout):
+    def draw_buttons(self, context, layout):
         layout.prop(self, 'correlation', expand=False)
 
     def draw_buttons_ext(self, context, layout):
         self.draw_buttons(context, layout)
 
     def process(self):
-         
+        """Process the correlation calculation."""
         if not self.inputs["Dataframe"].is_linked:
             return
-        self.dataframe = self.inputs["Dataframe"].sv_get(deepcopy = False)
 
-        df = self.dataframe
-        data = df.corr(method=self.correlation)
-        corr = [data]
+        dataframe = self.inputs["Dataframe"].sv_get(deepcopy=False)
 
+        if not dataframe:
+            return
 
-        ## Output
+        # Compute correlation
+        correlation_matrix = dataframe.corr(method=self.correlation)
 
-        self.outputs["Correlation"].sv_set(corr)
+        # Output the correlation matrix
+        self.outputs["Correlation"].sv_set([correlation_matrix])
 
 
 def register():
@@ -72,3 +63,4 @@ def register():
 
 def unregister():
     bpy.utils.unregister_class(SvMegapolisCorrelation)
+

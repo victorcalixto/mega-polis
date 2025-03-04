@@ -1,12 +1,8 @@
 import bpy
-from bpy.props import FloatProperty, BoolProperty
-
-from collections import namedtuple
 from sverchok.node_tree import SverchCustomTreeNode
 from sverchok.data_structure import updateNode
 
-#Megapolis Dependencies
-
+# Megapolis Dependencies
 from megapolis.dependencies import sklearn as skl
 
 class SvMegapolisModelEvaluate(SverchCustomTreeNode, bpy.types.Node):
@@ -16,41 +12,37 @@ class SvMegapolisModelEvaluate(SverchCustomTreeNode, bpy.types.Node):
     """
     bl_idname = 'SvMegapolisModelEvaluate'
     bl_label = 'Model Evaluate'
-    bl_icon = 'MESH_DATA'
+    bl_icon = 'DRIVER_TRANSFORM'
     sv_dependencies = {'sklearn'}
 
     # Hide Interactive Sockets
     def update_sockets(self, context):
-        """ need to do UX transformation before updating node"""
+        """ Need to do UX transformation before updating node. """
         def set_hide(sock, status):
             if sock.hide_safe != status:
                 sock.hide_safe = status
-        
-        updateNode(self,context)
 
-    #Blender Properties Buttons
-    
+        updateNode(self, context)
+
+    # Blender Properties Buttons
     def sv_init(self, context):
-        # inputs
+        # Inputs
         self.inputs.new('SvStringsSocket', "Model")
         self.inputs.new('SvStringsSocket', "Predictions")
         self.inputs.new('SvStringsSocket', "y")
 
-        # outputs
-        
+        # Outputs
         self.outputs.new('SvStringsSocket', "r2")
         self.outputs.new('SvStringsSocket', "rmse")
 
     def process(self):
-         
-        if not self.inputs["Model"].is_linked or not self.inputs["y"].is_linked or not self.inputs["Predictions"].is_linked :
+        if not self.inputs["Model"].is_linked or not self.inputs["y"].is_linked or not self.inputs["Predictions"].is_linked:
             return
-        self.model = self.inputs["Model"].sv_get(deepcopy = False)
-        self.y = self.inputs["y"].sv_get(deepcopy = False)
-        self.predictions = self.inputs["Predictions"].sv_get(deepcopy = False)
 
+        self.model = self.inputs["Model"].sv_get(deepcopy=False)
+        self.y = self.inputs["y"].sv_get(deepcopy=False)
+        self.predictions = self.inputs["Predictions"].sv_get(deepcopy=False)
 
-        model = self.model[0]
         predictions = self.predictions[0]
         y_test = self.y
 
@@ -59,11 +51,10 @@ class SvMegapolisModelEvaluate(SverchCustomTreeNode, bpy.types.Node):
 
         r2 = [data_r2]
         rmse = [data_rmse]
-        
-        ## Outputs
-        
-        self.outputs["r2"].sv_set(predictions)
-        self.outputs["rmse"].sv_set(predictions)
+
+        # Outputs
+        self.outputs["r2"].sv_set(r2)
+        self.outputs["rmse"].sv_set(rmse)
 
 
 def register():
@@ -72,3 +63,4 @@ def register():
 
 def unregister():
     bpy.utils.unregister_class(SvMegapolisModelEvaluate)
+

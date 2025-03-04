@@ -10,7 +10,6 @@ from sverchok.data_structure import updateNode
 from megapolis.dependencies import cv2
 from megapolis.dependencies import torch
 from megapolis.dependencies import pandas as pd
-from megapolis.dependencies import detectron2
 
 
 try:
@@ -26,9 +25,6 @@ except:
 import os
 import numpy as np
 from pathlib import Path
-
-from collections import namedtuple
-
 
 
 Detectron_method = namedtuple('DetectronMethod', ['OD', 'IS','KP','LVIS','PS'])
@@ -163,12 +159,8 @@ class Detector:
             pred_things_names = list(map(lambda x: things_names[x], categories))
             pred_stuff_names = list(map(lambda x: stuff_names[x], categories))
              
-            #pred_class_names_stuff = list(map(lambda x: panoptic_stuff[x], categories))
-           
 
             cv2.imwrite(f"{output_folder}/{image_name}_PS.png", output.get_image()[:, :, ::-1])
-
-            id_pano = segmentInfo
 
             for i in segmentInfo:
                 i["pixel_ratio"] = (i["area"]*100)/(height*width)
@@ -273,12 +265,10 @@ class Detector:
                         pred_things_names = list(map(lambda x: things_names[x], categories))
                         pred_stuff_names = list(map(lambda x: stuff_names[x], categories))
                          
-                        #pred_class_names_stuff = list(map(lambda x: panoptic_stuff[x], categories))
                        
 
                         cv2.imwrite(f"{output_folder}/{image_name}_PS.png", output.get_image()[:, :, ::-1])
 
-                        id_pano = segmentInfo
 
                         for i in segmentInfo:
                             i["pixel_ratio"] = (i["area"]*100)/(height*width)

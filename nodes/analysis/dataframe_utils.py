@@ -1,110 +1,96 @@
 import bpy
 from bpy.props import IntProperty, EnumProperty
-
 from collections import namedtuple
 from sverchok.node_tree import SverchCustomTreeNode
 from sverchok.data_structure import updateNode
-
-#Megapolis Dependencies
-from megapolis.dependencies import pandas as pd
 import io
 
-Info_type = namedtuple('InfoType', ['info','head','tail','decribe'])
-INFOTYPE = Info_type('info','head','tail','describe')
-infotype_items = [(i, i, '') for i in INFOTYPE]
+# Define DataFrame utility functions
+InfoType = namedtuple('InfoType', ['info', 'head', 'tail', 'describe'])
+INFO_TYPE = InfoType('info', 'head', 'tail', 'describe')
+info_type_items = [(i, i, '') for i in INFO_TYPE]
+
 
 class SvMegapolisDataframeUtils(SverchCustomTreeNode, bpy.types.Node):
     """
     Triggers: Dataframe Utils
-    Tooltip: Dataframe Utilits for Exploratory Data Analysis: info, head, tail, and decribe  
+    Tooltip: Provides utilities for exploratory data analysis: info, head, tail, and describe.
     """
     bl_idname = 'SvMegapolisDataframeUtils'
     bl_label = 'Dataframe Utils'
-    bl_icon = 'MESH_DATA'
+    bl_icon = 'TOOL_SETTINGS'
     sv_dependencies = {'pandas'}
 
-    # Hide Interactive Sockets
+    # Blender Properties
+    infotype: EnumProperty(
+        name='Function',
+        items=info_type_items,
+        default="info",
+        description='Choose a function to explore the data',
+        update=lambda self, context: self.update_sockets(context)
+    )
+
+    numberb: IntProperty(
+        name="Number",
+        default=5,
+        min=1,
+        update=updateNode
+    )
+
     def update_sockets(self, context):
-        """ need to do UX transformation before updating node"""
+        """Update socket visibility based on the selected function."""
         def set_hide(sock, status):
             if sock.hide_safe != status:
                 sock.hide_safe = status
-        
 
-        if self.infotype in INFOTYPE.head or self.infotype in INFOTYPE.tail: 
-            set_hide(self.inputs['Dataframe'], False)
+        if self.infotype in {INFO_TYPE.head, INFO_TYPE.tail}:
             set_hide(self.inputs['Number'], False)
         else:
-            set_hide(self.inputs['Dataframe'], False)
             set_hide(self.inputs['Number'], True)
 
-        updateNode(self,context)
-
-    #Blender Properties Buttons
-    
-    infotype: EnumProperty(
-        name='Function', items=infotype_items,
-        default="info",
-        description='Choose a Function to Explore the Data', 
-        update=update_sockets)
-    
-    numberb : IntProperty(
-        name = "number",
-        default = 5,
-        min = 1,
-        update = updateNode)
-
+        updateNode(self, context)
 
     def sv_init(self, context):
-        # inputs
+        """Initialise inputs and outputs."""
         self.inputs.new('SvStringsSocket', "Dataframe")
-        self.inputs.new('SvStringsSocket', "Number").prop_name='numberb'
-        
-        self.inputs['Number'].hide_safe = True 
-        
-        # outputs
-       
-        self.outputs.new('SvStringsSocket',"Value")
+        self.inputs.new('SvStringsSocket', "Number").prop_name = 'numberb'
+        self.inputs['Number'].hide_safe = True  # Hide number input by default
 
-    def draw_buttons(self,context, layout):
+        self.outputs.new('SvStringsSocket', "Value")
+
+    def draw_buttons(self, context, layout):
         layout.prop(self, 'infotype', expand=False)
-        #if self.infotype == 'head' or self.infotype == 'tail':
-        #    layout.prop(self, 'numberb')
 
     def draw_buttons_ext(self, context, layout):
         self.draw_buttons(context, layout)
 
     def process(self):
-        
-        if self.infotype in INFOTYPE.head or self.infotype in INFOTYPE.tail:
-            if not self.inputs["Dataframe"].is_linked:
+        """Perform the selected DataFrame utility function."""
+        if not self.inputs["Dataframe"].is_linked:
+            return
+
+        dataframe = self.inputs["Dataframe"].sv_get(deepcopy=False)
+
+        if self.infotype in {INFO_TYPE.head, INFO_TYPE.tail}:
+            if not self.inputs["Number"].is_linked:
                 return
-            self.df = self.inputs["Dataframe"].sv_get(deepcopy = False)
-            self.number= self.inputs["Number"].sv_get(deepcopy = False)
-            df = self.df
-            number= self.number
+            number = self.inputs["Number"].sv_get(deepcopy=False)[0][0]
         else:
-            if not self.inputs["Dataframe"].is_linked: 
-                return       
-            self.df = self.inputs["Dataframe"].sv_get(deepcopy = False)
-            df = self.df
+            number = None
 
-        if self.infotype in INFOTYPE.head:
-            value= df.head(number[0][0])
-        
-        elif self.infotype in INFOTYPE.tail:
-        
-            value = df.tail(number[0][0])
-        
-        elif self.infotype in INFOTYPE.info:
+        # Apply the selected function
+        if self.infotype == INFO_TYPE.head:
+            value = dataframe.head(number)
+        elif self.infotype == INFO_TYPE.tail:
+            value = dataframe.tail(number)
+        elif self.infotype == INFO_TYPE.info:
             buf = io.StringIO()
-            value= df.info(buf=buf)
+            dataframe.info(buf=buf)
             value = buf.getvalue()
-        else:
-            value = df.describe()
-        
-        ## Output
+        else:  # self.infotype == INFO_TYPE.describe
+            value = dataframe.describe()
 
+        # Output result
         self.outputs["Value"].sv_set(value)
 
 
@@ -114,3 +100,4 @@ def register():
 
 def unregister():
     bpy.utils.unregister_class(SvMegapolisDataframeUtils)
+

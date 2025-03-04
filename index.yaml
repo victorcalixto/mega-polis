@@ -11,10 +11,10 @@
 
     #- ---  # Separator
 - Megapolis:
-    - icon_name: OUTLINER_OB_CURVE
+    - icon_name: FILE_VOLUME
     - extra_menu: AdvancedObjectsPartialMenu
     - Gathering:  # Name of a node category
-        - icon_name: OBJECT_DATAMODE  # icon name to show
+        - icon_name: IMPORT # icon name to show
         - extra_menu: MeshPartialMenu  # to make the category available in another menu (1,2,3,4,5)
         - Gathering Design Tools:  # Name of a node category
             - SvMegapolisReadGis 
@@ -36,7 +36,7 @@
             - SvMegapolisRequestDataApi
        
     - Analysis:
-        - icon_name: OUTLINER_OB_CURVE
+        - icon_name: SEQ_HISTOGRAM
         - extra_menu: AdvancedObjectsPartialMenu
         - Analysis Design Tools:
             - SvMegapolisWhiteboxGisTools
@@ -59,7 +59,7 @@
             - SvMegapolisImageSegmentation
 
     - Generation:
-        - icon_name: SURFACE_DATA
+        - icon_name: HOME
         - extra_menu: AdvancedObjectsPartialMenu
         
         - Generation Design Tools: 
@@ -81,7 +81,7 @@
             - SvMegapolisFileToGeoJson
 
     - Visualisation:
-        - icon_name: OUTLINER_OB_FORCE_FIELD
+        - icon_name: OUTLINER_OB_IMAGE
         - extra_menu: AdvancedObjectsPartialMenu
         - Design Tools:
             - SvMegapolisDashboardMesh
