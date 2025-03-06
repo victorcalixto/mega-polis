@@ -1,13 +1,6 @@
 import bpy
-from bpy.props import IntProperty, EnumProperty
-
-#from collections import namedtuple
-from sverchok.node_tree import SverchCustomTreeNode
-from sverchok.data_structure import updateNode
-
-
-#Megapolis Dependencies
 import os
+from sverchok.node_tree import SverchCustomTreeNode
 
 
 class SvMegapolisGetFilePath(SverchCustomTreeNode, bpy.types.Node):
@@ -15,32 +8,30 @@ class SvMegapolisGetFilePath(SverchCustomTreeNode, bpy.types.Node):
     Triggers: GetFilePath
     Tooltip: Get File Path
     """
-    bl_idname = 'SvMegapolisGetFilePath'
-    bl_label = 'Get File path'
-    bl_icon = 'MESH_DATA'
-    
+    bl_idname = "SvMegapolisGetFilePath"
+    bl_label = "Get File Path"
+    bl_icon = "FILE_FOLDER"
 
     def sv_init(self, context):
-        # inputs
-        self.inputs.new('SvFilePathSocket', "File")
-
-        #outputs
-        self.outputs.new('SvStringsSocket', "File Path")
+        """Initialize node inputs and outputs."""
+        self.inputs.new("SvFilePathSocket", "File")
+        self.outputs.new("SvStringsSocket", "File Path")
 
     def process(self):
+        """Extract the directory path from the input file."""
         if not self.inputs["File"].is_linked:
             return
-        self.file = self.inputs["File"].sv_get(deepcopy = False)
 
-        file=self.file[0][0]
+        file_path = self.inputs["File"].sv_get(deepcopy=False)[0][0]
+        directory = os.path.dirname(os.path.abspath(file_path))
 
-        file_out = [os.path.dirname(os.path.abspath(file))]
+        self.outputs["File Path"].sv_set([directory])
 
-        #Output
-        self.outputs["File Path"].sv_set(file_out)
 
 def register():
     bpy.utils.register_class(SvMegapolisGetFilePath)
 
+
 def unregister():
     bpy.utils.unregister_class(SvMegapolisGetFilePath)
+

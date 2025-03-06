@@ -1,14 +1,8 @@
 import bpy
-from bpy.props import IntProperty, EnumProperty
-
-#from collections import namedtuple
 from sverchok.node_tree import SverchCustomTreeNode
-from sverchok.data_structure import updateNode
 
-
-#Megapolis Dependencies
+# Megapolis Dependencies
 from megapolis.dependencies import geopandas as gpd
-
 
 
 class SvMegapolisFileToGdf(SverchCustomTreeNode, bpy.types.Node):
@@ -18,29 +12,31 @@ class SvMegapolisFileToGdf(SverchCustomTreeNode, bpy.types.Node):
     """
     bl_idname = 'SvMegapolisFileToGdf'
     bl_label = 'File To Gdf'
-    bl_icon = 'MESH_DATA'
+    bl_icon = 'WORDWRAP_ON'
     sv_dependencies = {'geopandas'}
 
     def sv_init(self, context):
-        # inputs
+        """ Initialize inputs and outputs """
+        # Inputs
         self.inputs.new('SvFilePathSocket', "File")
 
-        #outputs
+        # Outputs
         self.outputs.new('SvStringsSocket', "GeoDataframe Output")
 
     def process(self):
+        """ Process the file and convert it to a GeoDataFrame """
         if not self.inputs["File"].is_linked:
             return
-        self.file = self.inputs["File"].sv_get(deepcopy = False)
 
-        file=self.file[0][0]
+        # Get the input file path
+        self.file = self.inputs["File"].sv_get(deepcopy=False)
+        file = self.file[0][0]
 
-        df = gpd.read_file(file)  
+        # Read the file as a GeoDataFrame
+        gdf = gpd.read_file(file)
 
-        gdf_out = [df]
-
-        #Output
-        self.outputs["GeoDataframe Output"].sv_set(gdf_out)
+        # Output the GeoDataFrame
+        self.outputs["GeoDataframe Output"].sv_set([gdf])
 
 
 def register():
@@ -49,3 +45,4 @@ def register():
 
 def unregister():
     bpy.utils.unregister_class(SvMegapolisFileToGdf)
+

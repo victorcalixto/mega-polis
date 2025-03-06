@@ -1,14 +1,6 @@
 import bpy
-from bpy.props import IntProperty, EnumProperty
-
-#from collections import namedtuple
 from sverchok.node_tree import SverchCustomTreeNode
-from sverchok.data_structure import updateNode
 
-
-#Megapolis Dependencies
-from megapolis.dependencies import pandas as pd
- 
 
 class SvMegapolisTransposeDataframe(SverchCustomTreeNode, bpy.types.Node):
     """
@@ -17,26 +9,29 @@ class SvMegapolisTransposeDataframe(SverchCustomTreeNode, bpy.types.Node):
     """
     bl_idname = 'SvMegapolisTransposeDataframe'
     bl_label = 'Transpose Dataframe'
-    bl_icon = 'MESH_DATA'
+    bl_icon = 'CON_TRANSLIKE'
     sv_dependencies = {'pandas'}
 
     def sv_init(self, context):
-        # inputs
+        """ Initialize inputs and outputs """
+        # Inputs
         self.inputs.new('SvStringsSocket', "Dataframe")
 
-        #outputs
+        # Outputs
         self.outputs.new('SvStringsSocket', "Dataframe Output")
 
     def process(self):
+        """ Process the dataframe and transpose it """
         if not self.inputs["Dataframe"].is_linked:
             return
-        self.df = self.inputs["Dataframe"].sv_get(deepcopy = False)
 
-        data = self.df.T
+        # Get the input dataframe
+        self.df = self.inputs["Dataframe"].sv_get(deepcopy=False)
 
-        df_transposed = data
+        # Transpose the dataframe
+        df_transposed = self.df.T
 
-        #Output
+        # Output the transposed dataframe
         self.outputs["Dataframe Output"].sv_set(df_transposed)
 
 
@@ -46,3 +41,4 @@ def register():
 
 def unregister():
     bpy.utils.unregister_class(SvMegapolisTransposeDataframe)
+
