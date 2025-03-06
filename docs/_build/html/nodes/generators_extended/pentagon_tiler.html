@@ -1,0 +1,279 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pentagon Tiler &mdash; Mega-Polis 0, 0, 0, 0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../../_static/documentation_options.js?v=b89074fd"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Polygon Grid" href="polygon_grid.html" />
+    <link rel="prev" title="Hilbert Image" href="hilbert_image.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../main.html" class="icon icon-home">
+            Mega-Polis
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../introduction/introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../user_interface/user_interface.html">User interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tree_evaluation_system.html">Node tree evaluation system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../data_structure/data_structure_index.html">Data structure</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../nodes.html">Nodes</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../generator/generator_index.html">Generators</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="generators_extended_index.html">Generators Extended</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="box_rounded.html">Rounded box</a></li>
+<li class="toctree-l3"><a class="reference internal" href="conic_section.html">Conic Sections</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ellipse_mk3.html">Ellipse</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hilbert.html">Hilbert 2D</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hilbert3d.html">Hilbert 3D</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hilbert_image.html">Hilbert Image</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Pentagon Tiler</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#functionality">Functionality</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#parameters">Parameters</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#inputs">Inputs</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#advanced-parameters">Advanced Parameters</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#outputs">Outputs</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#example-of-usage">Example of usage</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="polygon_grid.html">Polygon Grid</a></li>
+<li class="toctree-l3"><a class="reference internal" href="regular_solid.html">Regular Solid</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ring_mk2.html">Ring</a></li>
+<li class="toctree-l3"><a class="reference internal" href="smooth_lines.html">Smooth Lines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="spiral_mk2.html">Spiral</a></li>
+<li class="toctree-l3"><a class="reference internal" href="super_ellipsoid.html">Super Ellipsoid</a></li>
+<li class="toctree-l3"><a class="reference internal" href="torus_knot_mk2.html">Torus Knot</a></li>
+<li class="toctree-l3"><a class="reference internal" href="triangle.html">Triangle</a></li>
+<li class="toctree-l3"><a class="reference internal" href="wfc_texture.html">WFC Texture</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../curve/curve_index.html">Curves</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../surface/surface_index.html">Surfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../field/field_index.html">Fields</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../solid/solid_index.html">Solids</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../spatial/spatial_index.html">Spatial</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../transforms/transforms_index.html">Transforms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../analyzer/analyzer_index.html">Analyzers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../modifier_change/modifier_change_index.html">Modifier Change</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../modifier_make/modifier_make_index.html">Modifier Make</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../CAD/CAD_index.html">CAD</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../number/number_index.html">Number</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../vector/vector_index.html">Vector</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../matrix/matrix_index.html">Matrix</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../quaternion/quaternion_index.html">Quaternion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../color/color_index.html">Color</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../logic/logic_index.html">Logic</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../list_main/list_main_index.html">List Main</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../list_struct/list_struct_index.html">List Structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../list_masks/list_masks_index.html">List Masks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../list_mutators/list_mutators_index.html">List Mutators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../dictionary/dictionary_index.html">Dictionary</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../viz/viz_index.html">Viz</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../text/text_index.html">Text</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../script/script_index.html">Script</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../scene/scene_index.html">Scene</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../object_nodes/object_nodes_index.html">Object</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../layout/layout_index.html">Layout</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../network/network_index.html">Network</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pulga_physics/pulga_physics_index.html">Pulga Physics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../exchange/exchange_index.html">Exchange</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../svg/svg_index.html">SVG</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/tutorials.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/celling.html">Celling design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../contributing/contributing_to_sverchok.html">Contributing to sverchok</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../main.html">Mega-Polis</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../main.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../nodes.html">Nodes</a></li>
+          <li class="breadcrumb-item"><a href="generators_extended_index.html">Generators Extended</a></li>
+      <li class="breadcrumb-item active">Pentagon Tiler</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/nodes/generators_extended/pentagon_tiler.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="pentagon-tiler">
+<h1>Pentagon Tiler<a class="headerlink" href="#pentagon-tiler" title="Link to this heading">¶</a></h1>
+<a class="reference external image-reference" href="https://user-images.githubusercontent.com/14288520/191069282-dde70a46-4dc8-4f08-a863-22a0b39d3dd6.png"><img alt="https://user-images.githubusercontent.com/14288520/191069282-dde70a46-4dc8-4f08-a863-22a0b39d3dd6.png" src="https://user-images.githubusercontent.com/14288520/191069282-dde70a46-4dc8-4f08-a863-22a0b39d3dd6.png" />
+</a>
+<section id="functionality">
+<h2>Functionality<a class="headerlink" href="#functionality" title="Link to this heading">¶</a></h2>
+<p>The Pentagon Tiler node creates a pentagon array assembled to fill the plane. It can work with different types of pentagons</p>
+<p>The generated lattice points and tiles are confined to one of the selected layouts: rectangle, triangle, diamond and hexagon.</p>
+</section>
+<section id="parameters">
+<h2>Parameters<a class="headerlink" href="#parameters" title="Link to this heading">¶</a></h2>
+<p>The <strong>Type</strong> parameter allows to select the type of pentagon.</p>
+<p>The <strong>Rotation</strong> parameter allows to select the base angle, aligned with X axis, Y axis or aligned with the pentagon tile</p>
+<p>The <strong>Center</strong> parameter allows to center the grid around the origin.</p>
+<p>The <strong>Separate</strong> parameter allows for the individual primitive tiles (vertices, edges &amp; polygons) to be separated into individual lists in the corresponding outputs.</p>
+</section>
+<section id="inputs">
+<h2>Inputs<a class="headerlink" href="#inputs" title="Link to this heading">¶</a></h2>
+<p>All inputs are vectorized and they will accept single or multiple values.</p>
+<ul class="simple">
+<li><p><strong>Angle</strong> : Rotate the grid around origin by this amount</p></li>
+<li><p><strong>NumX</strong> : Number of points along X</p></li>
+<li><p><strong>NumY</strong> : Number of points along Y</p></li>
+<li><p><strong>A</strong> and <strong>B</strong>: Angles of the pentagon</p></li>
+<li><p><strong>a, b, c and d</strong>: Length of sides</p></li>
+</ul>
+</section>
+<section id="advanced-parameters">
+<h2>Advanced Parameters<a class="headerlink" href="#advanced-parameters" title="Link to this heading">¶</a></h2>
+<p>In the N-Panel (and on the right-click menu) you can find:</p>
+<p><strong>Angle Units</strong>: Choose if the input angles will be interpreted as Degrees or Radians</p>
+<p><strong>Flat output</strong>: Flatten output by list-joining level 1 and unwrapping it (default set to True)</p>
+<p><strong>Match List Global</strong>: Define how list with different lengths should be matched. Refers to the matching of groups (level 1)</p>
+<p><strong>Match List Local</strong>: Define how list with different lengths should be matched. Refers to the matching inside groups (level 2)</p>
+</section>
+<section id="outputs">
+<h2>Outputs<a class="headerlink" href="#outputs" title="Link to this heading">¶</a></h2>
+<p>Outputs will be generated when connected.</p>
+<p><strong>Vertices</strong>, <strong>Edges</strong>, <strong>Polygons</strong>
+These are the vertices, edges and polygons of the pentagonal tiles centered on the lattice points of the selected layout.</p>
+<p>Notes:
+- When the <strong>Separate</strong> is ON the output is a single list (joined mesh) of all the tile vertices/edges/polygons in the grid. When <strong>Separate</strong> is OFF the output is a list of grouped (list) tile vertices/edges/polygons (separate meshes).
+- If <strong>Separate</strong> is OFF (joined tiles),  the overlapping vertices will be merged.</p>
+</section>
+<section id="example-of-usage">
+<h2>Example of usage<a class="headerlink" href="#example-of-usage" title="Link to this heading">¶</a></h2>
+<a class="reference external image-reference" href="https://user-images.githubusercontent.com/10011941/71754304-df4b3f00-2e85-11ea-8feb-99e375ffca8d.png"><img alt="https://user-images.githubusercontent.com/10011941/71754304-df4b3f00-2e85-11ea-8feb-99e375ffca8d.png" src="https://user-images.githubusercontent.com/10011941/71754304-df4b3f00-2e85-11ea-8feb-99e375ffca8d.png" />
+</a>
+<ul class="simple">
+<li><p>old example_001:</p></li>
+</ul>
+<a class="reference external image-reference" href="https://user-images.githubusercontent.com/10011941/71755025-15d68900-2e89-11ea-83e0-3328446fa47d.png"><img alt="https://user-images.githubusercontent.com/10011941/71755025-15d68900-2e89-11ea-83e0-3328446fa47d.png" src="https://user-images.githubusercontent.com/10011941/71755025-15d68900-2e89-11ea-83e0-3328446fa47d.png" />
+</a>
+<ul class="simple">
+<li><p>restore example_001 with new nodes:</p></li>
+</ul>
+<a class="reference external image-reference" href="https://user-images.githubusercontent.com/14288520/191076744-8fb7de74-4726-4d85-85e1-3779f6f6f004.png"><img alt="https://user-images.githubusercontent.com/14288520/191076744-8fb7de74-4726-4d85-85e1-3779f6f6f004.png" src="https://user-images.githubusercontent.com/14288520/191076744-8fb7de74-4726-4d85-85e1-3779f6f6f004.png" />
+</a>
+<ul class="simple">
+<li><p>Transform-&gt; <a class="reference internal" href="../transforms/bend_along_surface.html"><span class="doc">Bend Object Along Surface</span></a></p></li>
+<li><p>Number-&gt; <a class="reference internal" href="../number/numbers.html"><span class="doc">A Number</span></a></p></li>
+<li><p>Surfaces-&gt; <a class="reference internal" href="../surface/evaluate_surface.html"><span class="doc">Evaluate Surface</span></a></p></li>
+<li><p>List-&gt;List Struct-&gt; <a class="reference internal" href="../list_struct/split.html"><span class="doc">List Split</span></a></p></li>
+<li><p>Viz-&gt; <a class="reference internal" href="../viz/viewer_draw_mk4.html"><span class="doc">Viewer Draw</span></a></p></li>
+<li><p>Scene-&gt; <a class="reference internal" href="../exchange/bezier_in.html"><span class="doc">Bezier Input</span></a></p></li>
+</ul>
+<hr class="docutils" />
+<ul class="simple">
+<li><p>old example_002</p></li>
+</ul>
+<a class="reference external image-reference" href="https://user-images.githubusercontent.com/10011941/71755215-e1af9800-2e89-11ea-9ba9-d23de15b2dbb.png"><img alt="https://user-images.githubusercontent.com/10011941/71755215-e1af9800-2e89-11ea-9ba9-d23de15b2dbb.png" src="https://user-images.githubusercontent.com/10011941/71755215-e1af9800-2e89-11ea-9ba9-d23de15b2dbb.png" />
+</a>
+<ul class="simple">
+<li><p>restore example_002 with new nodes</p></li>
+</ul>
+<a class="reference external image-reference" href="https://user-images.githubusercontent.com/14288520/191077924-72f3e9f1-aa0b-4c76-be35-5e2edd487218.png"><img alt="https://user-images.githubusercontent.com/14288520/191077924-72f3e9f1-aa0b-4c76-be35-5e2edd487218.png" src="https://user-images.githubusercontent.com/14288520/191077924-72f3e9f1-aa0b-4c76-be35-5e2edd487218.png" />
+</a>
+<ul class="simple">
+<li><p>Surfaces-&gt; <a class="reference internal" href="../surface/interpolating_surface.html"><span class="doc">Surface from Curves</span></a></p></li>
+<li><p>Surfaces-&gt; <a class="reference internal" href="../surface/evaluate_surface.html"><span class="doc">Evaluate Surface</span></a></p></li>
+<li><p>Transform-&gt; <a class="reference internal" href="../transforms/bend_along_surface.html"><span class="doc">Bend Object Along Surface</span></a></p></li>
+<li><p>Number-&gt; <a class="reference internal" href="../number/numbers.html"><span class="doc">A Number</span></a></p></li>
+<li><p>List-&gt;List Struct-&gt; <a class="reference internal" href="../list_struct/split.html"><span class="doc">List Split</span></a></p></li>
+<li><p>Viz-&gt; <a class="reference internal" href="../viz/viewer_draw_mk4.html"><span class="doc">Viewer Draw</span></a></p></li>
+<li><p>Scene-&gt; <a class="reference internal" href="../exchange/bezier_in.html"><span class="doc">Bezier Input</span></a></p></li>
+</ul>
+<hr class="docutils" />
+<ul class="simple">
+<li><p>old example_003</p></li>
+</ul>
+<a class="reference external image-reference" href="https://user-images.githubusercontent.com/10011941/71755942-7f589680-2e8d-11ea-86de-938d1090fb66.png"><img alt="https://user-images.githubusercontent.com/10011941/71755942-7f589680-2e8d-11ea-86de-938d1090fb66.png" src="https://user-images.githubusercontent.com/10011941/71755942-7f589680-2e8d-11ea-86de-938d1090fb66.png" />
+</a>
+<ul class="simple">
+<li><p>restore example_003 with new nodes:</p></li>
+</ul>
+<a class="reference external image-reference" href="https://user-images.githubusercontent.com/14288520/191079484-53a803e1-2f53-49f0-a138-d0374ba1bd4f.png"><img alt="https://user-images.githubusercontent.com/14288520/191079484-53a803e1-2f53-49f0-a138-d0374ba1bd4f.png" src="https://user-images.githubusercontent.com/14288520/191079484-53a803e1-2f53-49f0-a138-d0374ba1bd4f.png" />
+</a>
+<ul class="simple">
+<li><p>Vector-&gt; <a class="reference internal" href="../vector/vector_rewire.html"><span class="doc">Vector Rewire</span></a></p></li>
+<li><p>Matrix-&gt; <a class="reference internal" href="../matrix/matrix_in_mk4.html"><span class="doc">Matrix In</span></a></p></li>
+<li><p>Transform-&gt; <a class="reference internal" href="../transforms/deform.html"><span class="doc">Simple Deformation</span></a></p></li>
+<li><p>Viz-&gt; <a class="reference internal" href="../viz/viewer_draw_mk4.html"><span class="doc">Viewer Draw</span></a></p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="hilbert_image.html" class="btn btn-neutral float-left" title="Hilbert Image" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="polygon_grid.html" class="btn btn-neutral float-right" title="Polygon Grid" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022...2025, Victor Calixto.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

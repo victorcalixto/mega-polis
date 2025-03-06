@@ -1,0 +1,330 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Random Num Gen &mdash; Mega-Polis 0, 0, 0, 0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../../_static/documentation_options.js?v=b89074fd"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Map Range" href="range_map.html" />
+    <link rel="prev" title="Random" href="random.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../main.html" class="icon icon-home">
+            Mega-Polis
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../introduction/introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../user_interface/user_interface.html">User interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tree_evaluation_system.html">Node tree evaluation system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../data_structure/data_structure_index.html">Data structure</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../nodes.html">Nodes</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../generator/generator_index.html">Generators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../generators_extended/generators_extended_index.html">Generators Extended</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../curve/curve_index.html">Curves</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../surface/surface_index.html">Surfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../field/field_index.html">Fields</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../solid/solid_index.html">Solids</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../spatial/spatial_index.html">Spatial</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../transforms/transforms_index.html">Transforms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../analyzer/analyzer_index.html">Analyzers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../modifier_change/modifier_change_index.html">Modifier Change</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../modifier_make/modifier_make_index.html">Modifier Make</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../CAD/CAD_index.html">CAD</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="number_index.html">Number</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="curve_mapper.html">Curve Mapper</a></li>
+<li class="toctree-l3"><a class="reference internal" href="easing.html">Easing 0..1</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exponential.html">Exponential Sequence</a></li>
+<li class="toctree-l3"><a class="reference internal" href="fibonacci.html">Fibonacci Sequence</a></li>
+<li class="toctree-l3"><a class="reference internal" href="float_to_int.html">Float to Integer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="list_input.html">List Input</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mix_inputs.html">Mix Inputs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mix_numbers.html">Mix Numbers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="number_range.html">Number Range</a></li>
+<li class="toctree-l3"><a class="reference internal" href="numbers.html">A Number</a></li>
+<li class="toctree-l3"><a class="reference internal" href="oscillator.html">Oscillator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="random.html">Random</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Random Num Gen</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#functionality">Functionality</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#inputs-parameters">Inputs &amp; Parameters</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#outputs">Outputs</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#notes">Notes</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#remark">Remark</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#examples">Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="range_map.html">Map Range</a></li>
+<li class="toctree-l3"><a class="reference internal" href="scalar_mk4.html">Scalar Math</a></li>
+<li class="toctree-l3"><a class="reference internal" href="smooth_numbers.html">Smooth Numbers</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../vector/vector_index.html">Vector</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../matrix/matrix_index.html">Matrix</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../quaternion/quaternion_index.html">Quaternion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../color/color_index.html">Color</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../logic/logic_index.html">Logic</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../list_main/list_main_index.html">List Main</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../list_struct/list_struct_index.html">List Structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../list_masks/list_masks_index.html">List Masks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../list_mutators/list_mutators_index.html">List Mutators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../dictionary/dictionary_index.html">Dictionary</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../viz/viz_index.html">Viz</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../text/text_index.html">Text</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../script/script_index.html">Script</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../scene/scene_index.html">Scene</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../object_nodes/object_nodes_index.html">Object</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../layout/layout_index.html">Layout</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../network/network_index.html">Network</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pulga_physics/pulga_physics_index.html">Pulga Physics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../exchange/exchange_index.html">Exchange</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../svg/svg_index.html">SVG</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/tutorials.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/celling.html">Celling design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../contributing/contributing_to_sverchok.html">Contributing to sverchok</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../main.html">Mega-Polis</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../main.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../nodes.html">Nodes</a></li>
+          <li class="breadcrumb-item"><a href="number_index.html">Number</a></li>
+      <li class="breadcrumb-item active">Random Num Gen</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/nodes/number/random_num_gen.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="random-num-gen">
+<h1>Random Num Gen<a class="headerlink" href="#random-num-gen" title="Link to this heading">¶</a></h1>
+<a class="reference external image-reference" href="https://user-images.githubusercontent.com/14288520/189126776-794ea0fb-f6c1-4ec0-9965-cdd5009d3fe7.png"><img alt="https://user-images.githubusercontent.com/14288520/189126776-794ea0fb-f6c1-4ec0-9965-cdd5009d3fe7.png" src="https://user-images.githubusercontent.com/14288520/189126776-794ea0fb-f6c1-4ec0-9965-cdd5009d3fe7.png" />
+</a>
+<section id="functionality">
+<h2>Functionality<a class="headerlink" href="#functionality" title="Link to this heading">¶</a></h2>
+<p>Produces a list of pseudo-random numbers from a seed value.</p>
+</section>
+<section id="inputs-parameters">
+<h2>Inputs &amp; Parameters<a class="headerlink" href="#inputs-parameters" title="Link to this heading">¶</a></h2>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameters</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Int / Float</p></td>
+<td><p>Number type to be created</p></td>
+</tr>
+<tr class="row-odd"><td><p>Size</p></td>
+<td><p>Amount of numbers you want to create</p></td>
+</tr>
+<tr class="row-even"><td><p>Seed</p></td>
+<td><p>Accepts float values, they are hashed into <em>Integers</em> internally.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Int/Float Low</p></td>
+<td><p>Lower limit of values (included)*</p></td>
+</tr>
+<tr class="row-even"><td><p>Int/Float High</p></td>
+<td><p>Higher limit of values (included)*</p></td>
+</tr>
+<tr class="row-odd"><td><p>Weights</p></td>
+<td><p>On “Int” mode. Can be supplied to create a non-uniform distribution</p></td>
+</tr>
+<tr class="row-even"><td><p>Unique</p></td>
+<td><p>On “Int” mode. Outputs non-repeated numbers.
+The output size will be limited to (Int High -  Int Low + 1)</p></td>
+</tr>
+<tr class="row-odd"><td><p>Distribution</p></td>
+<td><p>On “Float” mode many distribution functions can be selected.</p>
+<ul class="simple">
+<li><p>Beta, Binomial, Chi_square, Exponential, F Distrib., Gamma, Geometric,</p></li>
+<li><p>Gumbel, Laplace, Logistic, Log Normal, Log Series, Negative Binomial,</p></li>
+<li><p>Noncentered Chi-Square, Normal, Pareto, Poisson, Power, RayLeigh,</p></li>
+<li><p>Standard Cauchy, Standard Gamma, Standard T, Triangular, Uniform,</p></li>
+<li><p>Vonmises, Wald, Weibull, Zipf</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td><p>Alpha</p></td>
+<td><p>Distribution parameter. Alpha &gt; 0**</p></td>
+</tr>
+<tr class="row-odd"><td><p>Beta</p></td>
+<td><p>Secondary distribution parameter. Beta &gt; 0**</p></td>
+</tr>
+<tr class="row-even"><td><p>t</p></td>
+<td><p>Normalized distribution parameter. 0 &lt; t &lt; 1</p></td>
+</tr>
+</tbody>
+</table>
+<p>What’s a Seed? Read the <a class="reference external" href="https://docs.python.org/3.4/library/random.html">Python docs here</a>.</p>
+<p>Learn more about the distribution functions on the <a class="reference external" href="https://docs.scipy.org/doc/numpy-1.14.0/reference/routines.random.html">SciPy random reference</a>.</p>
+</section>
+<section id="outputs">
+<h2>Outputs<a class="headerlink" href="#outputs" title="Link to this heading">¶</a></h2>
+<p>A list, or nested lists.</p>
+</section>
+<section id="notes">
+<h2>Notes<a class="headerlink" href="#notes" title="Link to this heading">¶</a></h2>
+<p>Providing a float values as a Seed parameter may be unconventional, if you are uncomfortable with it you
+could place a <em>FloatToInt</em> node before the Seed parameter.</p>
+<dl class="simple">
+<dt>(*) Notes on Float Low and Float High</dt><dd><p>Except on some distributions (Uniform, Beta and Triangular) the output values are mapped to fit the desired range. Due this mapping there will be at least one value which matches the “Float High” and  another that matches the “Float Low”</p>
+</dd>
+<dt>(**)Notes on Alpha and Beta values</dt><dd><ul class="simple">
+<li><p>On the “F Distribution” the minimum “Beta” is 0.025</p></li>
+<li><p>On the “Pareto” distribution the minimum valid “Alpha” is 0.01</p></li>
+<li><p>On the “Standard T” distribution the minimum valid “Alpha” is 0.017</p></li>
+<li><p>On the “Triangular” distribution the “Alpha” parameter has to be greater than the “Float Low” and smaller than the  “Float High”.</p></li>
+<li><p>On the “Weibull the minimum valid “Alpha” is 0.0028.</p></li>
+<li><p>On the “Zipf” distribution the minimum valid “Alpha” has to be bigger than 1.0</p></li>
+</ul>
+</dd>
+</dl>
+</section>
+<section id="remark">
+<h2>Remark<a class="headerlink" href="#remark" title="Link to this heading">¶</a></h2>
+<p>For random vector list see:</p>
+<ul class="simple">
+<li><p>Generator-&gt; <a class="reference internal" href="../generator/random_vector_mk3.html"><span class="doc">Random Vector</span></a></p></li>
+</ul>
+<p>for random numeric list see:</p>
+<ul class="simple">
+<li><p>Number-&gt; <a class="reference internal" href="random.html"><span class="doc">Random</span></a> (float, count, 0.0-1.0)</p></li>
+</ul>
+</section>
+<section id="examples">
+<h2>Examples<a class="headerlink" href="#examples" title="Link to this heading">¶</a></h2>
+<p>With the “Weighted” distribution you can control the relative probability of each possible solution.</p>
+<a class="reference external image-reference" href="https://user-images.githubusercontent.com/10011941/46135042-9816dd00-c244-11e8-80e4-41195b3fbdcd.png"><img alt="Weighted_Distribution1.PNG" src="https://user-images.githubusercontent.com/10011941/46135042-9816dd00-c244-11e8-80e4-41195b3fbdcd.png" />
+</a>
+<ul class="simple">
+<li><p>Number-&gt; <a class="reference internal" href="list_input.html"><span class="doc">List Input</span></a></p></li>
+<li><p>Vector-&gt; <a class="reference internal" href="../vector/vector_rewire.html"><span class="doc">Vector Rewire</span></a></p></li>
+<li><p>Matrix-&gt; <a class="reference internal" href="../matrix/matrix_in_mk4.html"><span class="doc">Matrix In</span></a></p></li>
+<li><p>Viz-&gt; <a class="reference internal" href="../viz/viewer_draw_mk4.html"><span class="doc">Viewer Draw</span></a></p></li>
+</ul>
+<a class="reference external image-reference" href="https://user-images.githubusercontent.com/10011941/46135049-9baa6400-c244-11e8-8cc9-3903e05bcd02.png"><img alt="Weighted_Distribution2.PNG" src="https://user-images.githubusercontent.com/10011941/46135049-9baa6400-c244-11e8-8cc9-3903e05bcd02.png" />
+</a>
+<ul class="simple">
+<li><p>Generator-&gt; <a class="reference internal" href="../generator/plane_mk3.html"><span class="doc">Plane</span></a></p></li>
+<li><p>Generator-&gt; <a class="reference internal" href="../generator/ngon.html"><span class="doc">NGon</span></a></p></li>
+<li><p>Generator-&gt; <a class="reference internal" href="../generator/box_mk2.html"><span class="doc">Box</span></a></p></li>
+<li><p>Generator-&gt; <a class="reference internal" href="../generator/icosphere.html"><span class="doc">Icosphere</span></a></p></li>
+<li><p>List-&gt;List Main-&gt; <a class="reference internal" href="../list_main/join.html"><span class="doc">List Join</span></a></p></li>
+<li><p>List-&gt;List Main-&gt; <a class="reference internal" href="../list_main/length.html"><span class="doc">List Length</span></a></p></li>
+<li><p>List-&gt;List Struct-&gt; <a class="reference internal" href="../list_struct/item.html"><span class="doc">List Item</span></a></p></li>
+<li><p>Matrix-&gt; <a class="reference internal" href="../matrix/matrix_in_mk4.html"><span class="doc">Matrix In</span></a></p></li>
+<li><p>Viz-&gt; <a class="reference internal" href="../viz/viewer_draw_mk4.html"><span class="doc">Viewer Draw</span></a></p></li>
+</ul>
+<p>The distribution functions can lead from the default Uniform to a more organic result (Laplace) or with a desired tendency (Triangular)</p>
+<a class="reference external image-reference" href="https://user-images.githubusercontent.com/10011941/46135062-9f3deb00-c244-11e8-9de4-b06c044d5520.png"><img alt="Random_Distribution3.PNG" src="https://user-images.githubusercontent.com/10011941/46135062-9f3deb00-c244-11e8-9de4-b06c044d5520.png" />
+</a>
+<ul class="simple">
+<li><p>Generator-&gt; <a class="reference internal" href="../generator/line_mk4.html"><span class="doc">Line</span></a></p></li>
+<li><p>Number-&gt; <a class="reference internal" href="numbers.html"><span class="doc">A Number</span></a></p></li>
+<li><p>Vector-&gt; <a class="reference internal" href="../vector/vector_rewire.html"><span class="doc">Vector Rewire</span></a></p></li>
+<li><p>Matrix-&gt; <a class="reference internal" href="../matrix/matrix_in_mk4.html"><span class="doc">Matrix In</span></a></p></li>
+<li><p>Viz-&gt; <a class="reference internal" href="../viz/viewer_draw_mk4.html"><span class="doc">Viewer Draw</span></a></p></li>
+</ul>
+<a class="reference external image-reference" href="https://user-images.githubusercontent.com/10011941/46135077-a82ebc80-c244-11e8-9616-6e8cb7218726.png"><img alt="Random_Distribution4.PNG" src="https://user-images.githubusercontent.com/10011941/46135077-a82ebc80-c244-11e8-9616-6e8cb7218726.png" />
+</a>
+<ul class="simple">
+<li><p>Spatial-&gt; <a class="reference internal" href="../spatial/delaunay_2d.html"><span class="doc">Delaunay 2D</span></a></p></li>
+<li><p>CAD-&gt; <a class="reference internal" href="../CAD/inset_special_mk2.html"><span class="doc">Inset Special</span></a></p></li>
+<li><p>Number-&gt; <a class="reference internal" href="numbers.html"><span class="doc">A Number</span></a></p></li>
+<li><p>Number-&gt; <a class="reference internal" href="scalar_mk4.html"><span class="doc">Scalar Math</span></a></p></li>
+<li><p>Vector-&gt; <a class="reference internal" href="../vector/vector_in.html"><span class="doc">Vector In</span></a></p></li>
+<li><p>Matrix-&gt; <a class="reference internal" href="../matrix/matrix_in_mk4.html"><span class="doc">Matrix In</span></a></p></li>
+<li><p>List-&gt;List Main-&gt; <a class="reference internal" href="../list_main/length.html"><span class="doc">List Length</span></a></p></li>
+<li><p>Viz-&gt; <a class="reference internal" href="../viz/viewer_draw_mk4.html"><span class="doc">Viewer Draw</span></a></p></li>
+</ul>
+<p>The “Unique” toggle will make sure there are not repeated numbers, very useful with the “List Item Node”.</p>
+<a class="reference external image-reference" href="https://user-images.githubusercontent.com/10011941/54881844-9e34f180-4e54-11e9-8c92-3eee832c6958.png"><img alt="Random_Distribution_Swerchok_parametric_design_random_sample_unique_example" src="https://user-images.githubusercontent.com/10011941/54881844-9e34f180-4e54-11e9-8c92-3eee832c6958.png" />
+</a>
+<ul class="simple">
+<li><p>Generator-&gt; <a class="reference internal" href="../generator/box_mk2.html"><span class="doc">Box</span></a></p></li>
+<li><p>Spacial-&gt; <a class="reference internal" href="../spatial/homogenous_vector_field.html"><span class="doc">Vector P Field</span></a></p></li>
+<li><p>Number-&gt; <a class="reference internal" href="scalar_mk4.html"><span class="doc">Scalar Math</span></a></p></li>
+<li><p>List-&gt;List Main-&gt; <a class="reference internal" href="../list_main/length.html"><span class="doc">List Length</span></a></p></li>
+<li><p>List-&gt;List Struct-&gt; <a class="reference internal" href="../list_struct/item.html"><span class="doc">List Item</span></a></p></li>
+<li><p>Viz-&gt; <a class="reference internal" href="../viz/viewer_draw_mk4.html"><span class="doc">Viewer Draw</span></a></p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="random.html" class="btn btn-neutral float-left" title="Random" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="range_map.html" class="btn btn-neutral float-right" title="Map Range" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022...2025, Victor Calixto.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

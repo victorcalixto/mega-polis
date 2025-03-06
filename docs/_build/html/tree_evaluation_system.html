@@ -1,0 +1,349 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Node tree evaluation system &mdash; Mega-Polis 0, 0, 0, 0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/documentation_options.js?v=b89074fd"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Data structure" href="data_structure/data_structure_index.html" />
+    <link rel="prev" title="Shortcuts" href="user_interface/shortcuts.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="main.html" class="icon icon-home">
+            Mega-Polis
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="introduction/introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation/installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="user_interface/user_interface.html">User interface</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Node tree evaluation system</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#control-flow">Control flow</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#group-nodes">Group nodes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#loop-nodes"><span class="xref std std-doc">Loop nodes</span></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#wifi-nodes"><span class="xref std std-doc">Wifi nodes</span></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#reroute-nodes">Reroute nodes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#other-nodes">Other nodes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#muting-links">Muting links</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#muting-nodes">Muting nodes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#triggers">Triggers</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#modes-active-tree-panel">Modes (<span class="xref std std-ref">active_tree_panel</span>)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#animation">Animation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#handling-errors">Handling errors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#progress-message">Progress message</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="data_structure/data_structure_index.html">Data structure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nodes.html">Nodes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials/tutorials.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials/celling.html">Celling design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing/contributing_to_sverchok.html">Contributing to sverchok</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="main.html">Mega-Polis</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="main.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Node tree evaluation system</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/tree_evaluation_system.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="node-tree-evaluation-system">
+<h1>Node tree evaluation system<a class="headerlink" href="#node-tree-evaluation-system" title="Link to this heading">¶</a></h1>
+<figure class="align-default" id="id1">
+<img alt="https://user-images.githubusercontent.com/28003269/125029133-3b55db80-e09a-11eb-8bea-3e631ad763eb.gif" src="https://user-images.githubusercontent.com/28003269/125029133-3b55db80-e09a-11eb-8bea-3e631ad763eb.gif" />
+<figcaption>
+<p><span class="caption-text">Highlighting nodes which were effected by property changes in an initial node</span><a class="headerlink" href="#id1" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
+<p>Sverchok layout is a tree of nodes connected with each other by links. The tree represents an algorithm.
+Typically, in the left side a tree has nodes which generate some data. In the middle there are nodes
+which manipulate with data. And in the right side there are output nodes which save/show the result.
+The role of the evaluation system is to combine work of every single node into a meaningful work of an algorithm.</p>
+<section id="control-flow">
+<h2>Control flow<a class="headerlink" href="#control-flow" title="Link to this heading">¶</a></h2>
+<p>In general execution process of a tree is happening from left to right. There is a rule that a node can be executed
+before all previous nodes are executed. However it does not make execution process fully ordered. Consider next example.</p>
+<figure class="align-center" id="id2">
+<img alt="https://user-images.githubusercontent.com/28003269/124717678-6c0d0800-df16-11eb-83fa-b9f6d21c417a.png" src="https://user-images.githubusercontent.com/28003269/124717678-6c0d0800-df16-11eb-83fa-b9f6d21c417a.png" />
+<figcaption>
+<p><span class="caption-text">Simple tree</span><a class="headerlink" href="#id2" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
+<p>Possible order of execution is A -&gt; B -&gt; C -&gt; D -&gt; E -&gt; F. However D -&gt; B -&gt; A -&gt; C -&gt; E -&gt; F is also possible.
+And there are another variants. If there are two or more disjoint nets of nodes their execution,
+relatively to each other, also is unordered.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In the future Sverchok may get a execution system which would be able to evaluate some parts of a tree concurrently.
+In this case A, B, D nodes could be executed concurrently if more than two processors were available.
+But now Sverchok can use only one processor.</p>
+</div>
+<p>There are nodes which can change control flow in some way.</p>
+<section id="group-nodes">
+<h3>Group nodes<a class="headerlink" href="#group-nodes" title="Link to this heading">¶</a></h3>
+<p>If there is a pattern of nodes which is repeated several times in a tree it can be converted into a group node.
+Group node encapsulates bunch of nodes inside a subtree. Evaluation system of main tree evaluate group nodes
+in the same way as regular nodes except that their work can be cancelled. Cancelling of group nodes happen between
+execution of its nodes.</p>
+</section>
+<section id="loop-nodes">
+<h3><a class="reference internal" href="nodes/logic/loop_out.html"><span class="doc">Loop nodes</span></a><a class="headerlink" href="#loop-nodes" title="Link to this heading">¶</a></h3>
+<p>Loop nodes can evaluate the same nodes multiple times. In current state the loop node takes control of the flow and
+return it to evaluation system after their part is done.</p>
+</section>
+<section id="wifi-nodes">
+<h3><a class="reference internal" href="nodes/layout/wifi_in.html"><span class="doc">Wifi nodes</span></a><a class="headerlink" href="#wifi-nodes" title="Link to this heading">¶</a></h3>
+<figure class="align-right" id="id3" style="width: 400px">
+<img alt="https://user-images.githubusercontent.com/28003269/125024249-6f78ce80-e091-11eb-836f-1f8a9fcad205.png" src="https://user-images.githubusercontent.com/28003269/125024249-6f78ce80-e091-11eb-836f-1f8a9fcad205.png" />
+<figcaption>
+<p><span class="caption-text">Connection between <code class="docutils literal notranslate"><span class="pre">A</span> <span class="pre">number</span></code> and <code class="docutils literal notranslate"><span class="pre">Stethoscope</span></code> nodes via wifi nodes</span><a class="headerlink" href="#id3" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
+<p>In case if you have links which go through all your tree and spoil the tree readability it’s possible
+to hide the links by using wifi nodes. <code class="docutils literal notranslate"><span class="pre">Wifi</span> <span class="pre">In</span></code> and <code class="docutils literal notranslate"><span class="pre">Wifi</span> <span class="pre">Out</span></code> nodes act as if they had a link between each other.
+<code class="docutils literal notranslate"><span class="pre">Wifi</span> <span class="pre">In</span></code> can be connected to multiple <code class="docutils literal notranslate"><span class="pre">Wifi</span> <span class="pre">Out</span></code> nodes.</p>
+</section>
+<section id="reroute-nodes">
+<h3>Reroute nodes<a class="headerlink" href="#reroute-nodes" title="Link to this heading">¶</a></h3>
+<p>This is <img alt="reroute" src="https://user-images.githubusercontent.com/28003269/125025744-4574db80-e094-11eb-9f1a-16f8f9191ef0.png" /> <a class="reference external" href="https://docs.blender.org/manual/en/latest/interface/controls/nodes/reroute.html">standard Blender nodes</a> which are used for links organization. They just pass data to next nodes.</p>
+</section>
+<section id="other-nodes">
+<h3>Other nodes<a class="headerlink" href="#other-nodes" title="Link to this heading">¶</a></h3>
+<p>Also there are other nodes which can evaluate nodes on their own accord. Here is at least one of them
+<a class="reference internal" href="nodes/logic/evolver.html"><span class="doc">Evolver node</span></a>.</p>
+</section>
+<section id="muting-links">
+<h3>Muting links<a class="headerlink" href="#muting-links" title="Link to this heading">¶</a></h3>
+<figure class="align-right" style="width: 300px">
+<img alt="https://user-images.githubusercontent.com/28003269/125027738-c681a200-e097-11eb-9033-8b8924a76661.gif" src="https://user-images.githubusercontent.com/28003269/125027738-c681a200-e097-11eb-9033-8b8924a76661.gif" />
+</figure>
+<p>This is <a class="reference external" href="https://docs.blender.org/manual/en/latest/interface/controls/nodes/editing.html?#mute-links">standard Blender functionality</a> which allows temporary to mute links. A muted link acts as if it did not
+exist. Muting links connected to reroute nodes mutes also the link from opposite side.</p>
+</section>
+<section id="muting-nodes">
+<h3>Muting nodes<a class="headerlink" href="#muting-nodes" title="Link to this heading">¶</a></h3>
+<p>It’s partly supported (not for all nodes yet). You are welcome to report if you
+find that some node is muting improperly.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Currently there are cases when internal inks of a node does not fit to how
+data really paths through the node. It’s limitation of Blender which API
+does not give control of displaying internal links properly.</p>
+</div>
+</section>
+</section>
+<section id="triggers">
+<span id="sv-triggers"></span><h2>Triggers<a class="headerlink" href="#triggers" title="Link to this heading">¶</a></h2>
+<p>Each evaluation starts with update event (trigger). Each event has information about what was previously changed.
+Evaluation system use this information to evaluate only those nodes which have been effected by the change.
+Evaluation process is next. The evaluation system scans nodes from left to right. If it finds outdated nodes
+it updates them. Also it checks whether current node has previous nodes updated in current session and if so it also
+goes to update.</p>
+<p>Update events can be cancelable or not. Events, which are cancelable, can be canceled either by user by pressing Escape
+button or by another event. For example if to change property of a node too rapidly in a heavy tree
+it causes stopping update in the middle of the tree and starting update from the node again.</p>
+<p>For now execution system can cancel execution only between nodes.
+It means if there is very slow node you won’t be able to cancel the update until the node will do its work.
+All events are cancelable except events triggered by frame change
+otherwise heavy trees will never be able to be evaluated entirely.</p>
+<dl class="simple">
+<dt>Tree topology changes</dt><dd><p>Any changes in tree topology (add/remove nodes, add/remove/relink links) trigger its revaluation. The update
+can be suppress by disabled live update option of a tree. If new link was added
+then node, from which the link is going, is marked as outdated by the event
+(actual rules are a bit more complicated in this case).
+If a link was removed then node, to which the link was going, is marked as outdated.
+If new node is added it’s going to be evaluated. If a node is removed nothing happens.</p>
+</dd>
+<dt>Node property / socket property changes</dt><dd><p>Node property changes or changes in a property of one of its sockets make the node outdated
+and trigger its reevaluation. The update can be suppress by disabled live update option of a tree.</p>
+</dd>
+<dt><cite>Re-update all nodes</cite> operator (<a class="reference internal" href="user_interface/panels.html#active-tree-panel"><span class="std std-ref">Active Tree Properties</span></a>)</dt><dd><p>It reevaluates a whole tree regardless to updated state of its nodes and the
+<cite>live update</cite> option.</p>
+</dd>
+<dt><cite>Update all</cite> operator (<a class="reference internal" href="user_interface/panels.html#layout-manager"><span class="std std-ref">Layout manager</span></a>)</dt><dd><p>It is the same as <cite>re-update all nodes</cite> operator but effect all trees in a file.</p>
+</dd>
+<dt>Frame changes</dt><dd><p>Update upon frame changes. Extra information <a class="reference internal" href="#animation">Animation</a>.</p>
+</dd>
+</dl>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>If you have heavy tree and auto-update makes the work with the tree inefficient you can disable the <cite>Live update</cite>
+property and update the tree manually with <cite>Re-update all nodes</cite> operator whenever you need.
+Also you can add shortcut for the operator by pressing <kbd class="kbd docutils literal notranslate">RMB</kbd> on the button of the operator (active tree panel).
+Another way to update is enabling <cite>Live update</cite> mode. In this case only changed put of the tree will be updated.</p>
+</div>
+<dl class="simple">
+<dt>Scene changes</dt><dd><p>This trigger reacts on arbitrary changes in scene. Those can be: moving
+objects, changing edit / object mode, mesh editing, assign materials etc.</p>
+</dd>
+</dl>
+<section id="modes-active-tree-panel">
+<h3>Modes (<a class="reference internal" href="user_interface/panels.html#active-tree-panel"><span class="std std-ref">Active Tree Properties</span></a>)<a class="headerlink" href="#modes-active-tree-panel" title="Link to this heading">¶</a></h3>
+<dl class="simple">
+<dt>Live update</dt><dd><p>If enabled it means that the tree will be evaluated upon changes in its
+topology, changes in node properties or scene changes made by user.
+This property does not effect evaluation upon frame changes or by
+<cite>re-update all nodes</cite> operator.
+Enabling the property will call the tree topology changes trigger.</p>
+</dd>
+<dt>Animate</dt><dd><p>If enabled the tree will be reevaluated upon frame change. The update can effect not all nodes but only those
+which have property <cite>to_animate</cite> enabled.</p>
+</dd>
+<dt>Scene update</dt><dd><p>If enabled togather with Live Update the tree will be reevaluated upon
+changes in the scene. It will effect only nodes with <cite>interactive</cite>
+property enabled.</p>
+</dd>
+</dl>
+</section>
+</section>
+<section id="animation">
+<h2>Animation<a class="headerlink" href="#animation" title="Link to this heading">¶</a></h2>
+<figure class="align-right" id="id4" style="width: 300px">
+<img alt="https://user-images.githubusercontent.com/28003269/124884635-83fe8d80-dfe3-11eb-903d-e6c2922e41ca.gif" src="https://user-images.githubusercontent.com/28003269/124884635-83fe8d80-dfe3-11eb-903d-e6c2922e41ca.gif" />
+<figcaption>
+<p><span class="caption-text">Example of how a tree can be recalculated after editing base object by changing current frame pressing the arrow
+button on keyboard.</span><a class="headerlink" href="#id4" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
+<p>With Sverchok it’s possible to create animations. Some nodes have <cite>Animate node</cite> option <img alt="option" src="https://user-images.githubusercontent.com/28003269/124885639-87464900-dfe4-11eb-8796-a54ff5f84e58.png" />. If the option is
+enabled the node will be update each frame change. This can serve two purposes.</p>
+<ul class="simple">
+<li><p>Firstly this can be used for generating animations. In this case
+<a class="reference internal" href="nodes/scene/frame_info_mk2.html"><span class="doc">Frame Info node</span></a> will be most useful.</p></li>
+<li><p><strong>(Deprecated, the Scene trigger is used instead now)</strong> Secondly updating
+nodes upon frame change can be used for refreshing nodes which take data from
+Blender data blocks. For frame change the left/right arrow buttons can be
+used.</p></li>
+</ul>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Blender does not support keyframes for custom trees. It’s possible to inset keyframes to node properties but
+they won’t react upon actual frame changes and you won’t find them in the graph editor.</p>
+</div>
+</section>
+<section id="handling-errors">
+<h2>Handling errors<a class="headerlink" href="#handling-errors" title="Link to this heading">¶</a></h2>
+<figure class="align-right" id="id5" style="width: 300px">
+<img alt="https://user-images.githubusercontent.com/28003269/124915446-9805b780-e002-11eb-8df0-b0b9e53d91dc.png" src="https://user-images.githubusercontent.com/28003269/124915446-9805b780-e002-11eb-8df0-b0b9e53d91dc.png" />
+<figcaption>
+<p><span class="caption-text">Displaying an error happen during the node execution</span><a class="headerlink" href="#id5" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
+<p>It can happen that during execution of a tree some nodes won’t be able to be evaluated properly.
+In this case the node will be marked by a color and it will got an error massage nearby itself.
+An error can have two parts - a name of the error and optionally some message.</p>
+<dl class="simple">
+<dt>There are 3 basic exceptions:</dt><dd><ul class="simple">
+<li><p>Node error (actually it can be any Python error like <code class="docutils literal notranslate"><span class="pre">IndexError</span></code>, <code class="docutils literal notranslate"><span class="pre">LookUpError</span></code> etc.) Sometimes the error
+can help to understand what is wrong but sometimes not. The reason of the error also can be due some bug in
+its implementation, or the type of data is wrong, or shape of the data is unexpected or something else.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">NoDataError</span></code> it can happen when previous node does not have any data in output sockets. It’s considered
+as deprecated behaviour and in the future nodes should be able to handle empty data without raising the error.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">CancelError</span></code> this marks nodes which execution was interrupted.</p></li>
+</ul>
+</dd>
+</dl>
+<p>If a node raises an error it prevents next nodes to be executed. If there is an error node you can determine whether
+any other node can be executed by searching path from that node to the node with error in backward direction.
+If there is no such a path then the node will be executed. It means that errors in detached groups of nodes
+won’t effect each other execution. This also is true about separate branches of nodes which don’t have connections
+after nodes with errors.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This behaviour may be changed in the future iterations and nodes with errors won’t cause stopping execution
+of next nodes.</p>
+</div>
+</section>
+<section id="progress-message">
+<h2>Progress message<a class="headerlink" href="#progress-message" title="Link to this heading">¶</a></h2>
+<figure class="align-right" id="id6" style="width: 350px">
+<img alt="https://user-images.githubusercontent.com/28003269/124924441-84f7e500-e00c-11eb-9b5f-c91329f635cd.gif" src="https://user-images.githubusercontent.com/28003269/124924441-84f7e500-e00c-11eb-9b5f-c91329f635cd.gif" />
+<figcaption>
+<p><span class="caption-text">Showing progress of execution of a tree</span><a class="headerlink" href="#id6" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
+<p>Cancellable events show execution progress of a tree in the header of the tree editor. The message displays
+name of a node which is currently executed. Not all nodes get into the message.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="user_interface/shortcuts.html" class="btn btn-neutral float-left" title="Shortcuts" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="data_structure/data_structure_index.html" class="btn btn-neutral float-right" title="Data structure" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022...2025, Victor Calixto.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

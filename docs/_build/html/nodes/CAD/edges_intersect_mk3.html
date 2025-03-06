@@ -1,0 +1,388 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Intersect Edges &mdash; Mega-Polis 0, 0, 0, 0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../../_static/documentation_options.js?v=b89074fd"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Edges to Faces 2D" href="edges_to_faces_2d.html" />
+    <link rel="prev" title="Crop Mesh 2D" href="crop_mesh_2d.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../main.html" class="icon icon-home">
+            Mega-Polis
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../introduction/introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../user_interface/user_interface.html">User interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tree_evaluation_system.html">Node tree evaluation system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../data_structure/data_structure_index.html">Data structure</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../nodes.html">Nodes</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../generator/generator_index.html">Generators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../generators_extended/generators_extended_index.html">Generators Extended</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../curve/curve_index.html">Curves</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../surface/surface_index.html">Surfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../field/field_index.html">Fields</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../solid/solid_index.html">Solids</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../spatial/spatial_index.html">Spatial</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../transforms/transforms_index.html">Transforms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../analyzer/analyzer_index.html">Analyzers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../modifier_change/modifier_change_index.html">Modifier Change</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../modifier_make/modifier_make_index.html">Modifier Make</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="CAD_index.html">CAD</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="crop_mesh_2d.html">Crop Mesh 2D</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Intersect Edges</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#functionality">Functionality</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#benchmark-of-2d-algorithms">Benchmark of 2D algorithms</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#inputs">Inputs</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#parameters">Parameters</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#parameters-n-panel">Parameters N-panel</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#outputs">Outputs</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#examples">Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="edges_to_faces_2d.html">Edges to Faces 2D</a></li>
+<li class="toctree-l3"><a class="reference internal" href="embed%20mesh.html">Embed Mesh</a></li>
+<li class="toctree-l3"><a class="reference internal" href="inset_special_mk2.html">Inset Special</a></li>
+<li class="toctree-l3"><a class="reference internal" href="merge_mesh_2d.html">Merge Mesh 2d</a></li>
+<li class="toctree-l3"><a class="reference internal" href="merge_mesh_2d_lite.html">Merge mesh 2D lite</a></li>
+<li class="toctree-l3"><a class="reference internal" href="straight_skeleton_2d_extrude.html">Straight Skeleton 2d Extrude (Alpha)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="straight_skeleton_2d_offset.html">Straight Skeleton 2d Offset (Alpha)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../number/number_index.html">Number</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../vector/vector_index.html">Vector</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../matrix/matrix_index.html">Matrix</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../quaternion/quaternion_index.html">Quaternion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../color/color_index.html">Color</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../logic/logic_index.html">Logic</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../list_main/list_main_index.html">List Main</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../list_struct/list_struct_index.html">List Structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../list_masks/list_masks_index.html">List Masks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../list_mutators/list_mutators_index.html">List Mutators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../dictionary/dictionary_index.html">Dictionary</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../viz/viz_index.html">Viz</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../text/text_index.html">Text</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../script/script_index.html">Script</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../scene/scene_index.html">Scene</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../object_nodes/object_nodes_index.html">Object</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../layout/layout_index.html">Layout</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../network/network_index.html">Network</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pulga_physics/pulga_physics_index.html">Pulga Physics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../exchange/exchange_index.html">Exchange</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../svg/svg_index.html">SVG</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/tutorials.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/celling.html">Celling design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../contributing/contributing_to_sverchok.html">Contributing to sverchok</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../main.html">Mega-Polis</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../main.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../nodes.html">Nodes</a></li>
+          <li class="breadcrumb-item"><a href="CAD_index.html">CAD</a></li>
+      <li class="breadcrumb-item active">Intersect Edges</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/nodes/CAD/edges_intersect_mk3.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="intersect-edges">
+<h1>Intersect Edges<a class="headerlink" href="#intersect-edges" title="Link to this heading">¶</a></h1>
+<a class="reference external image-reference" href="https://user-images.githubusercontent.com/14288520/198360363-7ddcfba9-21a3-4fb9-b6c5-b32dc8509ab9.png"><img alt="https://user-images.githubusercontent.com/14288520/198360363-7ddcfba9-21a3-4fb9-b6c5-b32dc8509ab9.png" src="https://user-images.githubusercontent.com/14288520/198360363-7ddcfba9-21a3-4fb9-b6c5-b32dc8509ab9.png" />
+</a>
+<section id="functionality">
+<h2>Functionality<a class="headerlink" href="#functionality" title="Link to this heading">¶</a></h2>
+<p>The node is designed for finding intersections of inputs edges and returns mesh based on intersection result.</p>
+<a class="reference external image-reference" href="https://user-images.githubusercontent.com/14288520/198872539-90d20aa8-fe32-404d-ad10-7c6c3238a7a7.png"><img alt="https://user-images.githubusercontent.com/14288520/198872539-90d20aa8-fe32-404d-ad10-7c6c3238a7a7.png" src="https://user-images.githubusercontent.com/14288520/198872539-90d20aa8-fe32-404d-ad10-7c6c3238a7a7.png" />
+</a>
+<p>This node contains several algorithm of finding edge intersections:</p>
+<p><strong>3D algorithm:</strong></p>
+<p>This is a brute force algorithm written in NumPy, it is pretty fast and pretty consistent but can produce double points that can be
+removed with the remove doubles toggle. It ignores overlapping edges.</p>
+<p><strong>2D algorithms</strong></p>
+<p><strong>Alg_1</strong></p>
+<p>Brute force algorithm that exposes every pair of edges to a mathutils function called ‘intersect_line_line’. Does not check
+if there are repeated points. It ignores overlapping edges</p>
+<p><strong>Np</strong></p>
+<p>This is a brute force algorithm written in NumPy, it is pretty fast and pretty consistent but can produce double points that can be
+removed with the remove doubles toggle. It ignores overlapping edges</p>
+<p><strong>Sweep line algorithm</strong></p>
+<p>This algorithm is based on <a class="reference external" href="https://en.wikipedia.org/wiki/Sweep_line_algorithm">sweep line</a> approach:</p>
+<p>It can handle big number of edges but if there are too much intersection the performance can slow down dramatically.
+For example if each input edge intersect with every others. In this case only few edges can be handled by this node.</p>
+<ul class="simple">
+<li><p>The algorithm does not produce double points.</p></li>
+<li><p>It is less robust and can give an error.</p></li>
+<li><p>For this algorithm epsilon parameter on N panel is more important. If you get an error you can try to change the parameter to fix.</p></li>
+</ul>
+<p>Prefix 2D means that the node expects from input any kind of flatten mesh
+but it does not mean that the mesh should only lay on XY surface.
+Input mesh can below or above XY surface or even can be tilted relative one.</p>
+<p>The algorithm of finding new intersection is like this:</p>
+<p>It takes two edges, removes Z coordinates and finds their intersection.
+But after intersection is found it projects intersection point back onto one of the given edges.
+This means that input mesh still should be flat but it can be located in space however you like.
+Only location of input flatten mesh along Z coordinate will bring the error.</p>
+<p><strong>Blender mode</strong></p>
+<p>This mode is using internal Blender function from <cite>mathutils</cite> module <a class="reference external" href="https://docs.blender.org/api/current/mathutils.geometry.html?highlight=delaunay_2d_cdt#mathutils.geometry.delaunay_2d_cdt">mathutils.geometry.delaunay_2d_cdt</a>.
+It is pretty fast with not big number of intersections (about 1000)
+but is quite unstable and can cause crash of Blender easily.
+Also it is not design for such cases where one edge is intersect with all or most of all other edges. Use with care.
+It’s available only with Blender 2.81+</p>
+</section>
+<section id="benchmark-of-2d-algorithms">
+<h2>Benchmark of 2D algorithms<a class="headerlink" href="#benchmark-of-2d-algorithms" title="Link to this heading">¶</a></h2>
+<p>Three different test to determine the efficiency of the algorithms.
+- Random Segments: Segments between random vectors
+- Star Segments: Rotated segments from a center point (every segments intersects with the rest of segments in the center)
+- Spine Segments: Parallel Segments intersected with a middle segment that cuts them in the center.</p>
+<img alt="https://user-images.githubusercontent.com/10011941/120835106-30bc9980-c564-11eb-93c5-bdbabd1a63fe.png" src="https://user-images.githubusercontent.com/10011941/120835106-30bc9980-c564-11eb-93c5-bdbabd1a63fe.png" />
+<table class="docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p>Test</p></td>
+<td colspan="3"><p>Random Segments</p></td>
+<td colspan="3"><p>Star segments</p></td>
+<td colspan="3"><p>Spine Segments</p></td>
+</tr>
+<tr class="row-even"><td><p>Edges In
+Intersec.</p></td>
+<td><p>100
+1299</p></td>
+<td><p>1000
+127892</p></td>
+<td><p>10000
+12355630</p></td>
+<td><dl class="simple">
+<dt>100</dt><dd><p>1</p>
+</dd>
+</dl>
+</td>
+<td><dl class="simple">
+<dt>1000</dt><dd><p>1</p>
+</dd>
+</dl>
+</td>
+<td><dl class="simple">
+<dt>10000</dt><dd><p>1</p>
+</dd>
+</dl>
+</td>
+<td><p>100
+100</p></td>
+<td><p>1000
+1000</p></td>
+<td><p>10000
+10000</p></td>
+</tr>
+<tr class="row-odd"><td><p>Alg_1</p></td>
+<td><p>6 ms</p></td>
+<td><p>694 ms</p></td>
+<td><p>74872 ms</p></td>
+<td><p>15 ms</p></td>
+<td><p>2125 ms</p></td>
+<td><p>SC*</p></td>
+<td><p>3 ms</p></td>
+<td><p>226 ms</p></td>
+<td><p>22618 ms</p></td>
+</tr>
+<tr class="row-even"><td><p>Alg_1 + RD*</p></td>
+<td><p>10 ms</p></td>
+<td><p>1477 ms</p></td>
+<td><p>226240 ms</p></td>
+<td><p>25 ms</p></td>
+<td><p>3300 ms</p></td>
+<td><p>SC*</p></td>
+<td><p>4 ms</p></td>
+<td><p>246 ms</p></td>
+<td><p>22626 ms</p></td>
+</tr>
+<tr class="row-odd"><td><p>Sweep Line</p></td>
+<td><p>900 ms</p></td>
+<td><p>76700 ms</p></td>
+<td><p>SC*</p></td>
+<td><p>53 ms</p></td>
+<td><p>778ms</p></td>
+<td><p>2000 ms</p></td>
+<td><p>81 ms</p></td>
+<td><p>1200 ms</p></td>
+<td><p>15500 ms</p></td>
+</tr>
+<tr class="row-even"><td><p>Blender</p></td>
+<td><p>3 ms</p></td>
+<td><p>650 ms</p></td>
+<td><p>112240 ms/BC*</p></td>
+<td><p>0.6 ms</p></td>
+<td><p>20ms</p></td>
+<td><p>10643 ms</p></td>
+<td><p>0.8 ms</p></td>
+<td><p>12 ms</p></td>
+<td><p>1100 ms</p></td>
+</tr>
+<tr class="row-odd"><td><p>Np</p></td>
+<td><p>4 ms</p></td>
+<td><p>635 ms</p></td>
+<td><p>316970 ms</p></td>
+<td><p>6 ms</p></td>
+<td><p>1760ms</p></td>
+<td><p>SC*</p></td>
+<td><p>3 ms</p></td>
+<td><p>160 ms</p></td>
+<td><p>6466 ms</p></td>
+</tr>
+<tr class="row-even"><td><p>Np + RD*</p></td>
+<td><p>9 ms</p></td>
+<td><p>1281 ms</p></td>
+<td><p>419789 ms/BC*</p></td>
+<td><p>18 ms</p></td>
+<td><p>3052 ms</p></td>
+<td><p>SC*</p></td>
+<td><p>5 ms</p></td>
+<td><p>168 ms</p></td>
+<td><p>6580 ms</p></td>
+</tr>
+</tbody>
+</table>
+<p><em>BC = Blender Crash</em>
+<em>SC = Blender Crash + Partial System Crash</em></p>
+</section>
+<section id="inputs">
+<h2>Inputs<a class="headerlink" href="#inputs" title="Link to this heading">¶</a></h2>
+<p>Verts and Edges only. Warning: Does not support faces</p>
+</section>
+<section id="parameters">
+<h2>Parameters<a class="headerlink" href="#parameters" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p><strong>Include ‘On touch’</strong> : consider a valid intersection when one end of the edge lays on another edge. Generates double points so if active “remove doubles” switch is recommended. Only for Np and 3d mode</p></li>
+</ul>
+<a class="reference external image-reference" href="https://user-images.githubusercontent.com/14288520/198378350-fb74cbaa-a998-43f7-b128-735ab81fa921.png"><img alt="https://user-images.githubusercontent.com/14288520/198378350-fb74cbaa-a998-43f7-b128-735ab81fa921.png" src="https://user-images.githubusercontent.com/14288520/198378350-fb74cbaa-a998-43f7-b128-735ab81fa921.png" />
+</a>
+<ul class="simple">
+<li><p><strong>doubles</strong> : Merges points that are closer than the defined distance. Only for Alg_1, Np and 3d mode</p></li>
+<li><p><strong>delta</strong> : Finds groups of vertices closer than dist and merges them together, using the weld verts  <a class="reference external" href="https://docs.blender.org/api/current/bmesh.ops.html">bmop (BMesh Operators)</a></p></li>
+</ul>
+</section>
+<section id="parameters-n-panel">
+<h2>Parameters N-panel<a class="headerlink" href="#parameters-n-panel" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p><strong>Epsilon</strong> - For comparing float figures. Does not effect on performance.</p></li>
+<li><p><strong>Big data Limit</strong> - Number of incoming edges where the node will switch to a slower-but-safer implementation of the algorithm (for Alg_1)</p></li>
+</ul>
+</section>
+<section id="outputs">
+<h2>Outputs<a class="headerlink" href="#outputs" title="Link to this heading">¶</a></h2>
+<p>Vertices and Edges, the mesh does not preserve any old vertex or edge index ordering due to the Hashing algorithm used for fast intersection lookups.</p>
+</section>
+<section id="examples">
+<h2>Examples<a class="headerlink" href="#examples" title="Link to this heading">¶</a></h2>
+<a class="reference external image-reference" href="https://user-images.githubusercontent.com/14288520/198387622-bd5c0f08-b5f6-4efa-8d25-ef2909de747a.png"><img alt="https://user-images.githubusercontent.com/14288520/198387622-bd5c0f08-b5f6-4efa-8d25-ef2909de747a.png" src="https://user-images.githubusercontent.com/14288520/198387622-bd5c0f08-b5f6-4efa-8d25-ef2909de747a.png" />
+</a>
+<ul class="simple">
+<li><p>Generator-&gt; <a class="reference internal" href="../generator/ngon.html"><span class="doc">NGon</span></a></p></li>
+<li><p>Viz-&gt; <a class="reference internal" href="../viz/viewer_draw_mk4.html"><span class="doc">Viewer Draw</span></a></p></li>
+</ul>
+<hr class="docutils" />
+<a class="reference external image-reference" href="https://user-images.githubusercontent.com/14288520/198382966-d8b2eca3-de79-4729-adf3-f4b5f6d04aa1.png"><img alt="https://user-images.githubusercontent.com/14288520/198382966-d8b2eca3-de79-4729-adf3-f4b5f6d04aa1.png" src="https://user-images.githubusercontent.com/14288520/198382966-d8b2eca3-de79-4729-adf3-f4b5f6d04aa1.png" />
+</a>
+<ul class="simple">
+<li><p>Generator-&gt; <a class="reference internal" href="../generator/line_mk4.html"><span class="doc">Line</span></a></p></li>
+<li><p>Generator-&gt;Generatots Extended-&gt; <a class="reference internal" href="../generators_extended/hilbert.html"><span class="doc">Hilbert</span></a></p></li>
+<li><p>Modifiers-&gt;Modifier Change-&gt; <a class="reference internal" href="../modifier_change/mesh_join_mk2.html"><span class="doc">Mesh Join</span></a></p></li>
+<li><p>Vector-&gt; <a class="reference internal" href="../vector/vector_polar_in.html"><span class="doc">Vector Polar Input</span></a></p></li>
+<li><p>List-&gt;List Main-&gt; <a class="reference internal" href="../list_main/join.html"><span class="doc">List Join</span></a></p></li>
+<li><p>Viz-&gt; <a class="reference internal" href="../viz/viewer_draw_mk4.html"><span class="doc">Viewer Draw</span></a></p></li>
+<li><p>Viz-&gt; <a class="reference internal" href="../viz/viewer_idx28.html"><span class="doc">Viewer Index+</span></a></p></li>
+</ul>
+<a class="reference external image-reference" href="https://user-images.githubusercontent.com/14288520/198383104-f7f2a44e-5bc7-4468-86a4-66cbb5ea3d1e.gif"><img alt="https://user-images.githubusercontent.com/14288520/198383104-f7f2a44e-5bc7-4468-86a4-66cbb5ea3d1e.gif" src="https://user-images.githubusercontent.com/14288520/198383104-f7f2a44e-5bc7-4468-86a4-66cbb5ea3d1e.gif" />
+</a>
+<hr class="docutils" />
+<a class="reference external image-reference" href="https://cloud.githubusercontent.com/assets/619340/2811581/16032c72-ce26-11e3-9055-925d2cd03719.png"><img alt="https://cloud.githubusercontent.com/assets/619340/2811581/16032c72-ce26-11e3-9055-925d2cd03719.png" src="https://cloud.githubusercontent.com/assets/619340/2811581/16032c72-ce26-11e3-9055-925d2cd03719.png" />
+</a>
+<ul class="simple">
+<li><p>Scene-&gt; <a class="reference internal" href="../scene/objects_in_lite.html"><span class="doc">Objects In Lite</span></a></p></li>
+<li><p>Remove Doubles - old nodes. Not exists.</p></li>
+<li><p>Viz-&gt; <a class="reference internal" href="../viz/viewer_draw_mk4.html"><span class="doc">Viewer Draw</span></a></p></li>
+<li><p>Viz-&gt; <a class="reference internal" href="../viz/viewer_idx28.html"><span class="doc">Viewer Index+</span></a></p></li>
+</ul>
+<p>See the progress of how this node came to life <a class="reference external" href="https://github.com/nortikin/sverchok/issues/109">here</a> (gifs, screenshots)</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="crop_mesh_2d.html" class="btn btn-neutral float-left" title="Crop Mesh 2D" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="edges_to_faces_2d.html" class="btn btn-neutral float-right" title="Edges to Faces 2D" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022...2025, Victor Calixto.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,455 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Approximate NURBS Curve &mdash; Mega-Polis 0, 0, 0, 0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../../_static/documentation_options.js?v=b89074fd"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Arc 3pt (Curve)" href="arc_3pt.html" />
+    <link rel="prev" title="Apply Field to Curve" href="apply_field_to_curve.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../main.html" class="icon icon-home">
+            Mega-Polis
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../introduction/introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../user_interface/user_interface.html">User interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tree_evaluation_system.html">Node tree evaluation system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../data_structure/data_structure_index.html">Data structure</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../nodes.html">Nodes</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../generator/generator_index.html">Generators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../generators_extended/generators_extended_index.html">Generators Extended</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="curve_index.html">Curves</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="adaptive_plot.html">Adaptive Plot Curve</a></li>
+<li class="toctree-l3"><a class="reference internal" href="adaptive_plot_nurbs.html">Adaptive Plot NURBS Curve</a></li>
+<li class="toctree-l3"><a class="reference internal" href="apply_field_to_curve.html">Apply Field to Curve</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Approximate NURBS Curve</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#dependencies">Dependencies</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#functionality">Functionality</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#inputs">Inputs</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#parameters">Parameters</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#outputs">Outputs</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#example-of-usage">Example of usage</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="arc_3pt.html">Arc 3pt (Curve)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="arc_sed.html">Arc Start / End / Tangent</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bezier_fit.html">Approximate Bezier Curve</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bezier_spline.html">Bezier Spline Segment (Curve)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="biarc.html">Bi Arc</a></li>
+<li class="toctree-l3"><a class="reference internal" href="blend_curves.html">Blend Curves</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cast_curve.html">Cast Curve</a></li>
+<li class="toctree-l3"><a class="reference internal" href="catenary_curve.html">Catenary Curve</a></li>
+<li class="toctree-l3"><a class="reference internal" href="catmull_rom.html">Catmull-Rom Spline</a></li>
+<li class="toctree-l3"><a class="reference internal" href="circlify.html">Circlify</a></li>
+<li class="toctree-l3"><a class="reference internal" href="concat_curves.html">Concatenate Curves</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cubic_spline.html">Cubic Spline</a></li>
+<li class="toctree-l3"><a class="reference internal" href="curvature.html">Curve Curvature</a></li>
+<li class="toctree-l3"><a class="reference internal" href="curve_circle.html">Circle (Curve)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="curve_formula.html">Curve Formula</a></li>
+<li class="toctree-l3"><a class="reference internal" href="curve_frame.html">Curve Frame</a></li>
+<li class="toctree-l3"><a class="reference internal" href="curve_frame_on_surface.html">Curve Frame on Surface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="curve_length.html">Curve Length</a></li>
+<li class="toctree-l3"><a class="reference internal" href="curve_lerp.html">Curve Lerp</a></li>
+<li class="toctree-l3"><a class="reference internal" href="curve_on_surface.html">Curve on Surface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="curve_range.html">Curve Domain</a></li>
+<li class="toctree-l3"><a class="reference internal" href="curve_segment.html">Curve Segment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="curve_to_nurbs.html">Curve to NURBS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="deconstruct_curve.html">Deconstruct Curve</a></li>
+<li class="toctree-l3"><a class="reference internal" href="discontinuity.html">NURBS Curve Discontinuity</a></li>
+<li class="toctree-l3"><a class="reference internal" href="elevate_degree.html">Elevate Degree (NURBS Curve)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ellipse_curve.html">Ellipse (Curve)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="endpoints.html">Curve Endpoints</a></li>
+<li class="toctree-l3"><a class="reference internal" href="eval_curve.html">Evaluate Curve</a></li>
+<li class="toctree-l3"><a class="reference internal" href="extend_curve.html">Extend Curve</a></li>
+<li class="toctree-l3"><a class="reference internal" href="extremes.html">Curve Extremes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="fillet_curve.html">Fillet Curve</a></li>
+<li class="toctree-l3"><a class="reference internal" href="fillet_polyline.html">Fillet Polyline</a></li>
+<li class="toctree-l3"><a class="reference internal" href="flip_curve.html">Flip Curve</a></li>
+<li class="toctree-l3"><a class="reference internal" href="freecad_helix.html">Helix (FreeCAD)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generate_knotvector.html">Generate Knotvector</a></li>
+<li class="toctree-l3"><a class="reference internal" href="insert_knot.html">Insert Knot (NURBS Curve)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="interpolate_frame.html">Interpolate Curve Frame</a></li>
+<li class="toctree-l3"><a class="reference internal" href="interpolate_nurbs_curve.html">Interpolate NURBS Curve</a></li>
+<li class="toctree-l3"><a class="reference internal" href="intersect_curve_plane.html">Intersect Curve with Plane</a></li>
+<li class="toctree-l3"><a class="reference internal" href="intersect_curves.html">Intersect NURBS Curves</a></li>
+<li class="toctree-l3"><a class="reference internal" href="iso_uv_curve.html">Iso U/V Curve</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kinky_curve.html">Kinked Curve</a></li>
+<li class="toctree-l3"><a class="reference internal" href="length_parameter.html">Curve Length Parameter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="length_rebuild.html">Naturally Parametrized Curve</a></li>
+<li class="toctree-l3"><a class="reference internal" href="line.html">Line (Curve)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="marching_squares.html">Marching Squares</a></li>
+<li class="toctree-l3"><a class="reference internal" href="marching_squares_on_surface.html">Marching Squares on Surface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="move_nurbs_curve_point.html">Move NURBS Curve Point</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nearest_point.html">Nearest Point on Curve</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nurbs_curve.html">Build NURBS Curve</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nurbs_curve_nodes.html">NURBS Curve Nodes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="offset_mk2.html">Offset Curve</a></li>
+<li class="toctree-l3"><a class="reference internal" href="offset_on_surface.html">Offset Curve on Surface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ortho_project.html">Ortho Project on Curve</a></li>
+<li class="toctree-l3"><a class="reference internal" href="point_curve.html">Single-Point Curve</a></li>
+<li class="toctree-l3"><a class="reference internal" href="polyarc.html">Poly Arc</a></li>
+<li class="toctree-l3"><a class="reference internal" href="polyline.html">Polyline</a></li>
+<li class="toctree-l3"><a class="reference internal" href="prepare_curves_net.html">Prepare NURBS Curves Net</a></li>
+<li class="toctree-l3"><a class="reference internal" href="project_curve_surface.html">Project Curve to Surface (NURBS)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="rbf_curve.html">RBF Curve</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reduce_degree.html">Reduce Degree (NURBS Curve)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="refine_nurbs_curve.html">Refine NURBS Curve</a></li>
+<li class="toctree-l3"><a class="reference internal" href="remove_excessive_knots.html">Remove Excessive Knots (NURBS Curve)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="remove_knot.html">Remove Knot (NURBS Curve)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reparametrize.html">Reparametrize Curve</a></li>
+<li class="toctree-l3"><a class="reference internal" href="rounded_rectangle.html">Rounded Rectangle</a></li>
+<li class="toctree-l3"><a class="reference internal" href="snap_curves.html">Snap Curves</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sort_curves.html">Sort Curves</a></li>
+<li class="toctree-l3"><a class="reference internal" href="split_curve.html">Split Curve</a></li>
+<li class="toctree-l3"><a class="reference internal" href="surface_boundary.html">Surface’s Boundary</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tangent_curve.html">Tangents Curve</a></li>
+<li class="toctree-l3"><a class="reference internal" href="torsion.html">Curve Torsion</a></li>
+<li class="toctree-l3"><a class="reference internal" href="zero_twist_frame.html">Curve Zero-Twist Frame</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../surface/surface_index.html">Surfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../field/field_index.html">Fields</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../solid/solid_index.html">Solids</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../spatial/spatial_index.html">Spatial</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../transforms/transforms_index.html">Transforms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../analyzer/analyzer_index.html">Analyzers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../modifier_change/modifier_change_index.html">Modifier Change</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../modifier_make/modifier_make_index.html">Modifier Make</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../CAD/CAD_index.html">CAD</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../number/number_index.html">Number</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../vector/vector_index.html">Vector</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../matrix/matrix_index.html">Matrix</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../quaternion/quaternion_index.html">Quaternion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../color/color_index.html">Color</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../logic/logic_index.html">Logic</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../list_main/list_main_index.html">List Main</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../list_struct/list_struct_index.html">List Structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../list_masks/list_masks_index.html">List Masks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../list_mutators/list_mutators_index.html">List Mutators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../dictionary/dictionary_index.html">Dictionary</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../viz/viz_index.html">Viz</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../text/text_index.html">Text</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../script/script_index.html">Script</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../scene/scene_index.html">Scene</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../object_nodes/object_nodes_index.html">Object</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../layout/layout_index.html">Layout</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../network/network_index.html">Network</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pulga_physics/pulga_physics_index.html">Pulga Physics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../exchange/exchange_index.html">Exchange</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../svg/svg_index.html">SVG</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/tutorials.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/celling.html">Celling design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../contributing/contributing_to_sverchok.html">Contributing to sverchok</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../main.html">Mega-Polis</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../main.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../nodes.html">Nodes</a></li>
+          <li class="breadcrumb-item"><a href="curve_index.html">Curves</a></li>
+      <li class="breadcrumb-item active">Approximate NURBS Curve</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/nodes/curve/approximate_nurbs_curve.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="approximate-nurbs-curve">
+<h1>Approximate NURBS Curve<a class="headerlink" href="#approximate-nurbs-curve" title="Link to this heading">¶</a></h1>
+<a class="reference external image-reference" href="https://user-images.githubusercontent.com/14288520/206873352-c1fafa58-1779-4324-b536-d019e27b1ec9.png"><img alt="https://user-images.githubusercontent.com/14288520/206873352-c1fafa58-1779-4324-b536-d019e27b1ec9.png" src="https://user-images.githubusercontent.com/14288520/206873352-c1fafa58-1779-4324-b536-d019e27b1ec9.png" />
+</a>
+<section id="dependencies">
+<h2>Dependencies<a class="headerlink" href="#dependencies" title="Link to this heading">¶</a></h2>
+<p>This node requires either <a class="reference external" href="https://onurraufbingol.com/NURBS-Python/">Geomdl</a>, <a class="reference external" href="https://scipy.org/">SciPy</a> or <a class="reference external" href="https://www.freecad.org/">FreeCAD</a> library to work.</p>
+</section>
+<section id="functionality">
+<h2>Functionality<a class="headerlink" href="#functionality" title="Link to this heading">¶</a></h2>
+<p>This node builds a <a class="reference external" href="https://en.wikipedia.org/wiki/Non-uniform_rational_B-spline">NURBS</a> Curve object, which approximates the given set of
+points, i.e. goes as close to them as possible while remaining a smooth curve.</p>
+<p>In fact, the generated curve always will be a non-rational curve, which means
+that all weights will be equal to 1.</p>
+<p>This node supports three different implementations for curve approximation.
+Every single implementation offers different ways of control:</p>
+<ul>
+<li><p><a class="reference external" href="https://onurraufbingol.com/NURBS-Python/">Geomdl</a> implementation can either define the number of control points of
+generated curve automatically, or you can provide it with desired number of
+control points. This implementation supports only two metrics - euclidean and
+centripetal. This implementation can not generate cyclic (closed) curves.</p></li>
+<li><p><a class="reference external" href="https://scipy.org/">SciPy</a> implementation allows you to define “smoothing” parameter, to define
+how smooth you want the curve to be. By default, it selects the smoothing
+factor automatically. If you explicitly set the smoothing factor to zero, the
+curve will go exactly through all provided points, i.e. the node will perform
+interpolation instead of approximation. This implementation supports wider
+selection of metrics. This implementation can make cyclic (closed) curves.
+Additionally, when smoothing factor is not zero, you can provide different
+weights for different points.</p></li>
+<li><p><a class="reference external" href="https://www.freecad.org/">FreeCAD</a> implementation supports three approximation methods and a wide variety of options:</p>
+<p>An exact curve degree cannot be specified. An interval ( Minimal Degree, Maximal Degree ) is used instead.
+The final curve degree is a result of all the constraints applied and will be in the specified interval.</p>
+<p>A global precision of the approximation can be specified as a <strong>Tolerance</strong> value.
+Lower values mean that the approximation curve will pass closely to the input Vertices.</p>
+<p>The <strong>“Parameterization”</strong> approximation method allows lots of inner continuity options
+and offers a list of metrics for the parametrization.</p>
+<p>The <strong>“Variational Smoothing”</strong> method uses three additional parameters - “Length Weight”,
+“Curvature Weight” and “Torsion Weight”. The functions approximates the points using variational
+smoothing algorithm, which tries to minimize additional criterium:</p>
+<p><strong>LengthWeight*CurveLength + CurvatureWeight*Curvature + TorsionWeight*Torsion</strong></p>
+<p>where Continuity must be <strong>C0, C1</strong> ( with “Maximal Degree” &gt;= 3 ) or
+<strong>C2</strong> ( with “Maximal Degree” &gt;= 5 ).</p>
+<p>With the <strong>“Explicit Knots”</strong> method a custom knot sequence can be specified. The knot sequence can be
+also provided with the use of the <a class="reference external" href="https://nortikin.github.io/sverchok/docs/nodes/curve/generate_knotvector.html">Generate Knotvector</a> node based on the metrics from it.</p>
+<p>The <strong>“Continuity”</strong> parameter defines how smooth will be the curve internally.
+The values it can take depend on the approximation method used. It defaults to C2.
+However, it may not be applied if it conflicts with other parameters ( especially “Maximal Degree” ).</p>
+</li>
+</ul>
+</section>
+<section id="inputs">
+<h2>Inputs<a class="headerlink" href="#inputs" title="Link to this heading">¶</a></h2>
+<p>This node has the following inputs:</p>
+<ul class="simple">
+<li><p><strong>Vertices</strong>. The points to be approximated. This input is mandatory.</p></li>
+<li><p><strong>Weights</strong>. This input is available only when <strong>Implementation</strong> parameter
+is set to <strong>SciPy</strong>. Weights of points to be approximated. Bigger values of
+weight mean that the curve will pass through corresponding point at the
+smaller distance. This does not have sense if <strong>Smoothing</strong> input is set to
+zero. Optional input. If not connected, the node will consider weights of all
+points as equal.</p></li>
+<li><p><strong>Degree</strong>. Available for <strong>Geomdl</strong> and <strong>SciPy</strong> only. Degree of the curve to be built.
+Default value is 3. Most useful values are 3, 5 and 7.
+If Scipy implementation is used, then maximum supported degree is 5.
+For Geomdl, there is no hard limit, but curves of very high degree can be hard to manipulate with.</p></li>
+<li><p><strong>PointsCnt</strong>. Number of curve’s control points. This input is available only
+when <strong>Implementation</strong> parameter is set to <strong>Geomdl</strong>, and <strong>Specify points
+count</strong> parameter is checked. Default value is 5.</p></li>
+<li><p><strong>Smoothing</strong>. This input is available only when <strong>Implementation</strong> parameter
+is set to <strong>SciPy</strong>, and <strong>Scpecify smoothing</strong> parameter is checked.
+Smoothing factor. Bigger values will make more smooth curves. Value of 0
+(zero) mean that the curve will exactly pass through all points. The default
+value is 0.1.</p></li>
+</ul>
+<p>FreeCAD implementation specific inputs:</p>
+<ul class="simple">
+<li><p><strong>Knots</strong>. The knot sequence. Available only if the “Explicit Knots” method is used.
+Must contain unique floats in an ascending order. When not connected, the curve will be
+calculated using Euclidean metric.</p></li>
+<li><p><strong>Minimal Degree</strong>. Minimal possible degree of the curve to be built.
+Default value is 3.</p></li>
+<li><p><strong>Maximal Degree</strong>. Maximal possible degree of the curve to be built.
+Default value is 5.</p></li>
+<li><p><strong>Tolerance</strong>. Maximal distance of the built curve from the init Vertices.
+Default value is 0.0001.</p></li>
+<li><p><strong>Length Weight</strong>. Available only for the “Variational Smoothing” method.
+Default value is 1.0.</p></li>
+<li><p><strong>Curvature Weight</strong>. Available only for the “Variational Smoothing” method.
+Default value is 1.0.</p></li>
+<li><p><strong>Torsion Weight</strong>. Available only for the “Variational Smoothing” method.
+Default value is 1.0.</p></li>
+</ul>
+</section>
+<section id="parameters">
+<h2>Parameters<a class="headerlink" href="#parameters" title="Link to this heading">¶</a></h2>
+<p>This node has the following parameters:</p>
+<ul>
+<li><p><strong>Implementation</strong>. Approximation algorithm implementation to be used. The available values are:</p>
+<ul class="simple">
+<li><p><strong>Geomdl</strong>. Use the implementation from <a class="reference external" href="https://onurraufbingol.com/NURBS-Python/">Geomdl</a> library. This is available only when Geomdl library is installed.</p></li>
+<li><p><strong>SciPy</strong>. Use the implementation from <a class="reference external" href="https://scipy.org/">SciPy</a> library. This is available only when SciPy library is installed.</p></li>
+<li><p><strong>FreeCAD</strong>. Use the implementation from <a class="reference external" href="https://www.freecad.org/">FreeCAD</a> library. This is available only when FreeCAD library is installed.</p></li>
+</ul>
+<p>By default, the first available implementation is used.</p>
+</li>
+<li><p><strong>Centripetal</strong>. This parameter is available only when <strong>Implementation</strong>
+parameter is set to <strong>Geomdl</strong>. This defines whether the node will use
+centripetal metric. If not checked, the node will use euclidean metric.
+Unchecked by default.</p></li>
+<li><p><strong>Specify points count</strong>. This parameter is available only when
+<strong>Implementation</strong> parameter is set to <strong>Geomdl</strong>. If checked, then it will
+be possible to specify the number of curve’s control points in <strong>PointsCnt</strong>
+input. Otherwise, the node will determine required number of control points
+by itself (this number can be too big for many applications).</p></li>
+<li><p><strong>Cyclic</strong>. This parameter is available only when <strong>Implementation</strong>
+parameter is set to <strong>SciPy</strong>. Defines whether the generated curve will be
+cyclic (closed). Unchecked by default.</p></li>
+<li><p><strong>Auto</strong>. This parameter is available only when <strong>Implementation</strong> parameter
+is set to <strong>SciPy</strong>, and <strong>Cyclic</strong> parameter is enabled. If checked, the
+node will automatically decide if the curve should be cyclic (closed), based
+on the distance between the first and last points being approximated: if the
+points are close enough, the curve will be closed. If not checked, the curve
+will be closed regardless of distance between points, just because <strong>Cyclic</strong>
+parameter is checked. Unchecked by default.</p></li>
+<li><p><strong>Cyclic threshold</strong>. This parameter is available only when
+<strong>Implementation</strong> parameter is set to <strong>SciPy</strong>, <strong>Cyclic</strong> parameter is
+enabled, and <strong>Auto</strong> parameter is enabled as well. This defines maximum
+distance between the first and the last points being approximated, for which
+the node will make the curve cyclic. Default value is 0.0, i.e. the points
+must exactly coincide in order for curve to be closed.</p></li>
+<li><p><strong>Metric</strong>. This parameter is available when <strong>Implementation</strong>
+parameter is set to <strong>SciPy</strong> and <strong>FreeCAD/Parametrization</strong>. It’s the metric (the specific knot values) to be used for interpolation. The
+available options are:</p>
+<ul class="simple">
+<li><p><strong>Manhattan</strong> metric is also known as Taxicab metric or rectilinear distance.</p></li>
+<li><p><strong>Euclidean</strong> also known as Chord-Length or Distance metric. The parameters of the points are proportionate to the distances between them.</p></li>
+<li><p><strong>Points</strong> also known as Uniform metric. The parameters of the points are distributed uniformly. Just the number of the points from the beginning.</p></li>
+<li><p><strong>Chebyshev</strong> metric is also known as Chessboard distance.</p></li>
+<li><p><strong>Centripetal</strong> The parameters of the points are proportionate to square roots of distances between them.</p></li>
+<li><p><strong>X, Y, Z axis</strong> Use distance along one of coordinate axis, ignore others.</p></li>
+</ul>
+<p>The default value is Euclidean.</p>
+</li>
+<li><p><strong>Specify smoothing</strong>. This parameter is available only when
+<strong>Implementation</strong> parameter is set to <strong>SciPy</strong>. If checked, the node will
+allow you to specify smoothing factor via <strong>Smoothing</strong> input. If not
+checked, the node will select the smoothing factor automatically. Unchecked
+by default.</p></li>
+<li><p><strong>Method</strong>. Available only for the <a class="reference external" href="https://www.freecad.org/">FreeCAD</a> implementation. Approximation algorithm implementation to be used. The available values are:</p>
+<ul class="simple">
+<li><p><strong>Parametrization</strong>.</p></li>
+<li><p><strong>Variational smoothing</strong>.</p></li>
+<li><p><strong>Explicit Knots</strong>.</p></li>
+</ul>
+</li>
+<li><p><strong>Continuity</strong>. Available only for the <a class="reference external" href="https://www.freecad.org/">FreeCAD</a> implementation. Desired internal smoothness of the result curve. The available values are:</p>
+<ul class="simple">
+<li><p><strong>C0</strong> : Only positional continuity.</p></li>
+<li><p><strong>G1</strong> : Geometric tangent continuity. Available only for the “Parametrization” method.</p></li>
+<li><p><strong>C1</strong> : Continuity of the first derivative all along the Curve.</p></li>
+<li><p><strong>G2</strong> : Geometric curvature continuity. Available only for the “Parametrization” method.</p></li>
+<li><p><strong>C2</strong> : Continuity of the second derivative all along the Curve.</p></li>
+<li><p><strong>C3</strong> : Continuity of the third derivative all along the Curve. Available only for the “Parametrization” method.</p></li>
+<li><p><strong>CN</strong> : Infinite order of continuity. Available only for Parametrization method.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="outputs">
+<h2>Outputs<a class="headerlink" href="#outputs" title="Link to this heading">¶</a></h2>
+<p>This node has the following outputs:</p>
+<ul class="simple">
+<li><p><strong>Curve</strong>. The generated NURBS curve object.</p></li>
+<li><p><strong>ControlPoints</strong>. Control points of the generated curve.</p></li>
+<li><p><strong>Knots</strong>. Knot vector of the generated curve.</p></li>
+</ul>
+</section>
+<section id="example-of-usage">
+<h2>Example of usage<a class="headerlink" href="#example-of-usage" title="Link to this heading">¶</a></h2>
+<p>Take points from Greasepencil drawing and approximate them with a smooth curve:</p>
+<a class="reference external image-reference" href="https://user-images.githubusercontent.com/284644/74363000-7becef00-4deb-11ea-9963-e864dc3a3599.png"><img alt="https://user-images.githubusercontent.com/284644/74363000-7becef00-4deb-11ea-9963-e864dc3a3599.png" src="https://user-images.githubusercontent.com/284644/74363000-7becef00-4deb-11ea-9963-e864dc3a3599.png" />
+</a>
+<ul class="simple">
+<li><p>Curves-&gt; <a class="reference internal" href="eval_curve.html"><span class="doc">Evaluate Curve</span></a></p></li>
+<li><p>Modifiers-&gt;Modifier Make-&gt; <a class="reference internal" href="../modifier_make/uv_connect.html"><span class="doc">UV Connection</span></a></p></li>
+<li><p>Viz-&gt; <a class="reference internal" href="../viz/viewer_draw_mk4.html"><span class="doc">Viewer Draw</span></a></p></li>
+<li><p>BPY Data-&gt; <a class="reference internal" href="../object_nodes/get_asset_properties_mk2.html"><span class="doc">Object ID Selector+</span></a></p></li>
+</ul>
+<hr class="docutils" />
+<p>Use SciPy implementation to make a closed curve:</p>
+<a class="reference external image-reference" href="https://user-images.githubusercontent.com/284644/101246890-d61ebe00-3737-11eb-942d-c31e02bf3c3d.png"><img alt="https://user-images.githubusercontent.com/284644/101246890-d61ebe00-3737-11eb-942d-c31e02bf3c3d.png" src="https://user-images.githubusercontent.com/284644/101246890-d61ebe00-3737-11eb-942d-c31e02bf3c3d.png" />
+</a>
+<ul class="simple">
+<li><p>Generator-&gt; <a class="reference internal" href="../generator/ngon.html"><span class="doc">NGon</span></a></p></li>
+<li><p>Curves-&gt; <a class="reference internal" href="eval_curve.html"><span class="doc">Evaluate Curve</span></a></p></li>
+<li><p>Viz-&gt; <a class="reference internal" href="../viz/viewer_draw_mk4.html"><span class="doc">Viewer Draw</span></a></p></li>
+</ul>
+<hr class="docutils" />
+<p>Example of the FreeCAD implementation usage. Euclidean parametrization:</p>
+<a class="reference external image-reference" href="https://user-images.githubusercontent.com/66558924/216157300-8480c5a9-29e4-4110-8f46-3ba15f25b3d6.jpg"><img alt="https://user-images.githubusercontent.com/66558924/216157300-8480c5a9-29e4-4110-8f46-3ba15f25b3d6.jpg" src="https://user-images.githubusercontent.com/66558924/216157300-8480c5a9-29e4-4110-8f46-3ba15f25b3d6.jpg" />
+</a>
+<ul class="simple">
+<li><p>Scene-&gt; <a class="reference internal" href="../scene/get_objects_data.html"><span class="doc">Get Objects Data</span></a></p></li>
+<li><p>Viz-&gt; <a class="reference internal" href="../viz/viewer_draw_curve.html"><span class="doc">Viewer Draw Curve</span></a></p></li>
+<li><p>Text-&gt; <a class="reference internal" href="../text/stethoscope_v28.html"><span class="doc">Stethoscope</span></a></p></li>
+</ul>
+<hr class="docutils" />
+<p>Example of the FreeCAD implementation using the Explicit Knots method and utilizing the “Generate Knotvector” node:</p>
+<a class="reference external image-reference" href="https://user-images.githubusercontent.com/66558924/216157176-288d70c4-040d-4e4e-bf90-e110b32c4d20.jpg"><img alt="https://user-images.githubusercontent.com/66558924/216157176-288d70c4-040d-4e4e-bf90-e110b32c4d20.jpg" src="https://user-images.githubusercontent.com/66558924/216157176-288d70c4-040d-4e4e-bf90-e110b32c4d20.jpg" />
+</a>
+<ul class="simple">
+<li><p>Curves-&gt; <a class="reference internal" href="generate_knotvector.html"><span class="doc">Generate Knotvector</span></a></p></li>
+<li><p>Number-&gt; <a class="reference internal" href="../number/list_input.html"><span class="doc">List Input</span></a></p></li>
+<li><p>Viz-&gt; <a class="reference internal" href="../viz/viewer_draw_mk4.html"><span class="doc">Viewer Draw</span></a></p></li>
+<li><p>Viz-&gt; <a class="reference internal" href="../viz/viewer_draw_curve.html"><span class="doc">Viewer Draw Curve</span></a></p></li>
+<li><p>Text-&gt; <a class="reference internal" href="../text/stethoscope_v28.html"><span class="doc">Stethoscope</span></a></p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="apply_field_to_curve.html" class="btn btn-neutral float-left" title="Apply Field to Curve" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="arc_3pt.html" class="btn btn-neutral float-right" title="Arc 3pt (Curve)" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022...2025, Victor Calixto.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

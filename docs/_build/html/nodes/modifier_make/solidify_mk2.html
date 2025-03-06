@@ -1,0 +1,262 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Solidify &mdash; Mega-Polis 0, 0, 0, 0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../../_static/documentation_options.js?v=b89074fd"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Sweep Modulator" href="sweep_modulator.html" />
+    <link rel="prev" title="Pipe" href="pipe_tubes.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../main.html" class="icon icon-home">
+            Mega-Polis
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../introduction/introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../user_interface/user_interface.html">User interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tree_evaluation_system.html">Node tree evaluation system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../data_structure/data_structure_index.html">Data structure</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../nodes.html">Nodes</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../generator/generator_index.html">Generators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../generators_extended/generators_extended_index.html">Generators Extended</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../curve/curve_index.html">Curves</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../surface/surface_index.html">Surfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../field/field_index.html">Fields</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../solid/solid_index.html">Solids</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../spatial/spatial_index.html">Spatial</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../transforms/transforms_index.html">Transforms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../analyzer/analyzer_index.html">Analyzers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../modifier_change/modifier_change_index.html">Modifier Change</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="modifier_make_index.html">Modifier Make</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="adaptive_polygons_mk3.html">Adaptive Polygons Mk2</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bevel_curve.html">Bevel a Curve (Mesh)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bisect.html">Bisect</a></li>
+<li class="toctree-l3"><a class="reference internal" href="clip_verts.html">Clip Vertices</a></li>
+<li class="toctree-l3"><a class="reference internal" href="contour2D.html">Contour 2D</a></li>
+<li class="toctree-l3"><a class="reference internal" href="csg_booleanMK2.html">CSG Boolean MK2</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cut_object_by_surface.html">Cut Object by Surface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="diamond_mesh.html">Diamond Mesh</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dual_mesh.html">Dual Mesh</a></li>
+<li class="toctree-l3"><a class="reference internal" href="edges_adaptative.html">Adaptative Edges</a></li>
+<li class="toctree-l3"><a class="reference internal" href="edges_adaptative.html#examples">Examples</a></li>
+<li class="toctree-l3"><a class="reference internal" href="fractal_curve.html">Fractal Curve</a></li>
+<li class="toctree-l3"><a class="reference internal" href="framework.html">Framework</a></li>
+<li class="toctree-l3"><a class="reference internal" href="join_tris.html">Join Triangles</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lathe.html">Lathe</a></li>
+<li class="toctree-l3"><a class="reference internal" href="matrix_tube.html">Matrix Tube</a></li>
+<li class="toctree-l3"><a class="reference internal" href="offset_line.html">Offset Line</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pipe_tubes.html">Pipe</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Solidify</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#inputs">Inputs</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#options">Options</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#outputs">Outputs</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#examples">Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="sweep_modulator.html">Sweep Modulator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="unsubdivide.html">Unsubdivide node</a></li>
+<li class="toctree-l3"><a class="reference internal" href="uv_connect.html">UV Connection</a></li>
+<li class="toctree-l3"><a class="reference internal" href="wafel.html">Wafel</a></li>
+<li class="toctree-l3"><a class="reference internal" href="wireframe.html">Wireframe</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../CAD/CAD_index.html">CAD</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../number/number_index.html">Number</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../vector/vector_index.html">Vector</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../matrix/matrix_index.html">Matrix</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../quaternion/quaternion_index.html">Quaternion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../color/color_index.html">Color</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../logic/logic_index.html">Logic</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../list_main/list_main_index.html">List Main</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../list_struct/list_struct_index.html">List Structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../list_masks/list_masks_index.html">List Masks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../list_mutators/list_mutators_index.html">List Mutators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../dictionary/dictionary_index.html">Dictionary</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../viz/viz_index.html">Viz</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../text/text_index.html">Text</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../script/script_index.html">Script</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../scene/scene_index.html">Scene</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../object_nodes/object_nodes_index.html">Object</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../layout/layout_index.html">Layout</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../network/network_index.html">Network</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pulga_physics/pulga_physics_index.html">Pulga Physics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../exchange/exchange_index.html">Exchange</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../svg/svg_index.html">SVG</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/tutorials.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/celling.html">Celling design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../contributing/contributing_to_sverchok.html">Contributing to sverchok</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../main.html">Mega-Polis</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../main.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../nodes.html">Nodes</a></li>
+          <li class="breadcrumb-item"><a href="modifier_make_index.html">Modifier Make</a></li>
+      <li class="breadcrumb-item active">Solidify</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/nodes/modifier_make/solidify_mk2.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="solidify">
+<h1>Solidify<a class="headerlink" href="#solidify" title="Link to this heading">¶</a></h1>
+<a class="reference external image-reference" href="https://user-images.githubusercontent.com/14288520/201440855-0564d90d-6654-42d9-980c-2f856b57d4f0.png"><img alt="https://user-images.githubusercontent.com/14288520/201440855-0564d90d-6654-42d9-980c-2f856b57d4f0.png" src="https://user-images.githubusercontent.com/14288520/201440855-0564d90d-6654-42d9-980c-2f856b57d4f0.png" />
+</a>
+<p>Extrudes a mesh along its normal. Used usually to get a thick mesh from a planar mesh.</p>
+<a class="reference external image-reference" href="https://user-images.githubusercontent.com/14288520/201441550-c1a3bb63-693d-48b3-a8f1-8144296f4c12.png"><img alt="https://user-images.githubusercontent.com/14288520/201441550-c1a3bb63-693d-48b3-a8f1-8144296f4c12.png" src="https://user-images.githubusercontent.com/14288520/201441550-c1a3bb63-693d-48b3-a8f1-8144296f4c12.png" />
+</a>
+<section id="inputs">
+<h2>Inputs<a class="headerlink" href="#inputs" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p><strong>Vertices</strong>: Mesh Vertices (mandatory)</p></li>
+<li><p><strong>Edges</strong>: Mesh Edges (optional, if you want to output edges makes the algorithm faster)</p></li>
+<li><p><strong>Polygons</strong>: Mesh Polygons (mandatory)</p></li>
+<li><p><strong>Thickness</strong>: Distance to extrude</p></li>
+</ul>
+<a class="reference external image-reference" href="https://user-images.githubusercontent.com/14288520/201442046-b93db529-8e17-47b7-995b-82acf469f27c.gif"><img alt="https://user-images.githubusercontent.com/14288520/201442046-b93db529-8e17-47b7-995b-82acf469f27c.gif" src="https://user-images.githubusercontent.com/14288520/201442046-b93db529-8e17-47b7-995b-82acf469f27c.gif" />
+</a>
+<ul class="simple">
+<li><p><strong>Offset</strong>: Relative offset from original mesh [-1.0; 1.0]</p></li>
+</ul>
+<a class="reference external image-reference" href="https://user-images.githubusercontent.com/14288520/201442148-7ef38073-ee87-48a1-98ed-6a247687a0db.gif"><img alt="https://user-images.githubusercontent.com/14288520/201442148-7ef38073-ee87-48a1-98ed-6a247687a0db.gif" src="https://user-images.githubusercontent.com/14288520/201442148-7ef38073-ee87-48a1-98ed-6a247687a0db.gif" />
+</a>
+</section>
+<section id="options">
+<h2>Options<a class="headerlink" href="#options" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p><strong>Even</strong>: adjust thickness in sharp corners to have a even thickness.</p></li>
+</ul>
+<a class="reference external image-reference" href="https://user-images.githubusercontent.com/14288520/201442415-7e840cc4-af94-43b0-b4ee-0cf93c715832.gif"><img alt="https://user-images.githubusercontent.com/14288520/201442415-7e840cc4-af94-43b0-b4ee-0cf93c715832.gif" src="https://user-images.githubusercontent.com/14288520/201442415-7e840cc4-af94-43b0-b4ee-0cf93c715832.gif" />
+</a>
+<ul class="simple">
+<li><p><strong>Implementation</strong>: Algorithm used to compute.</p>
+<ul>
+<li><p>Sverchok: Faster all with more options</p></li>
+<li><p>Blender: Old method, left because it may differ in some corner cases</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="outputs">
+<h2>Outputs<a class="headerlink" href="#outputs" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p><strong>Vertices</strong>, <strong>Edges</strong>, <strong>Polygons</strong>: Modified mesh</p></li>
+<li><p><strong>New Pols</strong>: New opposite polygons (in the same order as the originals)</p></li>
+<li><p><strong>Rim Pols</strong>: Side Polygons created in the boundaries of the mesh</p></li>
+<li><p><strong>Pols Group</strong>: Outputs a list to mask polygons from the modified mesh,</p>
+<ul>
+<li><p>0 = Original Polygon</p></li>
+<li><p>1 = New Polygon</p></li>
+<li><p>2 = Rim Polygon</p></li>
+</ul>
+</li>
+<li><p><strong>New Verts Mask</strong>: To split old vertices form new vertices</p></li>
+</ul>
+<a class="reference external image-reference" href="https://user-images.githubusercontent.com/14288520/201444252-0c1d3bef-78c5-4527-8870-32c3ae2cb30e.png"><img alt="https://user-images.githubusercontent.com/14288520/201444252-0c1d3bef-78c5-4527-8870-32c3ae2cb30e.png" src="https://user-images.githubusercontent.com/14288520/201444252-0c1d3bef-78c5-4527-8870-32c3ae2cb30e.png" />
+</a>
+<ul class="simple">
+<li><p>Text-&gt; <a class="reference internal" href="../text/stethoscope_v28.html"><span class="doc">Stethoscope</span></a></p></li>
+</ul>
+</section>
+<section id="examples">
+<h2>Examples<a class="headerlink" href="#examples" title="Link to this heading">¶</a></h2>
+<p>Using variable thickness:</p>
+<a class="reference external image-reference" href="https://user-images.githubusercontent.com/14288520/201444780-ff1a1ac7-c6ec-4215-8638-6f40bd38db81.png"><img alt="https://user-images.githubusercontent.com/14288520/201444780-ff1a1ac7-c6ec-4215-8638-6f40bd38db81.png" src="https://user-images.githubusercontent.com/14288520/201444780-ff1a1ac7-c6ec-4215-8638-6f40bd38db81.png" />
+</a>
+<ul class="simple">
+<li><p>Generator-&gt; <a class="reference internal" href="../generator/box_mk2.html"><span class="doc">Box</span></a></p></li>
+<li><p>Vector-&gt; <a class="reference internal" href="../vector/noise_mk3.html"><span class="doc">Vector Noise</span></a></p></li>
+<li><p>Number-&gt; <a class="reference internal" href="../number/range_map.html"><span class="doc">Map Range</span></a></p></li>
+<li><p>Viz-&gt; <a class="reference internal" href="../viz/viewer_draw_mk4.html"><span class="doc">Viewer Draw</span></a></p></li>
+</ul>
+<hr class="docutils" />
+<p>Splitting Data: New Vertices in white, Old vertices in black, New Polys in grey, Rim Polys in white…</p>
+<a class="reference external image-reference" href="https://user-images.githubusercontent.com/14288520/201445261-ebbee6d5-8e1a-4f85-a9fa-f05123d5efcd.png"><img alt="https://user-images.githubusercontent.com/14288520/201445261-ebbee6d5-8e1a-4f85-a9fa-f05123d5efcd.png" src="https://user-images.githubusercontent.com/14288520/201445261-ebbee6d5-8e1a-4f85-a9fa-f05123d5efcd.png" />
+</a>
+<ul class="simple">
+<li><p>Generator-&gt; <a class="reference internal" href="../generator/cylinder_mk2.html"><span class="doc">Cylinder</span></a></p></li>
+<li><p>DIV: Number-&gt; <a class="reference internal" href="../number/scalar_mk4.html"><span class="doc">Scalar Math</span></a></p></li>
+<li><p>Viz-&gt; <a class="reference internal" href="../viz/viewer_draw_mk4.html"><span class="doc">Viewer Draw</span></a></p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="pipe_tubes.html" class="btn btn-neutral float-left" title="Pipe" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="sweep_modulator.html" class="btn btn-neutral float-right" title="Sweep Modulator" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022...2025, Victor Calixto.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

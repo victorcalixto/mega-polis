@@ -1,0 +1,331 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Viewer Draw Surface &mdash; Mega-Polis 0, 0, 0, 0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../../_static/documentation_options.js?v=b89074fd"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="GreasePencil Viewer" href="viewer_gp.html" />
+    <link rel="prev" title="Viewer Draw" href="viewer_draw_mk4.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../main.html" class="icon icon-home">
+            Mega-Polis
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../introduction/introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../user_interface/user_interface.html">User interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tree_evaluation_system.html">Node tree evaluation system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../data_structure/data_structure_index.html">Data structure</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../nodes.html">Nodes</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../generator/generator_index.html">Generators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../generators_extended/generators_extended_index.html">Generators Extended</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../curve/curve_index.html">Curves</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../surface/surface_index.html">Surfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../field/field_index.html">Fields</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../solid/solid_index.html">Solids</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../spatial/spatial_index.html">Spatial</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../transforms/transforms_index.html">Transforms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../analyzer/analyzer_index.html">Analyzers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../modifier_change/modifier_change_index.html">Modifier Change</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../modifier_make/modifier_make_index.html">Modifier Make</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../CAD/CAD_index.html">CAD</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../number/number_index.html">Number</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../vector/vector_index.html">Vector</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../matrix/matrix_index.html">Matrix</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../quaternion/quaternion_index.html">Quaternion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../color/color_index.html">Color</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../logic/logic_index.html">Logic</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../list_main/list_main_index.html">List Main</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../list_struct/list_struct_index.html">List Structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../list_masks/list_masks_index.html">List Masks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../list_mutators/list_mutators_index.html">List Mutators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../dictionary/dictionary_index.html">Dictionary</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="viz_index.html">Viz</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="console_node.html">Console Node</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dupli_instances_lite.html">Dupli Instancer Lite</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dupli_instances_mk5.html">Dupli Instancer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="empty_out.html">Empty out</a></li>
+<li class="toctree-l3"><a class="reference internal" href="geo_nodes_viewer.html">Geo Nodes Viewer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="instancer.html">Obj instancer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="light_viewer.html">Light viewer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mesh_viewer.html">Mesh Viewer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="polyline_viewer.html">Polyline Viewer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="vd_matrix.html">Matrix View</a></li>
+<li class="toctree-l3"><a class="reference internal" href="viewer_2d.html">Viewer 2D</a></li>
+<li class="toctree-l3"><a class="reference internal" href="viewer_bezier_curve.html">Bezier Curve Out</a></li>
+<li class="toctree-l3"><a class="reference internal" href="viewer_curves.html">Curve Viewer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="viewer_draw_curve.html">Viewer Draw Curve</a></li>
+<li class="toctree-l3"><a class="reference internal" href="viewer_draw_mk4.html">Viewer Draw</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Viewer Draw Surface</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#functionality">Functionality</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#inputs">Inputs</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#parameters">Parameters</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#operators">Operators</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#outputs">Outputs</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#example-of-usage">Example of Usage</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="viewer_gp.html">GreasePencil Viewer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="viewer_idx28.html">Viewer Index+</a></li>
+<li class="toctree-l3"><a class="reference internal" href="viewer_metaball.html">Metaball Out</a></li>
+<li class="toctree-l3"><a class="reference internal" href="viewer_nurbs_curve.html">NURBS Curve Out</a></li>
+<li class="toctree-l3"><a class="reference internal" href="viewer_nurbs_surface.html">NURBS Surface Out</a></li>
+<li class="toctree-l3"><a class="reference internal" href="viewer_skin.html">Skin Mesher</a></li>
+<li class="toctree-l3"><a class="reference internal" href="viewer_texture.html">Texture Viewer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="viewer_texture_lite.html">Texture Viewer Lite</a></li>
+<li class="toctree-l3"><a class="reference internal" href="viewer_typography.html">Typography Viewer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="viewer_waveform_output.html">Viewer Waveform</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../text/text_index.html">Text</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../script/script_index.html">Script</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../scene/scene_index.html">Scene</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../object_nodes/object_nodes_index.html">Object</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../layout/layout_index.html">Layout</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../network/network_index.html">Network</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pulga_physics/pulga_physics_index.html">Pulga Physics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../exchange/exchange_index.html">Exchange</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../svg/svg_index.html">SVG</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/tutorials.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/celling.html">Celling design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../contributing/contributing_to_sverchok.html">Contributing to sverchok</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../main.html">Mega-Polis</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../main.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../nodes.html">Nodes</a></li>
+          <li class="breadcrumb-item"><a href="viz_index.html">Viz</a></li>
+      <li class="breadcrumb-item active">Viewer Draw Surface</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/nodes/viz/viewer_draw_surface.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="viewer-draw-surface">
+<h1>Viewer Draw Surface<a class="headerlink" href="#viewer-draw-surface" title="Link to this heading">¶</a></h1>
+<a class="reference external image-reference" href="https://user-images.githubusercontent.com/14288520/190859856-a96709c4-434f-444b-849a-09dfc89e1f26.png"><img alt="https://user-images.githubusercontent.com/14288520/190859856-a96709c4-434f-444b-849a-09dfc89e1f26.png" src="https://user-images.githubusercontent.com/14288520/190859856-a96709c4-434f-444b-849a-09dfc89e1f26.png" />
+</a>
+<section id="functionality">
+<h2>Functionality<a class="headerlink" href="#functionality" title="Link to this heading">¶</a></h2>
+<p>This node displays Surface objects in the 3D View, using opengl. The node is
+intended to be a fast way to show you the result of your node tree.</p>
+<p>For NURBS and NURBS-like surfaces, the node can also additionally display
+control points and control net edges. For non-NURBS curves, the node just does
+not try to display these attributes.</p>
+<p>This node is automatically created when you select “Connect Viewer Draw” from
+right-click menu for nodes which have Surface output. Also this node pops up as a
+“temporal viewer”. when you perform control-click on such a node.</p>
+</section>
+<section id="inputs">
+<h2>Inputs<a class="headerlink" href="#inputs" title="Link to this heading">¶</a></h2>
+<p>This node has the following inputs:</p>
+<ul class="simple">
+<li><p><strong>Surface</strong>. The surface object(s) to be displayed. This input is mandatory.</p></li>
+<li><p><strong>Resolution U</strong>, <strong>Resolution V</strong>. Resolution to display the surface, along
+U and V parameters. The default value is 50.</p></li>
+</ul>
+</section>
+<section id="parameters">
+<h2>Parameters<a class="headerlink" href="#parameters" title="Link to this heading">¶</a></h2>
+<p>This node has one main parameter:</p>
+<ul class="simple">
+<li><p><strong>Show</strong>. The node displays something only when this parameter is enabled.</p></li>
+</ul>
+<a class="reference external image-reference" href="https://user-images.githubusercontent.com/14288520/190235190-86138e03-8423-4b86-9d35-4337b25513f3.png"><img alt="https://user-images.githubusercontent.com/14288520/190235190-86138e03-8423-4b86-9d35-4337b25513f3.png" src="https://user-images.githubusercontent.com/14288520/190235190-86138e03-8423-4b86-9d35-4337b25513f3.png" />
+</a>
+<p>Most parameters of this node are grouped in rows; for each type of
+information this node can display, there are three parameters: whether to
+display it, the color to be used, and point size / line width to be used.</p>
+<p>The parameters of the node are (in this order):</p>
+<ul class="simple">
+<li><p><strong>Display Vertices</strong>, <strong>Vertices Color</strong>, <strong>Vertices Size</strong>. Control display
+of points on the surface (number of points along U and V parameters are
+controlled by <strong>Resolution U</strong>, <strong>Resolution V</strong> inputs). Display of points
+is disabled by default.</p></li>
+</ul>
+<a class="reference external image-reference" href="https://user-images.githubusercontent.com/14288520/190232504-7efd678d-60da-45e9-a8f9-3a00a68096b4.png"><img alt="https://user-images.githubusercontent.com/14288520/190232504-7efd678d-60da-45e9-a8f9-3a00a68096b4.png" src="https://user-images.githubusercontent.com/14288520/190232504-7efd678d-60da-45e9-a8f9-3a00a68096b4.png" />
+</a>
+<hr class="docutils" />
+<ul class="simple">
+<li><p><strong>Display Edges</strong>, <strong>Edges Color</strong>, <strong>Edges Line Width</strong>. Control display of
+edges on the curve (edges between points). Display of edges is disabled by
+default.</p></li>
+</ul>
+<a class="reference external image-reference" href="https://user-images.githubusercontent.com/14288520/190232619-676b8cfd-839a-4c1f-9cc9-703b8d6b3bda.png"><img alt="https://user-images.githubusercontent.com/14288520/190232619-676b8cfd-839a-4c1f-9cc9-703b8d6b3bda.png" src="https://user-images.githubusercontent.com/14288520/190232619-676b8cfd-839a-4c1f-9cc9-703b8d6b3bda.png" />
+</a>
+<hr class="docutils" />
+<ul class="simple">
+<li><p><strong>Display Surface</strong>, <strong>Surface Color</strong>. Control display of the surface
+itself. The surface is shown by default.</p></li>
+</ul>
+<a class="reference external image-reference" href="https://user-images.githubusercontent.com/14288520/190233082-7627834b-cd18-476c-8abf-27be180c8705.png"><img alt="https://user-images.githubusercontent.com/14288520/190233082-7627834b-cd18-476c-8abf-27be180c8705.png" src="https://user-images.githubusercontent.com/14288520/190233082-7627834b-cd18-476c-8abf-27be180c8705.png" />
+</a>
+<hr class="docutils" />
+<ul class="simple">
+<li><p><strong>Display Control Points</strong>, <strong>Control Points Color</strong>, <strong>Control Points
+Size</strong>. Control display of surface’s control points, for NURBS and NURBS-like
+surfaces. Control points are not shown by default.</p></li>
+</ul>
+<a class="reference external image-reference" href="https://user-images.githubusercontent.com/14288520/190233234-3e638636-4945-4e31-8872-ccc45c0ddeaf.png"><img alt="https://user-images.githubusercontent.com/14288520/190233234-3e638636-4945-4e31-8872-ccc45c0ddeaf.png" src="https://user-images.githubusercontent.com/14288520/190233234-3e638636-4945-4e31-8872-ccc45c0ddeaf.png" />
+</a>
+<hr class="docutils" />
+<ul class="simple">
+<li><p><strong>Display Control Net</strong>, <strong>Control Net Color</strong>, <strong>Control Net Line Width</strong>.
+Control display of surface’s control net (edges between control points), for
+NURBS and NURBS-like surfaces. Control net is not displayed by default.</p></li>
+<li><p><strong>Display Node Lines</strong>, <strong>Node Lines Color</strong>, <strong>Node Lines Width</strong>. Conrtol
+display of node lines, i.e. isolines at U and V parameters according to node
+values of knotvectors along U and V parameter directions. Node lines are not
+displayed by default.</p></li>
+</ul>
+<a class="reference external image-reference" href="https://user-images.githubusercontent.com/14288520/190234804-8789ca5c-d35a-46f3-9c6c-95cc440ce394.png"><img alt="https://user-images.githubusercontent.com/14288520/190234804-8789ca5c-d35a-46f3-9c6c-95cc440ce394.png" src="https://user-images.githubusercontent.com/14288520/190234804-8789ca5c-d35a-46f3-9c6c-95cc440ce394.png" />
+</a>
+<ul class="simple">
+<li><p><strong>Indicate Curvature</strong>, <strong>Minimum Curvature Color</strong>, <strong>Maximum Curvature
+Color</strong>. Control indication of surface curvature. Colors control how places
+with minimum and maximum curvature value will be indicated on surface. Places
+with medium curvature values will be drawn with <strong>Surface Color</strong>, as usual.
+The <strong>Type</strong> dropdown is visible only when <strong>Indicate Curvature</strong> is checked,
+and it controls what type of curvature should be indicated:</p>
+<ul>
+<li><p><strong>Gauss</strong> - indicate Gauss curvature (product of minimum and maximum
+curvature). Places with positive Gaussian curvature are where the surface
+behaves like sphere. Places with negative Gaussian curvature are where the
+surface is like a saddle.</p></li>
+<li><p><strong>Mean</strong> - indicate mean curvature (sum of minimum and maximum curvature).</p></li>
+<li><p><strong>Maximum</strong> - indicate maximum curvature, i.e. the biggest of two principal
+curvature values.</p></li>
+<li><p><strong>Minimum</strong> - indicate minimum curvature, i.e. the smallest of two
+principal curvature values.</p></li>
+<li><p><strong>Difference</strong> - indicate difference between maximum and minimum curvature
+values. Places where difference is zero, i.e. maximum curvature equals
+minimum curvature, are umbillic points.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="operators">
+<h2>Operators<a class="headerlink" href="#operators" title="Link to this heading">¶</a></h2>
+<p>This node has the following buttons:</p>
+<ul class="simple">
+<li><p><strong>BAKE</strong>. Create mesh objects in Blender scene according to curves being displayed.</p></li>
+<li><p><strong>Align</strong>. Zoom and position 3D view so that generated object is in the center.</p></li>
+</ul>
+</section>
+<section id="outputs">
+<h2>Outputs<a class="headerlink" href="#outputs" title="Link to this heading">¶</a></h2>
+<p>This node has no outputs.</p>
+</section>
+<section id="example-of-usage">
+<h2>Example of Usage<a class="headerlink" href="#example-of-usage" title="Link to this heading">¶</a></h2>
+<a class="reference external image-reference" href="https://user-images.githubusercontent.com/284644/189537929-2be26995-0cb3-4063-9531-8ca0f955e155.png"><img alt="https://user-images.githubusercontent.com/284644/189537929-2be26995-0cb3-4063-9531-8ca0f955e155.png" src="https://user-images.githubusercontent.com/284644/189537929-2be26995-0cb3-4063-9531-8ca0f955e155.png" />
+</a>
+<ul class="simple">
+<li><p>Generator-&gt; <a class="reference internal" href="../generator/plane_mk3.html"><span class="doc">Plane</span></a></p></li>
+<li><p>Transform-&gt; <a class="reference internal" href="../transforms/randomize.html"><span class="doc">Randomize</span></a></p></li>
+<li><p>Surfaces-&gt;NURBS-&gt; <a class="reference internal" href="../surface/interpolate_nurbs_surface.html"><span class="doc">Interpolate Nurbs Surface</span></a></p></li>
+</ul>
+<p>Examples of surface curvature indication:</p>
+<ul class="simple">
+<li><p>Gaussian curvature:</p></li>
+</ul>
+<a class="reference external image-reference" href="https://user-images.githubusercontent.com/284644/212495583-9f71e2c3-5fa5-410f-be9d-9b5c6c72b066.png"><img alt="https://user-images.githubusercontent.com/284644/212495583-9f71e2c3-5fa5-410f-be9d-9b5c6c72b066.png" src="https://user-images.githubusercontent.com/284644/212495583-9f71e2c3-5fa5-410f-be9d-9b5c6c72b066.png" />
+</a>
+<ul class="simple">
+<li><p>Another surface with indicated Gaussian curvature:</p></li>
+</ul>
+<a class="reference external image-reference" href="https://user-images.githubusercontent.com/284644/215551129-04652358-2704-4f6a-a069-d4f05a51158c.png"><img alt="https://user-images.githubusercontent.com/284644/215551129-04652358-2704-4f6a-a069-d4f05a51158c.png" src="https://user-images.githubusercontent.com/284644/215551129-04652358-2704-4f6a-a069-d4f05a51158c.png" />
+</a>
+<ul class="simple">
+<li><p>Mean curvature:</p></li>
+</ul>
+<a class="reference external image-reference" href="https://user-images.githubusercontent.com/284644/212495578-f719c92f-a503-4146-92bb-f474c2905753.png"><img alt="https://user-images.githubusercontent.com/284644/212495578-f719c92f-a503-4146-92bb-f474c2905753.png" src="https://user-images.githubusercontent.com/284644/212495578-f719c92f-a503-4146-92bb-f474c2905753.png" />
+</a>
+<ul class="simple">
+<li><p>Difference of two curvatures:</p></li>
+</ul>
+<a class="reference external image-reference" href="https://user-images.githubusercontent.com/284644/212495582-cfae4468-8b65-4f78-9c55-6237e53a5e0a.png"><img alt="https://user-images.githubusercontent.com/284644/212495582-cfae4468-8b65-4f78-9c55-6237e53a5e0a.png" src="https://user-images.githubusercontent.com/284644/212495582-cfae4468-8b65-4f78-9c55-6237e53a5e0a.png" />
+</a>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="viewer_draw_mk4.html" class="btn btn-neutral float-left" title="Viewer Draw" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="viewer_gp.html" class="btn btn-neutral float-right" title="GreasePencil Viewer" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022...2025, Victor Calixto.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
