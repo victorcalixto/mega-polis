@@ -1,52 +1,28 @@
-# This file is part of project Sverchok. It's copyrighted by the contributors
-# recorded in the version control history of the file, available from
-# its original location https://github.com/nortikin/sverchok/commit/master
-#  
-# SPDX-License-Identifier: GPL3
-# License-Filename: LICENSE
-
-# made by: Linus Yng, haxed by zeffii to mk2
-# pylint: disable=c0326
-
-import io
-import csv
-import json
-import itertools
-import pprint
-import sverchok
-
 import bpy
-from bpy.props import BoolProperty, EnumProperty, StringProperty
+from bpy.props import BoolProperty, StringProperty
 
 from sverchok.node_tree import SverchCustomTreeNode
-from sverchok.data_structure import node_id, multi_socket, updateNode, levels_of_list_or_np
-
+from sverchok.data_structure import levels_of_list_or_np
 from sverchok.utils.sv_text_io_common import (
-    FAIL_COLOR, READY_COLOR, TEXT_IO_CALLBACK,
-    get_socket_type,
-    new_output_socket,
-    name_dict,
-    text_modes
+    READY_COLOR, TEXT_IO_CALLBACK
 )
-
 from megapolis.dependencies import pandas as pd
 from megapolis.dependencies import tabulate
 
 try:
     from tabulate import tabulate
-
-except:
+except ImportError:
     pass
 
-def get_sv_data(node):
-        out = []
-        if node.inputs['Data'].links:
-            data = node.inputs['Data'].sv_get(deepcopy=False)
-            pd.set_option('display.max_rows', None)
-            df_vis = tabulate(data, headers='keys', tablefmt='psql', showindex=True, numalign="right")
-            out = str(df_vis)
-        return out
 
+def get_sv_data(node):
+    out = []
+    if node.inputs['Data'].links:
+        data = node.inputs['Data'].sv_get(deepcopy=False)
+        pd.set_option('display.max_rows', None)
+        df_vis = tabulate(data, headers='keys', tablefmt='psql', showindex=True, numalign="right")
+        out = str(df_vis)
+    return out
 
 
 def format_to_text(data):
@@ -54,17 +30,16 @@ def format_to_text(data):
     out = ''
     if deptl > 1:
         for i, sub_data in enumerate(data):
-            if i> 0:
+            if i > 0:
                 out += '\n'
-            sub_data_len = len(sub_data)-1
-            for i, d in enumerate(sub_data):
+            sub_data_len = len(sub_data) - 1
+            for j, d in enumerate(sub_data):
                 out += str(d)
-                if i< sub_data_len:
+                if j < sub_data_len:
                     out += '\n'
-
     else:
         for d in data:
-            out += str(d)+'\n'
+            out += str(d) + '\n'
     return out
 
 
@@ -75,25 +50,22 @@ class SvMegapolisDataframeVis(SverchCustomTreeNode, bpy.types.Node):
     """
     bl_idname = 'SvMegapolisDataframeVis'
     bl_label = 'Dataframe Vis'
-    bl_icon = 'COPYDOWN'
+    bl_icon = 'WORDWRAP_ON'
 
     sv_modes = [
-        ('compact',     'Compact',      'Using str()',        1),
-        ('pretty',      'Pretty',       'Using pretty print', 2)]
-    
-    
+        ('compact', 'Compact', 'Using str()', 1),
+        ('pretty', 'Pretty', 'Using pretty print', 2)
+    ]
 
     def change_mode(self, context):
         self.inputs.clear()
         self.inputs.new('SvStringsSocket', 'Data')
-
 
     def pointer_update(self, context):
         if self.file_pointer:
             self.text = self.file_pointer.name
         else:
             self.text = ""
-        # need to do other stuff?
 
     text: StringProperty(name='text')
     file_pointer: bpy.props.PointerProperty(type=bpy.types.Text, poll=lambda s, o: True, update=pointer_update)
@@ -101,7 +73,7 @@ class SvMegapolisDataframeVis(SverchCustomTreeNode, bpy.types.Node):
     append: BoolProperty(default=False, description="Append to output file")
     base_name: StringProperty(name='base_name', default='Col ')
     multi_socket_type: StringProperty(name='multi_socket_type', default='SvStringsSocket')
-    
+
     autodump: BoolProperty(default=False, description="autodump", name="auto dump")
     unwrap: BoolProperty(default=True, description="unwrap", name="unwrap")
 
@@ -109,18 +81,12 @@ class SvMegapolisDataframeVis(SverchCustomTreeNode, bpy.types.Node):
         self.inputs.new('SvStringsSocket', 'Data')
 
     def draw_buttons(self, context, layout):
-
         col = layout.column(align=True)
         col.prop(self, 'autodump', toggle=True)
+
         row = col.row(align=True)
         row.prop_search(self, 'file_pointer', bpy.data, 'texts', text="Write")
         row.operator("text.new", icon="ZOOM_IN", text='')
-
-        #row = col.row(align=True)
-        #row.prop(self, 'text_mode', expand=True)
-
-        #row = col.row(align=True)
-        #row.prop(self, 'sv_mode', expand=True)
 
         if not self.autodump:
             col2 = col.column(align=True)
@@ -130,7 +96,6 @@ class SvMegapolisDataframeVis(SverchCustomTreeNode, bpy.types.Node):
             col2.prop(self, 'append', text="Append")
 
     def process(self):
-
         # upgrades older versions of ProfileMK3 to the version that has self.file_pointer
         if self.text and not self.file_pointer:
             text = self.get_bpy_data_from_name(self.text, bpy.data.texts)
@@ -141,7 +106,7 @@ class SvMegapolisDataframeVis(SverchCustomTreeNode, bpy.types.Node):
             self.append = False
             self.dump()
 
-    # build a string with data from sockets
+    # Build a string with data from sockets
     def dump(self):
         out = self.get_data()
         if len(out) == 0:
@@ -168,3 +133,4 @@ def register():
 
 def unregister():
     bpy.utils.unregister_class(SvMegapolisDataframeVis)
+

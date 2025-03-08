@@ -1,12 +1,6 @@
 import bpy
-from bpy.props import IntProperty, EnumProperty, BoolProperty
-
-from collections import namedtuple
 from sverchok.node_tree import SverchCustomTreeNode
 from sverchok.data_structure import updateNode
-
-
-#Megapolis Dependencies
 
 
 class SvMegapolisDashboardPlotlyFigure(SverchCustomTreeNode, bpy.types.Node):
@@ -16,46 +10,46 @@ class SvMegapolisDashboardPlotlyFigure(SverchCustomTreeNode, bpy.types.Node):
     """
     bl_idname = 'SvMegapolisDashboardPlotlyFigure'
     bl_label = 'Dashboard Plotly Figure'
-    bl_icon = 'MESH_DATA'
+    bl_icon = 'IMAGE_RGB_ALPHA'
 
-    
     # Hide Interactive Sockets
     def update_sockets(self, context):
-        """ need to do UX transformation before updating node"""
+        """Need to do UX transformation before updating node."""
         def set_hide(sock, status):
             if sock.hide_safe != status:
                 sock.hide_safe = status
 
-        updateNode(self,context)
-   
-    #Blender Properties Buttons
-    
+        updateNode(self, context)
+
+    # Blender Properties Buttons
     def sv_init(self, context):
-        # inputs
+        # Inputs
         self.inputs.new('SvStringsSocket', "Figure Name")
 
-        #Outputs
-        self.outputs.new('SvStringsSocket',"Plotly Figure")
+        # Outputs
+        self.outputs.new('SvStringsSocket', "Plotly Figure")
 
     def process(self):
-    
         if not self.inputs["Figure Name"].is_linked:
             return
-        self.figname = self.inputs["Figure Name"].sv_get(deepcopy = False)
-
-        plotly_figure_name = self.figname[0][0]
         
-        plot  = f"""
+        self.figname = self.inputs["Figure Name"].sv_get(deepcopy=False)
+        plotly_figure_name = self.figname[0][0]
+
+        plot = f"""
 st.plotly_chart({plotly_figure_name}, use_container_width=True) \n
-             """
+        """
 
         plot_plotly_figure = plot
-        ## Output
-
+        
+        # Output
         self.outputs["Plotly Figure"].sv_set(plot_plotly_figure)
+
 
 def register():
     bpy.utils.register_class(SvMegapolisDashboardPlotlyFigure)
 
+
 def unregister():
     bpy.utils.unregister_class(SvMegapolisDashboardPlotlyFigure)
+

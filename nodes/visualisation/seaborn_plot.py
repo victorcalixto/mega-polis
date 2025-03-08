@@ -1,23 +1,18 @@
 import bpy
-from bpy.props import IntProperty, EnumProperty, BoolProperty
-
+from bpy.props import EnumProperty, BoolProperty
 from collections import namedtuple
 from sverchok.node_tree import SverchCustomTreeNode
 from sverchok.data_structure import updateNode
 
-
-#Megapolis Dependencies
+# Megapolis Dependencies
 from megapolis.dependencies import seaborn as sns
-
-import threading
-
 from megapolis.dependencies import matplotlib
 
-try: 
+try:
     import matplotlib.pyplot as plt
     matplotlib.use("TkAgg")
     import secrets
-except:
+except ImportError:
     pass
 
 Plot = namedtuple('Plot', ['regplot', 'pairplot'])
@@ -31,12 +26,12 @@ class SvMegapolisSeabornPlot(SverchCustomTreeNode, bpy.types.Node):
     """
     bl_idname = 'SvMegapolisSeabornPlot'
     bl_label = 'Seaborn Plot'
-    bl_icon = 'MESH_DATA'
+    bl_icon = 'IMAGE_ZDEPTH'
     sv_dependencies = {'matplotlib'}
 
     # Hide Interactive Sockets
     def update_sockets(self, context):
-        """ need to do UX transformation before updating node"""
+        """Need to do UX transformation before updating node"""
         def set_hide(sock, status):
             if sock.hide_safe != status:
                 sock.hide_safe = status
@@ -46,33 +41,35 @@ class SvMegapolisSeabornPlot(SverchCustomTreeNode, bpy.types.Node):
             set_hide(self.inputs['Feature X'], False)
             set_hide(self.inputs['Feature y'], False)
         else:
-            set_hide(self.inputs['Dataframe'],False)
-            set_hide(self.inputs['Feature X'],True)
-            set_hide(self.inputs['Feature y'],True)
+            set_hide(self.inputs['Dataframe'], False)
+            set_hide(self.inputs['Feature X'], True)
+            set_hide(self.inputs['Feature y'], True)
 
-        updateNode(self,context)
+        updateNode(self, context)
 
-    #Blender Properties Buttons
-    
+    # Blender Properties Buttons
     plot: EnumProperty(
-        name='plot', items=plot_items,
+        name='plot',
+        items=plot_items,
         default="regplot",
-        description='Choose a plot type', 
-        update=update_sockets)
-    
+        description='Choose a plot type',
+        update=update_sockets
+    )
+
     run: BoolProperty(
-            default=False, 
-            description="run", 
-            name="run",
-            update=update_sockets)
+        default=False,
+        description="run",
+        name="run",
+        update=update_sockets
+    )
 
     def sv_init(self, context):
         # inputs
         self.inputs.new('SvStringsSocket', "Dataframe")
         self.inputs.new('SvStringsSocket', "Feature X")
         self.inputs.new('SvStringsSocket', "Feature y")
-    
-    def draw_buttons(self,context, layout):
+
+    def draw_buttons(self, context, layout):
         layout.prop(self, 'run')
         layout.prop(self, 'plot', expand=True)
 
@@ -80,15 +77,14 @@ class SvMegapolisSeabornPlot(SverchCustomTreeNode, bpy.types.Node):
         self.draw_buttons(context, layout)
 
     def process(self):
-        hex_name=secrets.token_hex(nbytes=16)
+        hex_name = secrets.token_hex(nbytes=16)
 
-
-        def showRegPlot(df,feature_x,feature_y):
+        def show_reg_plot(df, feature_x, feature_y):
             sns.set_theme(color_codes=True)
-            sns.regplot(x=feature_x, y=feature_y , data=df)
+            sns.regplot(x=feature_x, y=feature_y, data=df)
             plt.show()
 
-        def showPairPlot(df):
+        def show_pair_plot(df):
             sns.set_theme(color_codes=True)
             sns.pairplot(df)
             plt.show()
@@ -96,34 +92,28 @@ class SvMegapolisSeabornPlot(SverchCustomTreeNode, bpy.types.Node):
         if self.plot in PLOT.pairplot:
             if not self.inputs["Dataframe"].is_linked:
                 return
-            self.df = self.inputs["Dataframe"].sv_get(deepcopy = False)
-            df = self.df 
-            
-            #showPairPlot(df)
-            if self.run == True:
-                
-                exec(f"t1_{hex_name} = threading.Thread(target=showPairPlot, args=(df,))")
+            self.df = self.inputs["Dataframe"].sv_get(deepcopy=False)
+
+            # showPairPlot(df)
+            if self.run:
+                exec(f"t1_{hex_name} = threading.Thread(target=show_pair_plot, args=(df,))")
                 exec(f"t1_{hex_name}.start()")
             else:
-                hex_name=secrets.token_hex(nbytes=16)
-                
-        else:
-            if not self.inputs["Dataframe"].is_linked or not self.inputs["Feature X"].is_linked or not self.inputs["Feature y"].is_linked :
-                return
-            self.df = self.inputs["Dataframe"].sv_get(deepcopy = False)
-            self.x = self.inputs["Feature X"].sv_get(deepcopy = False)
-            self.y = self.inputs["Feature y"].sv_get(deepcopy = False)
-            
-            df = self.df
-            feature_x = self.x[0][0]
-            feature_y = self.y[0][0]
+                hex_name = secrets.token_hex(nbytes=16)
 
-            #showRegPlot(df,feature_x,feature_y)
-            if self.run ==True: 
-                exec(f"t2_{hex_name} = threading.Thread(target=showPairPlot, args=(df,))")
+        else:
+            if not self.inputs["Dataframe"].is_linked or not self.inputs["Feature X"].is_linked or not self.inputs["Feature y"].is_linked:
+                return
+            self.df = self.inputs["Dataframe"].sv_get(deepcopy=False)
+            self.x = self.inputs["Feature X"].sv_get(deepcopy=False)
+            self.y = self.inputs["Feature y"].sv_get(deepcopy=False)
+            # showRegPlot(df, feature_x, feature_y)
+            if self.run:
+                exec(f"t2_{hex_name} = threading.Thread(target=show_reg_plot, args=(df, self.x, self.y))")
                 exec(f"t2_{hex_name}.start()")
             else:
-                hex_name=secrets.token_hex(nbytes=16)
+                hex_name = secrets.token_hex(nbytes=16)
+
 
 def register():
     bpy.utils.register_class(SvMegapolisSeabornPlot)
@@ -131,3 +121,4 @@ def register():
 
 def unregister():
     bpy.utils.unregister_class(SvMegapolisSeabornPlot)
+
