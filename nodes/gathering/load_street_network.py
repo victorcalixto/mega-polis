@@ -149,11 +149,36 @@ class SvMegapolisLoadStreetNetwork(SverchCustomTreeNode, bpy.types.Node):
         linestrings_features = get_gdf_features(gdf_edges["geometry"], gdf_mapping_edges, mapping(gdf_edges), "LineString")
 
         edges_verts = [[tuple(i) + (0,) for i in line] for line in linestrings]
+        
+
         edges_id = [i["id"] for i in linestrings_features]
         edges_keys = [list(i["properties"].keys()) for i in linestrings_features]
         edges_values = [list(i["properties"].values()) for i in linestrings_features]
 
-        edges = [list(zip(verts[:-1], verts[1:])) for verts in edges_verts]
+        #edges = [[edges_verts.index(verts[:-1]), edges_verts.index(verts[1:])] for verts in edges_verts]
+
+        ## lineStrings Edges
+
+        ### Creating List of Edges LineStrings
+        linestrings_edges_p = []
+        linestrings_edges_x = []
+
+        for i in edges_verts:
+            linestrings_edges_p.append([])
+            for j in i:
+                linestrings_edges_p[edges_verts.index(i)].append(i.index(j))
+
+        ### Creating Second List of Edges (Shifted List)
+
+        linestrings_edges_z = [linestrings_edges_p[linestrings_edges_p.index(items)][1:] + linestrings_edges_p[linestrings_edges_p.index(items)][:1] for items in linestrings_edges_p]
+
+        ### Zip First and Second List of Edges
+
+        linestrings_edges_h=[[list(zip(linestrings_edges_p[items],linestrings_edges_z[items]))] for items in range(0,len(linestrings_edges_p))]
+
+        ### Remove Extra Edges
+
+        edges= [i.pop() for i in linestrings_edges_h]
 
         # Output results
         self.outputs["Nodes"].sv_set(points_verts)
@@ -177,4 +202,5 @@ def register():
 
 def unregister():
     bpy.utils.unregister_class(SvMegapolisLoadStreetNetwork)
+
 
