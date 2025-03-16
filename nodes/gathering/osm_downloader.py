@@ -137,6 +137,9 @@ class SvMegapolisOSMDownloader(SverchCustomTreeNode, bpy.types.Node):
             filename = re.sub('[^A-Za-z0-9]+', ' ', f"{query_param}_{self.features}.geojson")
             buildings.to_file(f"{folder}{filename}", driver="GeoJSON")
 
+        else:
+            buildings =''
+
         self.outputs["Output_Message"].sv_set(buildings)
 
 
