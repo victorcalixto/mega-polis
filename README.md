@@ -1,33 +1,12 @@
-```bash
-                       .|
-                       | |
-                       |'|            ._____
-               ___    |  |            |.   |' .---"|
-       _    .-'   '-. |  |     .--'|  ||   | _|    |
-    .-'|  _.|  |    ||   '-__  |   |  |    ||      |
-    |' | |.    |    ||       | |   |  |    ||      |
-____|  '-'     '    ""       '-'   '-.'    '`      |_________________________
-jgs~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+<p align="center" width="100%">
+    <img width="33%" src="https://i.imgur.com/DmcjzUc.png">
+</p>
+<h1 align="center"><b>MEGA-POLIS</b></h1>
+<h3 align="center"> A Free and Open Source Data-Driven Urban Design Toolkit for Sverchok </h1>
 
-███    ███ ███████  ██████   █████        ██████   ██████  ██      ██ ███████ 
-████  ████ ██      ██       ██   ██       ██   ██ ██    ██ ██      ██ ██      
-██ ████ ██ █████   ██   ███ ███████ █████ ██████  ██    ██ ██      ██ ███████ 
-██  ██  ██ ██      ██    ██ ██   ██       ██      ██    ██ ██      ██      ██ 
-██      ██ ███████  ██████  ██   ██       ██       ██████  ███████ ██ ███████ 
-                                                                               
-```
-
-A DATA-DRIVEN URBAN DESIGN TOOLKIT FOR SVERCHOK 
-============================================
 
 MEGA-POLIS is a Data-Driven Urban Design Toolkit. This is an addon for [Blender][1] that extends [Sverchok][2]
-addon. 
-
-This add-on is part of an ongoing research, and it still very experimental and under HEAVILY development.  
-
-While the documentation is not ready, you can check the thesis chapter that describes the  tool development [here](https://www.victorcalixto.xyz/phd_thesis/ct-development.html)
-
-Also, you can check this demonstration:
+addon. While the documentation is not ready, you can check the thesis chapter that describes the  tool development [here](https://www.victorcalixto.xyz/phd_thesis/ct-development.html). Also, you can check this demonstration:
 
 [![Watch the video](https://img.youtube.com/vi/lTRNIa2PwhQ/maxresdefault.jpg)](https://youtu.be/lTRNIa2PwhQ)
 
