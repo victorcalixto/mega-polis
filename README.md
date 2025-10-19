@@ -24,13 +24,38 @@ Gathering
 ---------
 
 - Read GIS (shapefile, geopackage, geojson)
+  
+![](https://www.victorcalixto.xyz/phd_thesis/images/tool-dev/02_read_gis.png)
+ 
 - Read CSV Files
+  
+ ![](https://www.victorcalixto.xyz/phd_thesis/images/tool-dev/07_read_csv.png)
+
 - Read DEM (GeoTIFF)
+  
+ ![](https://www.victorcalixto.xyz/phd_thesis/images/tool-dev/04_read_dem.png)
+  
 - Read LAS (.las)
-- OSM Downloader 
+
+ ![](https://www.victorcalixto.xyz/phd_thesis/images/tool-dev/05_read_las.png)
+
+  
+- OSM Downloader
+
+ ![](https://www.victorcalixto.xyz/phd_thesis/images/tool-dev/02_read_gis.png)
+
 - Load Street Network
+
+ ![](https://www.victorcalixto.xyz/phd_thesis/images/tool-dev/03_load_street_network.png)
+  
 - Download Street Imagery
+  
+ ![](https://www.victorcalixto.xyz/phd_thesis/images/tool-dev/01_tool_mapillary.gif)
+
 - Download Data URL
+  
+![](https://www.victorcalixto.xyz/phd_thesis/images/tool-dev/12_download_data_url.gif)
+
 - Request Data API
 - Get Pandas Feature
 - Pandas Dataframe
