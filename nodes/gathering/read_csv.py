@@ -1,6 +1,6 @@
 import bpy
 import csv
-import pandas as pd  # Corrected the import statement as per PEP8
+import pandas as pd  
 
 # Megapolis Dependencies
 from sverchok.node_tree import SverchCustomTreeNode

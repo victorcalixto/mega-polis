@@ -1,7 +1,7 @@
 import bpy
 from sverchok.node_tree import SverchCustomTreeNode
 from sverchok.data_structure import updateNode
-from megapolis.dependencies import pandas as pd
+import pandas as pd
 
 
 class SvMegapolisDashboardDataframe(SverchCustomTreeNode, bpy.types.Node):
@@ -12,7 +12,7 @@ class SvMegapolisDashboardDataframe(SverchCustomTreeNode, bpy.types.Node):
     bl_idname = 'SvMegapolisDashboardDataframe'
     bl_label = 'Dashboard Dataframe'
     bl_icon = 'WORDWRAP_ON'
-    sv_dependencies = {'pandas', 'streamlit'}
+    sv_dependencies = {'osmnx', 'streamlit'}
 
     # Hide Interactive Sockets
     def update_sockets(self, context):

@@ -11,7 +11,7 @@ class SvMegapolisGetPandasFeature(SverchCustomTreeNode, bpy.types.Node):
     bl_idname = "SvMegapolisGetPandasFeature"
     bl_label = "Get Pandas Feature"
     bl_icon = "TEXT"
-    sv_dependencies = {"pandas"}
+    sv_dependencies = {"osmnx"}
 
     def sv_init(self, context):
         """Initialize input and output sockets."""

@@ -9,7 +9,7 @@ class SvMegapolisPandasMapFeature(SverchCustomTreeNode, bpy.types.Node):
     bl_idname = 'SvMegapolisPandasMapFeature'
     bl_label = 'Pandas Map Feature'
     bl_icon = 'CON_TRANSFORM_CACHE'
-    sv_dependencies = {'pandas'}
+    sv_dependencies = {'osmnx'}
 
     def sv_init(self, context):
         """ Initialize inputs and outputs for the node """

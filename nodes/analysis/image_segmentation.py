@@ -9,7 +9,7 @@ from sverchok.data_structure import updateNode
 #Megapolis Dependencies
 from megapolis.dependencies import cv2
 from megapolis.dependencies import torch
-from megapolis.dependencies import pandas as pd
+import pandas as pd
 
 
 try:

@@ -1,0 +1,19 @@
+schema_version = "1.0.0"
+
+id = "megapolis"
+version = "0.0.0"
+name = "Megapolis"
+tagline = "A Computational Data-Driven Urban Design Tool"
+maintainer = "Victor Calixto <https://github.com/victorcalixto>"
+type = "add-on"
+
+# REQUIRED top-level fields
+blender_version_min = "3.3.0"
+blender_version_max = "5.0.0"
+
+license = ["GPL-3.0-or-later"]
+website = "https://github.com/victorcalixto/mega-polis"
+tags = ["nodes", "urban design", "parametric", "geospatial", "AI"]
+
+# REQUIRED as a non-empty list of strings
+permissions = ["files"]  # add "network", "clipboard" later if needed

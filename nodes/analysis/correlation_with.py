@@ -18,7 +18,7 @@ class SvMegapolisCorrelationWith(SverchCustomTreeNode, bpy.types.Node):
     bl_idname = 'SvMegapolisCorrelationWith'
     bl_label = 'Correlation With'
     bl_icon = 'PAUSE'
-    sv_dependencies = {'pandas'}
+    sv_dependencies = {'osmnx'}
 
     # Blender Property for correlation method selection
     correlation: EnumProperty(

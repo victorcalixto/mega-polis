@@ -5,7 +5,7 @@ from sverchok.node_tree import SverchCustomTreeNode
 from sverchok.data_structure import updateNode
 
 # Megapolis Dependencies
-from megapolis.dependencies import richdem as rd
+from megapolis.dependencies import xdem
 
 Sequential = namedtuple('Sequential', [
     'viridis', 'plasma', 'inferno', 'magma', 'cividis', 'Greys', 'Purples', 'Blues', 'Greens', 'Oranges', 'Reds',
@@ -30,7 +30,7 @@ class SvMegapolisPlotDem(SverchCustomTreeNode, bpy.types.Node):
     bl_idname = 'SvMegapolisPlotDem'
     bl_label = 'Plot Dem'
     bl_icon = 'FCURVE'
-    sv_dependencies = {'richdem'}
+    sv_dependencies = {'xdem'}
 
     # Hide Interactive Sockets
     def update_sockets(self, context):

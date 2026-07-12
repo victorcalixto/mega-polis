@@ -1,6 +1,6 @@
 import bpy
 from sverchok.node_tree import SverchCustomTreeNode
-from megapolis.dependencies import pandas as pd
+import pandas as pd
 
 
 class SvMegapolisPandasSeries(SverchCustomTreeNode, bpy.types.Node):
@@ -11,7 +11,7 @@ class SvMegapolisPandasSeries(SverchCustomTreeNode, bpy.types.Node):
     bl_idname = 'SvMegapolisPandasSeries'
     bl_label = 'Pandas Series'
     bl_icon = 'TEXT'
-    sv_dependencies = {'pandas'}
+    sv_dependencies = {'osmnx'}
 
     def sv_init(self, context):
         """Initialize node inputs and outputs."""

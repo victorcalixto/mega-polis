@@ -21,13 +21,10 @@ ARCHIVE_LINK = 'https://github.com/victorcalixto/mega-polis/archive/'
 MASTER_BRANCH_NAME = 'main'
 
 def draw_in_sv_prefs(layout):
-    draw_message(layout, "geopandas", dependencies=ex_dependencies)
     draw_message(layout, "leafmap", dependencies=ex_dependencies)
     draw_message(layout, "osmnx", dependencies=ex_dependencies)
-    draw_message(layout, "pandas", dependencies=ex_dependencies)
     draw_message(layout, "laspy", dependencies=ex_dependencies)
     draw_message(layout, "rasterio", dependencies=ex_dependencies)
-    draw_message(layout, "pillow", dependencies=ex_dependencies)
     draw_message(layout, "mapillary", dependencies=ex_dependencies)
     draw_message(layout, "wget", dependencies=ex_dependencies)
     draw_message(layout, "networkx", dependencies=ex_dependencies)
@@ -35,24 +32,21 @@ def draw_in_sv_prefs(layout):
     draw_message(layout, "streamlit", dependencies=ex_dependencies)
     draw_message(layout, "pyvista", dependencies=ex_dependencies)
     draw_message(layout, "seaborn", dependencies=ex_dependencies)
-    draw_message(layout, "visilibity", dependencies=ex_dependencies)
     draw_message(layout, "opencv-python", dependencies=ex_dependencies)
     draw_message(layout, "keplergl", dependencies=ex_dependencies)
     draw_message(layout, "plotly", dependencies=ex_dependencies)
     draw_message(layout, "requests", dependencies=ex_dependencies)
     draw_message(layout, "bokeh", dependencies=ex_dependencies)
     draw_message(layout, "pythreejs", dependencies=ex_dependencies)
-    draw_message(layout, "shapely", dependencies=ex_dependencies)
     draw_message(layout, "pyproj", dependencies=ex_dependencies)
     draw_message(layout, "detectron2", dependencies=ex_dependencies)
     draw_message(layout, "torch", dependencies=ex_dependencies)
     draw_message(layout, "tabulate", dependencies=ex_dependencies)
     draw_message(layout, "psutil", dependencies=ex_dependencies)
     draw_message(layout, "matplotlib", dependencies=ex_dependencies)
-    draw_message(layout, "richdem", dependencies=ex_dependencies)
-
-
-
+    draw_message(layout, "xdem", dependencies=ex_dependencies)
+    draw_message(layout, "pyvips", dependencies=ex_dependencies)
+    draw_message(layout, "tifffile", dependencies=ex_dependencies)
 
 
 
@@ -97,13 +91,10 @@ class SvMegapolisPreferences(AddonPreferences):
         box.label(text="Dependencies:")
 
         draw_message(box, "sverchok", dependencies=ex_dependencies)
-        draw_message(box, "geopandas", dependencies=ex_dependencies)
         draw_message(box, "leafmap", dependencies=ex_dependencies)
         draw_message(box, "osmnx", dependencies=ex_dependencies)
-        draw_message(box, "pandas", dependencies=ex_dependencies)
         draw_message(box, "laspy", dependencies=ex_dependencies)
         draw_message(box, "rasterio", dependencies=ex_dependencies)
-        draw_message(box, "pillow", dependencies=ex_dependencies)
         draw_message(box, "mapillary", dependencies=ex_dependencies)
         draw_message(box, "wget", dependencies=ex_dependencies)
         draw_message(box, "networkx", dependencies=ex_dependencies)
@@ -111,23 +102,20 @@ class SvMegapolisPreferences(AddonPreferences):
         draw_message(box, "streamlit", dependencies=ex_dependencies)
         draw_message(box, "pyvista", dependencies=ex_dependencies)
         draw_message(box, "seaborn", dependencies=ex_dependencies)
-        draw_message(box, "visilibity", dependencies=ex_dependencies)
-        box.operator('wm.url_open', text="Read installation instructions for Swig (Visilibity dependency)").url="https://swig.org/download.html"
         draw_message(box, "opencv-python", dependencies=ex_dependencies)
         draw_message(box, "keplergl", dependencies=ex_dependencies)
-        draw_message(box, "plotly", dependencies=ex_dependencies)
         draw_message(box, "requests", dependencies=ex_dependencies)
         draw_message(box, "pythreejs", dependencies=ex_dependencies)
         draw_message(box, "bokeh", dependencies=ex_dependencies)
-        draw_message(box, "shapely", dependencies=ex_dependencies)
         draw_message(box, "pyproj", dependencies=ex_dependencies)
         draw_message(box, "detectron2", dependencies=ex_dependencies)
         draw_message(box, "torch", dependencies=ex_dependencies)
         draw_message(box, "tabulate", dependencies=ex_dependencies)
         draw_message(box, "psutil", dependencies=ex_dependencies)
         draw_message(box, "matplotlib", dependencies=ex_dependencies)
-        draw_message(box, "richdem", dependencies=ex_dependencies)
-
+        draw_message(box, "xdem", dependencies=ex_dependencies)
+        draw_message(box, "pyvips", dependencies=ex_dependencies)
+        draw_message(box, "tifffile", dependencies=ex_dependencies)
 
 
 

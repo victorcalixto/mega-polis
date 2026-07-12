@@ -5,7 +5,11 @@ from sverchok.node_tree import SverchCustomTreeNode
 from sverchok.data_structure import updateNode
 
 # Megapolis Dependencies
-import geopandas as gpd
+
+from megapolis.dependencies import geopandas as gpd
+
+
+
 
 try:
     from shapely.geometry import mapping
@@ -29,7 +33,7 @@ class SvMegapolisReadGis(SverchCustomTreeNode, bpy.types.Node):
     bl_idname = 'SvMegapolisReadGis'
     bl_label = 'Read GIS'
     bl_icon = 'WORLD'
-    sv_dependencies = {'geopandas', 'osmnx'}
+    sv_dependencies = {'osmnx'}
 
     def update_sockets(self, context):
         """Need to do UX transformation before updating the node."""

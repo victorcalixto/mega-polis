@@ -13,6 +13,7 @@ class SvMegapolisPointToLatLon(SverchCustomTreeNode, bpy.types.Node):
     bl_idname = 'SvMegapolisPointToLatLon'
     bl_label = 'Point to Latitude/Longitude'
     bl_icon = 'LATTICE_DATA'
+    sv_dependencies = {"pyproj"}
 
     def update_sockets(self, context):
         """ UX transformation before updating node """

@@ -19,7 +19,7 @@ class SvMegapolisDataframeUtils(SverchCustomTreeNode, bpy.types.Node):
     bl_idname = 'SvMegapolisDataframeUtils'
     bl_label = 'Dataframe Utils'
     bl_icon = 'TOOL_SETTINGS'
-    sv_dependencies = {'pandas'}
+    sv_dependencies = {'osmnx'}
 
     # Blender Properties
     infotype: EnumProperty(

@@ -23,6 +23,7 @@
             - SvMegapolisDownloadStImagery
             - SvMegapolisLoadStreetNetwork
             - SvMegapolisOSMDownloader
+            - SvMegapolisOpenTopoNode 
         - Gathering Data Tools:  # Name of a node category
             - SvMegapolisReadCsv 
             - SvMegapolisReadJson
@@ -41,6 +42,7 @@
         - Analysis Design Tools:
             - SvMegapolisWhiteboxGisTools
             - SvMegapolisDemTerrainAttributes
+            - SvMegapolisDemTerrainAttributesExt
             - SvMegapolisNetworkAnalyses
             - SvMegapolisIsovists
             - SvMegapolisShortestPath

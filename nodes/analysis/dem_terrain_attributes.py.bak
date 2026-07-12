@@ -5,18 +5,18 @@ from sverchok.node_tree import SverchCustomTreeNode
 from sverchok.data_structure import updateNode
 
 # Megapolis Dependencies
-from megapolis.dependencies import xdem
+from megapolis.dependencies import richdem as rd
 
 # Define Terrain Attributes
 AttributeType = namedtuple(
     'AttributeType',
-    ['hillshade', 'slope', 'aspect', 'curvature',
-     'terrain_ruggedness', 'rugosity']
+    ['aspect', 'profile_curvature', 'planform_curvature', 'curvature',
+     'slope_riserun', 'slope_degrees', 'slope_percentage', 'slope_radians']
 )
 
 ATTRIBUTE_TYPE = AttributeType(
-    'hillshade', 'slope', 'aspect', 'curvature',
-    'terrain_ruggedness', 'rugosity'
+    'aspect', 'profile_curvature', 'planform_curvature', 'curvature',
+    'slope_riserun', 'slope_degrees', 'slope_percentage', 'slope_radians'
 )
 
 attribute_type_items = [(i, i, '') for i in ATTRIBUTE_TYPE]
@@ -30,13 +30,13 @@ class SvMegapolisDemTerrainAttributes(SverchCustomTreeNode, bpy.types.Node):
     bl_idname = 'SvMegapolisDemTerrainAttributes'
     bl_label = 'DEM Terrain Attributes'
     bl_icon = 'OUTLINER_DATA_LATTICE'
-    sv_dependencies = {'xdem'}
+    sv_dependencies = {'richdem'}
 
     # Blender Properties
     attributetype: EnumProperty(
         name='Terrain Attribute',
         items=attribute_type_items,
-        default="slope",
+        default="slope_degrees",
         description='Choose a terrain attribute to extract values',
         update=lambda self, context: updateNode(self, context)
     )
@@ -59,16 +59,13 @@ class SvMegapolisDemTerrainAttributes(SverchCustomTreeNode, bpy.types.Node):
             return
 
         dem_array = self.inputs["DEM Array"].sv_get(deepcopy=False)
-        
-        attributes = xdem.terrain.get_terrain_attribute(
-            dem_array.data,
-            resolution=dem.res,
-            attribute=self.attributetype
-        )
-        
+        dem_richdem = rd.rdarray(dem_array, no_data=-9999)
+        dem_slope = rd.TerrainAttribute(dem_richdem, attrib=self.attributetype)
+        attribute_values = dem_slope.flatten()
+
         # Output results
-        self.outputs["Attribute Values"].sv_set(attributes)
-        self.outputs["Array Out"].sv_set(dem_array.data)
+        self.outputs["Attribute Values"].sv_set(attribute_values)
+        self.outputs["Array Out"].sv_set(dem_slope)
 
 
 def register():

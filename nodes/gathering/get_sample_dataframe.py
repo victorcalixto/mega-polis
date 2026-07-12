@@ -23,7 +23,7 @@ class SvMegapolisGetSampleDataframe(SverchCustomTreeNode, bpy.types.Node):
     bl_idname = 'SvMegapolisGetSampleDataframe'
     bl_label = 'Get Sample Dataframe'
     bl_icon = 'TEXT'
-    sv_dependencies = {'pandas'}
+    sv_dependencies = {'osmnx'}
 
     # Hide Interactive Sockets
     def update_sockets(self, context):

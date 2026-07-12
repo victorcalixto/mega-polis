@@ -3,7 +3,9 @@ from bpy.props import IntProperty
 from sverchok.node_tree import SverchCustomTreeNode
 from sverchok.data_structure import updateNode
 import numpy as np
-import laspy
+
+
+from megapolis.dependencies import laspy as las
 
 
 def get_coordinates(las):

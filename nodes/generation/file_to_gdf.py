@@ -13,7 +13,7 @@ class SvMegapolisFileToGdf(SverchCustomTreeNode, bpy.types.Node):
     bl_idname = 'SvMegapolisFileToGdf'
     bl_label = 'File To Gdf'
     bl_icon = 'WORDWRAP_ON'
-    sv_dependencies = {'geopandas'}
+    sv_dependencies = {'osmnx'}
 
     def sv_init(self, context):
         """ Initialize inputs and outputs """

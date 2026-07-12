@@ -10,7 +10,7 @@ class SvMegapolisTransposeDataframe(SverchCustomTreeNode, bpy.types.Node):
     bl_idname = 'SvMegapolisTransposeDataframe'
     bl_label = 'Transpose Dataframe'
     bl_icon = 'CON_TRANSLIKE'
-    sv_dependencies = {'pandas'}
+    sv_dependencies = {'osmnx'}
 
     def sv_init(self, context):
         """ Initialize inputs and outputs """

@@ -6,7 +6,7 @@ from sverchok.data_structure import levels_of_list_or_np
 from sverchok.utils.sv_text_io_common import (
     READY_COLOR, TEXT_IO_CALLBACK
 )
-from megapolis.dependencies import pandas as pd
+import pandas as pd
 from megapolis.dependencies import tabulate
 
 try:
@@ -56,6 +56,7 @@ class SvMegapolisDataframeVis(SverchCustomTreeNode, bpy.types.Node):
         ('compact', 'Compact', 'Using str()', 1),
         ('pretty', 'Pretty', 'Using pretty print', 2)
     ]
+    sv_dependencies = {"osmnx"}
 
     def change_mode(self, context):
         self.inputs.clear()

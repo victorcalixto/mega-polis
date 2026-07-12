@@ -1,4 +1,3 @@
-
 from sverchok.dependencies import SvDependency
 
 ex_dependencies = dict()
@@ -21,17 +20,6 @@ except ImportError:
     print(message)
     sverchok = None
 
-#geopandas
-geopandas_d = ex_dependencies["geopandas"] = SvDependency("geopandas", "https://geopandas.org/en/stable/")
-geopandas_d.pip_installable = True
-
-
-try:
-    import geopandas
-    geopandas_d.module = geopandas
-except ImportError:
-    geopandas = None
-
 #leafmap
 leafmap_d = ex_dependencies["leafmap"] = SvDependency("leafmap", "https://leafmap.org/")
 leafmap_d.pip_installable = True
@@ -52,15 +40,27 @@ try:
 except ImportError:
     osmnx = None
 
-#pandas
-pandas_d = ex_dependencies["pandas"] = SvDependency("pandas", "https://pandas.pydata.org/")
-pandas_d.pip_installable = True
+
+#tifffile
+tifffile_d = ex_dependencies["tifffile"] = SvDependency("tifffile", "https://github.com/gboeing/osmnx")
+tifffile_d.pip_installable = True
 
 try:
-    import pandas
-    pandas_d.module = pandas
+    import tifffile
+    tifffile_d.module = tifffile
 except ImportError:
-    pandas = None
+    tifffile = None
+
+#pyvips
+pyvips_d = ex_dependencies["pyvips"] = SvDependency("pyvips", "https://github.com/gboeing/osmnx")
+pyvips_d.pip_installable = True
+
+try:
+    import pyvips
+    pyvips_d.module = pyvips
+except ImportError:
+    pyvips = None
+
 
 #laspy
 laspy_d = ex_dependencies["laspy"] = SvDependency("laspy", "https://laspy.readthedocs.io/en/latest/installation.html")
@@ -82,15 +82,16 @@ try:
 except ImportError:
     rasterio = None
 
-#pillow
-pillow_d = ex_dependencies["pillow"] = SvDependency("pillow", "https://pillow.readthedocs.io/en/stable/")
-pillow_d.pip_installable = True
+
+#xdem
+xdem_d = ex_dependencies["xdem"] = SvDependency("xdem", "https://xdem.readthedocs.io/en/stable/")
+xdem_d.pip_installable = True
 
 try:
-    import PIL
-    pillow_d.module = PIL
+    import xdem
+    xdem_d.module = xdem
 except ImportError:
-    pillow = None
+    xdem = None
 
 #mapillary
 mapillary_d = ex_dependencies["mapillary"] = SvDependency("mapillary", "https://github.com/mapillary/mapillary-python-sdk")
@@ -162,16 +163,6 @@ try:
 except ImportError:
     seaborn = None
 
-#visilibity
-visilibity_d = ex_dependencies["visilibity"] = SvDependency("visilibity", "https://karlobermeyer.github.io/VisiLibity1/")
-visilibity_d.pip_installable = True
-
-try:
-    import visilibity
-    visilibity_d.module = visilibity
-except ImportError:
-    visilibity = None
-
 #opencv
 opencvpython_d = ex_dependencies["opencv-python"] = SvDependency("opencv-python", "https://github.com/opencv/opencv-python")
 opencvpython_d.pip_installable = True
@@ -192,16 +183,6 @@ try:
 except ImportError:
     keplergl = None
 
-#plotly
-plotly_d = ex_dependencies["plotly"] = SvDependency("plotly", "https://plotly.com/python/")
-plotly_d.pip_installable = True
-
-try:
-    import plotly
-    plotly_d.module = plotly
-except ImportError:
-    plotly = None
-
 #requests
 requests_d = ex_dependencies["requests"] = SvDependency("requests", "https://pypi.org/project/requests")
 requests_d.pip_installable = True
@@ -211,16 +192,6 @@ try:
     requests_d.module = requests
 except ImportError:
     requests = None
-
-#richdem
-richdem_d = ex_dependencies["richdem"] = SvDependency("richdem", "https://richdem.com/")
-richdem_d.pip_installable = True
-
-try:
-    import richdem
-    richdem_d.module = richdem
-except ImportError:
-    richdem = None
 
 #pythreejs
 pythreejs_d = ex_dependencies["pythreejs"] = SvDependency("pythreejs", "https://github.com/jupyter-widgets/pythreejs")
@@ -241,26 +212,6 @@ try:
     bokeh_d.module = bokeh
 except ImportError:
     bokeh = None
-
-#shapely
-shapely_d = ex_dependencies["shapely"] = SvDependency("shapely", "https://pypi.org/project/shapely/")
-shapely_d.pip_installable = True
-
-try:
-    import shapely
-    shapely_d.module = shapely
-except ImportError:
-    shapely = None
-
-#requests
-requests_d = ex_dependencies["requests"] = SvDependency("requests", "https://requests.readthedocs.io/en/latest/")
-requests_d.pip_installable = True
-
-try:
-    import requests
-    requests_d.module = requests
-except ImportError:
-    requests = None
 
 #pyproj
 pyproj_d = ex_dependencies["pyproj"] = SvDependency("pyproj", "https://pypi.org/project/pyproj/")
@@ -316,29 +267,24 @@ except ImportError:
 matplotlib_d = ex_dependencies["matplotlib"] = SvDependency("matplotlib", "https://matplotlib.org/")
 matplotlib_d.pip_installable = True
 
+#matplotlib
+matplotlib_d = ex_dependencies["matplotlib"] = SvDependency("matplotlib", "https://matplotlib.org/")
+matplotlib_d.pip_installable = True
+
 try:
     import matplotlib
     matplotlib_d.module = matplotlib
 except ImportError:
     matplotlib = None
 
-#richdem
-richdem_d = ex_dependencies["richdem"] = SvDependency("richdem", "https://richdem.readthedocs.io/en/latest/")
-richdem_d.pip_installable = True
+#geopandas
+geopandas_d = ex_dependencies["geopandas"] = SvDependency("geopandas", "https://geopandas.org/en/stable/")
+geopandas_d.pip_installable = True
 
 try:
-    import richdem
-    richdem_d.module = richdem
+    import geopandas
+    geopandas_d.module = geopandas
 except ImportError:
-    richdem = None
-
-
-
-
-
-
-
-
-
+    geopandas = None
 
 

@@ -50,7 +50,8 @@ def nodes_index():
                 ("gathering.download_data_url","SvMegapolisDownloadDataUrl"),
                 ("gathering.request_data_api","SvMegapolisRequestDataApi"),
                 ("gathering.get_pandas_feature","SvMegapolisGetPandasFeature"),
-                ("gathering.get_sample_dataframe","SvMegapolisGetSampleDataframe")
+                ("gathering.get_sample_dataframe","SvMegapolisGetSampleDataframe"),
+                ("gathering.download_dem_opentoponode","SvMegapolisOpenTopoNode")
 
 
 
@@ -72,7 +73,8 @@ def nodes_index():
                 ("analysis.model_evaluate","SvMegapolisModelEvaluate"),
                 ("analysis.dataframe_utils","SvMegapolisDataframeUtils"),
                 ("analysis.object_detection","SvMegapolisObjectDetection"),
-                ("analysis.image_segmentation","SvMegapolisImageSegmentation")
+                ("analysis.image_segmentation","SvMegapolisImageSegmentation"),
+                ("analysis.dem_terrain_attributes_ext","SvMegapolisDemTerrainAttributesExt")
 
 
 

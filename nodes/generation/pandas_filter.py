@@ -10,7 +10,7 @@ class SvMegapolisPandasFilter(SverchCustomTreeNode, bpy.types.Node):
     bl_idname = 'SvMegapolisPandasFilter'
     bl_label = 'Pandas Filter'
     bl_icon = 'FILTER'
-    sv_dependencies = {'pandas'}
+    sv_dependencies = {'osmnx'}
 
     def sv_init(self, context):
         """ Initialize inputs and outputs for the node """

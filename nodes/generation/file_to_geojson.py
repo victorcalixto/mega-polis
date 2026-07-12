@@ -14,7 +14,7 @@ class SvMegapolisFileToGeoJson(SverchCustomTreeNode, bpy.types.Node):
     bl_idname = "SvMegapolisFileToGeoJson"
     bl_label = "File To GeoJson"
     bl_icon = "KEY_MENU"
-    sv_dependencies = {"geopandas"}
+    sv_dependencies = {"osmnx"}
 
     def sv_init(self, context):
         """Initialize node inputs and outputs."""
