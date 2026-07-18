@@ -1,40 +1,14 @@
-```bash
-                       .|
-                       | |
-                       |'|            ._____
-               ___    |  |            |.   |' .---"|
-       _    .-'   '-. |  |     .--'|  ||   | _|    |
-    .-'|  _.|  |    ||   '-__  |   |  |    ||      |
-    |' | |.    |    ||       | |   |  |    ||      |
-____|  '-'     '    ""       '-'   '-.'    '`      |_________________________
-jgs~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+<p align="center" width="100%">
+    <img width="33%" src="https://i.imgur.com/DmcjzUc.png">
+</p>
+<h1 align="center"><b>MEGA-POLIS</b></h1>
+<h3 align="center"> A Free and Open Source Data-Driven Urban Design Toolkit for Sverchok </h1>
 
-███    ███ ███████  ██████   █████        ██████   ██████  ██      ██ ███████ 
-████  ████ ██      ██       ██   ██       ██   ██ ██    ██ ██      ██ ██      
-██ ████ ██ █████   ██   ███ ███████ █████ ██████  ██    ██ ██      ██ ███████ 
-██  ██  ██ ██      ██    ██ ██   ██       ██      ██    ██ ██      ██      ██ 
-██      ██ ███████  ██████  ██   ██       ██       ██████  ███████ ██ ███████ 
-                                                                               
-```
-
-A DATA-DRIVEN URBAN DESIGN TOOLKIT FOR SVERCHOK 
-============================================
 
 MEGA-POLIS is a Data-Driven Urban Design Toolkit. This is an addon for [Blender][1] that extends [Sverchok][2]
-addon. 
-
-This add-on is part of an ongoing research, and it still very experimental and under HEAVILY development.  
-
-While the documentation is not ready, you can check the thesis chapter that describes the  tool development [here](https://www.victorcalixto.xyz/phd_thesis/ct-development.html)
-
-Also, you can check this demonstration:
+addon. While the documentation is not ready, you can check the thesis chapter that describes the  tool development [here](https://www.victorcalixto.xyz/phd_thesis/ct-development.html). Also, you can check this demonstration:
 
 [![Watch the video](https://img.youtube.com/vi/lTRNIa2PwhQ/maxresdefault.jpg)](https://youtu.be/lTRNIa2PwhQ)
-
-![](https://community.osarch.org/uploads/editor/z9/z4mow9t071rz.gif)
-
-![](https://community.osarch.org/uploads/editor/ix/l882bk7h2h94.gif)
-
 
 Features
 --------
@@ -45,32 +19,93 @@ Gathering
 ---------
 
 - Read GIS (shapefile, geopackage, geojson)
+  
+![](https://www.victorcalixto.xyz/phd_thesis/images/tool-dev/02_read_gis.png)
+ 
 - Read CSV Files
+  
+ ![](https://www.victorcalixto.xyz/phd_thesis/images/tool-dev/07_read_csv.png)
+
 - Read DEM (GeoTIFF)
+  
+ ![](https://www.victorcalixto.xyz/phd_thesis/images/tool-dev/04_read_dem.png)
+  
 - Read LAS (.las)
-- OSM Downloader 
+
+ ![](https://www.victorcalixto.xyz/phd_thesis/images/tool-dev/05_read_las.png)
+
+  
+- OSM Downloader
+
 - Load Street Network
+
+ ![](https://www.victorcalixto.xyz/phd_thesis/images/tool-dev/03_load_street_network.png)
+  
 - Download Street Imagery
+  
+ ![](https://www.victorcalixto.xyz/phd_thesis/images/tool-dev/01_tool_mapillary.gif)
+
 - Download Data URL
+  
+![](https://www.victorcalixto.xyz/phd_thesis/images/tool-dev/12_download_data_url.gif)
+
 - Request Data API
+  
+ ![]( https://www.victorcalixto.xyz/phd_thesis/images/tool-dev/13_request_data_api.gif)
+
 - Get Pandas Feature
 - Pandas Dataframe
+
+![](https://www.victorcalixto.xyz/phd_thesis/images/tool-dev/10_pandas_dataframe.png)
+  
 - Pandas Series
+
+![](https://www.victorcalixto.xyz/phd_thesis/images/tool-dev/09_pandas_series.png)
+
 - Get Sample Dataframe
 - Split String
+  
+![](https://www.victorcalixto.xyz/phd_thesis/images/tool-dev/11_split_string.png)
 
 Analysis
 --------
 
 - DEM Terrain Attributes
+  
+![](https://www.victorcalixto.xyz/phd_thesis/images/tool-dev/14_dem_terrain_attributes.png)
+
 - Network Analyses
+
+![](https://www.victorcalixto.xyz/phd_thesis/images/tool-dev/17_network_analyses.gif)
+
 - Shortest Path
+
+![](https://www.victorcalixto.xyz/phd_thesis/images/tool-dev/18_shortest_path.gif)
+
 - Whitebox GIS Tool (Whitebox Tools Connection)
+
+![](https://www.victorcalixto.xyz/phd_thesis/images/tool-dev/15_whitebox_gis.gif)
+
 - Isovists
+
+![](https://www.victorcalixto.xyz/phd_thesis/images/tool-dev/16_isovists.png)
+
 - Dataframe Utils
+
+![](https://www.victorcalixto.xyz/phd_thesis/images/tool-dev/19_dataframe_utils.gif)
+
 - Object Detection (YoloV5)
+
+![](https://www.victorcalixto.xyz/phd_thesis/images/tool-dev/21-object-detection.gif)
+
 - Detectron (Instance and Panoptic Segmentation based on Detectron2)
+
+![](https://www.victorcalixto.xyz/phd_thesis/images/tool-dev/22_image_segmentation.gif)
+
 - Correlation
+  
+![](https://www.victorcalixto.xyz/phd_thesis/images/tool-dev/20_correlation.png)
+
 - Correlation With
 - Get Feature At
 - Get Feature Index
@@ -82,9 +117,15 @@ Generation
 ----------
 
 - Faces from Vertices
+  
+![](https://www.victorcalixto.xyz/phd_thesis/images/tool-dev/23-faces-from-vertices.gif)
+  
 - CSV to Dataframe
 - Lat-Lon to Points 
 - Pandas Filter
+  
+![](https://www.victorcalixto.xyz/phd_thesis/images/tool-dev/25-pandas-filter.png)
+
 - Pandas Map Feature
 - Sequential Colormap
 - Transpose Dataframe
@@ -95,22 +136,42 @@ Generation
 Visualisation
 -------------
 
-- Seaborn Plot 
+- Seaborn Plot
+  
+![](https://www.victorcalixto.xyz/phd_thesis/images/tool-dev/32-seaborn-plot.gif)
+  
 - WebVR Connector (A-Frame)
+
+![](https://www.victorcalixto.xyz/phd_thesis/images/tool-dev/31-webvr-connector.gif)
+  
 - Dashboard Creation
 - Dashboard Bokeh Figure
 - Dashboard Bokeh Plot Chart
 - Dashboard Bokeh Plot Line
 - Dashboard Dataframe
+  
+![](https://www.victorcalixto.xyz/phd_thesis/images/tool-dev/33-dashboard-dataframe.gif)
+
 - Dashboard Load Map
 - Dashboard Map
+
+![](https://www.victorcalixto.xyz/phd_thesis/images/tool-dev/30-dashboard-map.gif)
+
 - Dashboard Markdown
+
+![](https://www.victorcalixto.xyz/phd_thesis/images/tool-dev/34-dashboard-markdown.gif)
+
 - Dashboard Mesh
+  
+![](https://www.victorcalixto.xyz/phd_thesis/images/tool-dev/29-mesh-dashboard.gif)
+
 - Dashboard Plotly Figure
 - Dashboard Plotly Scatter
 - Dashboard Server
 - Dataframe Visualisation
 - Python Server
+  
+![](https://www.victorcalixto.xyz/phd_thesis/images/tool-dev/35-visualisation-supporting-tools.png)
 
 Documentation still under development. 
 
